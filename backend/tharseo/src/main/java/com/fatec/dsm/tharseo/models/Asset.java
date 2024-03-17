@@ -87,3 +87,4 @@ public class Asset implements Serializable {
         this.user = user;
     }
 }
+

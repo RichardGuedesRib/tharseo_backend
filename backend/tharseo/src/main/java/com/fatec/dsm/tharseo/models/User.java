@@ -1,7 +1,7 @@
 package com.fatec.dsm.tharseo.models;
 
 
-import com.fatec.dsm.tharseo.models.Transaction;
+
 import jakarta.persistence.*;
 
 
