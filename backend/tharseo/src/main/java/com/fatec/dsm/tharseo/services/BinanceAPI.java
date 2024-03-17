@@ -10,8 +10,8 @@ import java.util.HashMap;
 public class BinanceAPI {
 
     private final String addressServer = "https://testnet.binance.vision";
-    private String apiKey = "kHww0CYVKcjnTQzGVFcej977jKX0cvM2xD1J0Tdg4Zrin9bc8LNEqVu5cwWMyqiU";
-    private String apiSecret = "dyQD711IPSLNvKTQkYzB7I8IIs0c3kYWXEarYW7Y8GlHrxfffJIT8LXmybMjM9yT";
+    private static final String apiKey = System.getenv("BINANCE_API_KEY");
+    private static final String apiSecret = System.getenv("BINANCE_API_SECRET");
 
     BinanceRequests binanceRequests = new BinanceRequests(addressServer, apiKey, apiSecret);
 

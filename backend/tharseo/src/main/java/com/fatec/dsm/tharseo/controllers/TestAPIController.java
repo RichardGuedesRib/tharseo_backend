@@ -2,6 +2,9 @@ package com.fatec.dsm.tharseo.controllers;
 
 import com.fatec.dsm.tharseo.external.Request;
 import com.fatec.dsm.tharseo.services.BinanceAPI;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,21 +33,21 @@ public class TestAPIController {
     public ResponseEntity<?> testConnection() {
         StringBuilder sb = new StringBuilder();
         sb = binanceAPI.testConnection();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb.toString());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
     }
 
     @GetMapping(value = "/getchartinfo")
     public ResponseEntity<?> getChartInfo() {
         StringBuilder sb = new StringBuilder();
         sb = binanceAPI.getChartInfo("BTCUSDT", "1d", "2");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb.toString());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
     }
 
     @GetMapping(value = "/accountinfo")
     public ResponseEntity<?> getAccountInfo() {
         StringBuilder sb = new StringBuilder();
         sb = binanceAPI.getAccountInfo();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb.toString());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
     }
 
 
