@@ -1,4 +1,4 @@
-package com.fatec.dsm.tharseo.services;
+package com.fatec.dsm.tharseo.external;
 
 import com.fatec.dsm.tharseo.external.BinanceRequests;
 import org.json.JSONObject;
