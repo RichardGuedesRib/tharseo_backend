@@ -1,8 +1,12 @@
 package com.fatec.dsm.tharseo.services;
 
 
+import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
 import com.fatec.dsm.tharseo.repositories.AssetRepository;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,9 @@ public class AssetService {
 
     @Autowired
     AssetRepository assetRepository;
+
+    @Autowired
+    BinanceAPI binanceAPI;
 
 
     public void insertAsset(Asset asset) {
@@ -60,5 +67,7 @@ public class AssetService {
         asset.setIsActive(0);
         updateAsset(asset.getId(), asset);
     }
+
+
 
 }
