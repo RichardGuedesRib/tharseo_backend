@@ -19,7 +19,7 @@ public class BinanceAPI {
     private final String apiSecret = System.getenv("BINANCE_API_SECRET");
 
         BinanceRequests binanceRequests = new BinanceRequests(addressServer, apiKey, apiSecret);
- 
+
 
 
     public StringBuilder testConnection() {
