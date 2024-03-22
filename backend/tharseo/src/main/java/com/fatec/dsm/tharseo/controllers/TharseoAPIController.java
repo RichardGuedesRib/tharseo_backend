@@ -12,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/testtharseo")
-public class TestAPIController {
+@RequestMapping(value = "/tharseo")
+public class TharseoAPIController {
 
 
     @Autowired
@@ -111,7 +111,7 @@ public class TestAPIController {
         for (Transaction el : listTransactions) {
             boolean exists = false;
             for (Transaction elTransaction : oldTransactions) {
-                if (el.getOrderId() == elTransaction.getOrderId()) {
+                if (Objects.equals(el.getOrderId(), elTransaction.getOrderId())) {
                     exists = true;
                     break;
                 }
