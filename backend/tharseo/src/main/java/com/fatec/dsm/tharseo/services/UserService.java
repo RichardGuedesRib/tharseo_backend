@@ -54,12 +54,19 @@ public class UserService {
         if (user.getIsactive() != null) {
             oldUser.setIsactive(user.getIsactive());
         }
-//        if (user.getWallet() != null) {
-//            oldUser.setWallet((user.getWallet()));
-//        }
+        if (user.getWallet() != null) {
+            oldUser.setWallet((user.getWallet()));
+        }
         if (user.getPhoneNumber() != null) {
             oldUser.setPhoneNumber(user.getPhoneNumber());
         }
+        if(user.getApiKey() != null) {
+            oldUser.setApiKey(user.getApiKey());
+        }
+        if(user.getSecretKey() != null) {
+            oldUser.setSecretKey(user.getSecretKey());
+        }
+
         return userRepository.save(oldUser);
     }
 

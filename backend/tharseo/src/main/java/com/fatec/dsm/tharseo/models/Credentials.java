@@ -14,7 +14,6 @@ public class Credentials implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String apiKey;
-
     private String secretKey;
     private Integer isActive;
     @OneToOne

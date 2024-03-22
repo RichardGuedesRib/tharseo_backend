@@ -15,10 +15,9 @@ public class BinanceRequests {
     String apiSecret;
     Signature sign = new Signature();
 
-    public BinanceRequests(String baseUrl, String apiKey, String apiSecret) {
+    public BinanceRequests(String baseUrl) {
         this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-        this.apiSecret = apiSecret;
+
     }
 
     private StringBuilder returnResponse(HttpURLConnection conn) throws IOException {
@@ -65,7 +64,7 @@ public class BinanceRequests {
         return urlPath;
     }
 
-    private StringBuilder sendRequest(URL url, String httpMethod) throws Exception {
+    private StringBuilder sendRequest(URL url, String httpMethod, String apiKey, String apiSecret) throws Exception {
         StringBuilder sb = new StringBuilder();
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         if (httpMethod != null) {
@@ -83,17 +82,17 @@ public class BinanceRequests {
 
     }
 
-    public StringBuilder sendPublicRequest(HashMap<String, String> parameters, String urlRequest) throws Exception {
+    public StringBuilder sendPublicRequest(HashMap<String, String> parameters, String urlRequest, String apiKey, String apiSecret) throws Exception {
         String queryPath = joinQueryParameters(parameters);
         URL url = new URL(baseUrl + urlRequest + "?" + queryPath);
         System.out.println("url:" + url.toString());
 
         StringBuilder sb = new StringBuilder();
-        sb = sendRequest(url, null);
+        sb = sendRequest(url, null, apiKey, apiSecret);
         return sb;
     }
 
-    public StringBuilder sendSignedRequest(HashMap<String, String> parameters, String urlRequest, String httpMethod) throws Exception {
+    public StringBuilder sendSignedRequest(HashMap<String, String> parameters, String urlRequest, String httpMethod, String apiKey, String apiSecret) throws Exception {
         StringBuilder sb = new StringBuilder();
         String queryPath = "";
         String signature = "";
@@ -112,7 +111,7 @@ public class BinanceRequests {
         URL url = new URL(baseUrl + urlRequest + "?" + queryPath);
         System.out.println("Request in: " + url.toString());
 
-        sb = sendRequest(url, httpMethod);
+        sb = sendRequest(url, httpMethod, apiKey, apiSecret);
 
         return sb;
     }

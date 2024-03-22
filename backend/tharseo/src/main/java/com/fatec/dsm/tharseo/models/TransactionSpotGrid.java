@@ -22,12 +22,7 @@ public class TransactionSpotGrid  extends Transaction {
         this.profit = profit;
     }
 
-    public TransactionSpotGrid(Long id, User user, Asset asset, Double price, String typeTransaction, Integer isActive, Double priceTarget, LocalDateTime closeDate, Double profit) {
-        super(id, user, asset, price, typeTransaction, isActive);
-        this.priceTarget = priceTarget;
-        this.closeDate = closeDate;
-        this.profit = profit;
-    }
+
 
     public Double getPriceTarget() {
         return priceTarget;

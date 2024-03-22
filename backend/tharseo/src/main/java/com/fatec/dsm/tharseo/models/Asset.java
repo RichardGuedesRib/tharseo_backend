@@ -86,5 +86,17 @@ public class Asset implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Asset{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", acronym='" + acronym + '\'' +
+                ", quantity=" + quantity +
+                ", isActive=" + isActive +
+                ", user=" + user +
+                '}';
+    }
 }
 
