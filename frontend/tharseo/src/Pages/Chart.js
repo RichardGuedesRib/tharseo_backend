@@ -1,11 +1,13 @@
 import "./style.css";
 import React from "react";
+import ChartConstructor from "./ChartConstructor";
 
-function Chart() {
+
+function Chart({data}) {
   return (
-    <div className="App">
-      <div class="container">
-        <h1>CHART</h1>
+    <div className="App app-chart">
+      <div className="container-chart" id="chart-container">
+       <ChartConstructor />
       </div>
     </div>
   );

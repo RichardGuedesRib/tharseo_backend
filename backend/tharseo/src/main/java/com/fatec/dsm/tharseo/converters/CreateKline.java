@@ -7,18 +7,16 @@ public class CreateKline {
 
     public static Kline createKline(JsonObject data) {
         Kline kline = new Kline();
-        kline.setSymbol(data.get("s").toString());
-        kline.setStartTime(data.get("t").toString());
-        kline.setStartTime(data.get("T").toString());
-        kline.setInterval(data.get("i").toString());
-        kline.setOpenPrice(data.get("o").toString());
-        kline.setClosePrice(data.get("c").toString());
-        kline.setHighPrice(data.get("h").toString());
-        kline.setLowPrice(data.get("l").toString());
+        kline.setSymbol(data.get("s").toString().replace("\"", ""));
+        kline.setStartTime(data.get("t").toString().replace("\"", ""));
+        kline.setStartTime(data.get("T").toString().replace("\"", ""));
+        kline.setInterval(data.get("i").toString().replace("\"", ""));
+        kline.setOpenPrice(data.get("o").toString().replace("\"", ""));
+        kline.setClosePrice(data.get("c").toString().replace("\"", ""));
+        kline.setHighPrice(data.get("h").toString().replace("\"", ""));
+        kline.setLowPrice(data.get("l").toString().replace("\"", ""));
 
-        System.out.println(kline);
-
-        return kline;
+                return kline;
 
     }
 }

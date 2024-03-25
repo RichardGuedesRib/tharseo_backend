@@ -1,1 +1,2 @@
-npm install react-router-dom
+npm install react-router-dom apexcharts react-apexcharts react-use-websocket
+

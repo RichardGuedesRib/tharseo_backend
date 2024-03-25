@@ -1,11 +1,17 @@
 package com.fatec.dsm.tharseo.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tb_chart1m")
 public class Kline {
 
-    private String symbol;
+
+    @Id
     private String startTime;
+    private String symbol;
     private String closeTime;
-    private String interval;
+    private String intervalTime;
     private String openPrice;
     private String closePrice;
     private String highPrice;
@@ -14,16 +20,19 @@ public class Kline {
     public Kline() {
     }
 
-    public Kline(String symbol, String startTime, String closeTime, String interval, String openPrice, String closePrice, String highPrice, String lowPrice) {
+
+
+    public Kline(String symbol, String startTime, String closeTime, String intervalTime, String openPrice, String closePrice, String highPrice, String lowPrice) {
         this.symbol = symbol;
         this.startTime = startTime;
         this.closeTime = closeTime;
-        this.interval = interval;
+        this.intervalTime = intervalTime;
         this.openPrice = openPrice;
         this.closePrice = closePrice;
         this.highPrice = highPrice;
         this.lowPrice = lowPrice;
     }
+
 
     public String getSymbol() {
         return symbol;
@@ -50,11 +59,11 @@ public class Kline {
     }
 
     public String getInterval() {
-        return interval;
+        return intervalTime;
     }
 
-    public void setInterval(String interval) {
-        this.interval = interval;
+    public void setInterval(String intervalTime) {
+        this.intervalTime = intervalTime;
     }
 
     public String getOpenPrice() {
@@ -95,7 +104,7 @@ public class Kline {
                 "symbol='" + symbol + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", closeTime='" + closeTime + '\'' +
-                ", interval='" + interval + '\'' +
+                ", intervalTime='" + intervalTime + '\'' +
                 ", openPrice='" + openPrice + '\'' +
                 ", closePrice='" + closePrice + '\'' +
                 ", highPrice='" + highPrice + '\'' +

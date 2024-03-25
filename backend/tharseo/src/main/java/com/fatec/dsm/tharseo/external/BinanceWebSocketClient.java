@@ -2,6 +2,7 @@ package com.fatec.dsm.tharseo.external;
 
 import com.fatec.dsm.tharseo.converters.CreateKline;
 import com.fatec.dsm.tharseo.models.Kline;
+import com.fatec.dsm.tharseo.services.ChartService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class BinanceWebSocketClient {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    ChartService chartService;
 
 
     public BinanceWebSocketClient() {
@@ -30,7 +33,7 @@ public class BinanceWebSocketClient {
         WebSocketSession session;
 
         try {
-            session = client.doHandshake(handler, new WebSocketHttpHeaders(), URI.create("wss://testnet.binance.vision/stream?streams=btcusdt@kline_15m")).get();
+            session = client.doHandshake(handler, new WebSocketHttpHeaders(), URI.create("wss://testnet.binance.vision/stream?streams=btcusdt@kline_1m")).get();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao conectar ao WebSocket da Binance", e);
         }
@@ -52,7 +55,10 @@ public class BinanceWebSocketClient {
             JsonObject dataContent = resultsPayload.getAsJsonObject("data");
             JsonObject klineStream = dataContent.getAsJsonObject("k");
             Kline kline = CreateKline.createKline(klineStream);
-            messagingTemplate.convertAndSend("/topic/kline", kline.toString());
+
+//            chartService.insertOne(kline);
+
+
 
         }
     }

@@ -594,3 +594,15 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 50 more
+2024-03-25 13:46:22.341239-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table tb_chart1m (id bigint not null, close_price varchar(255), close_time varchar(255), high_price varchar(255), [*]interval varchar(255), low_price varchar(255), open_price varchar(255), start_time varchar(255), symbol varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table tb_chart1m (id bigint not null, close_price varchar(255), close_time varchar(255), high_price varchar(255), interval varchar(255), low_price varchar(255), open_price varchar(255), start_time varchar(255), symbol varchar(255), primary key (id)) [42001-224]
+2024-03-25 13:47:05.851063-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table tb_chart (id bigint not null, close_price varchar(255), close_time varchar(255), high_price varchar(255), [*]interval varchar(255), low_price varchar(255), open_price varchar(255), start_time varchar(255), symbol varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table tb_chart (id bigint not null, close_price varchar(255), close_time varchar(255), high_price varchar(255), interval varchar(255), low_price varchar(255), open_price varchar(255), start_time varchar(255), symbol varchar(255), primary key (id)) [42001-224]
+2024-03-25 14:07:23.257259-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "delete [*]table tb_chart1m"; expected "identifier"; SQL statement:
+delete table tb_chart1m [42001-224]
+2024-03-25 14:07:32.647859-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "delete [*]table ""tb_chart1m"""; expected "identifier"; SQL statement:
+delete table "tb_chart1m" [42001-224]

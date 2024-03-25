@@ -9,8 +9,10 @@ import Home from "./Pages/Home";
 function App() {
   const [user, setUser] = useState([]);
 
+ 
+  
   useEffect(() => {
-    const getUser = async () => {
+     const getUser = async () => {
       try {
         const res = await fetch("http://localhost:8080/users/1");
         if (!res.ok) {
@@ -26,8 +28,6 @@ function App() {
     };
 
     getUser();
-
-    
   }, []);
 
   return (
