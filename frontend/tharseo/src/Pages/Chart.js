@@ -7,7 +7,7 @@ function Chart({data}) {
   return (
     <div className="App app-chart">
       <div className="container-chart" id="chart-container">
-       <ChartConstructor />
+       <ChartConstructor data={data}/>
       </div>
     </div>
   );

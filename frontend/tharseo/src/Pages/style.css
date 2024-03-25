@@ -4,10 +4,10 @@ body {
 }
 
 .container-chart {
-    border: 1px solid yellow;
+    border: 1px solid #FFF;
     border-radius: 1rem;
-    width: 100%;
-    height: 100%;
+    width: 640ps;
+    height: 480px;
     display: flex;
     flex-direction: column;
     padding: 20px;
