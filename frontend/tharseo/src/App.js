@@ -13,10 +13,8 @@ function App() {
   const [symbol, setSymbol] = useState("BTCUSDT");
   const [interval, setInterval] = useState("1m");
 
- 
-  
   useEffect(() => {
-     const getUser = async () => {
+    const getUser = async () => {
       try {
         const res = await fetch("http://localhost:8080/users/1");
         if (!res.ok) {
@@ -53,18 +51,22 @@ function App() {
             ],
             z: lastJsonMessage.k.x,
           };
-         
-          setData(prevData => {
-            const newData = [...prevData]; 
+
+          setData((prevData) => {
+            const newData = [...prevData];
             if (lastJsonMessage.k.x === false) {
               newData[newData.length - 1] = newCandle;
             } else {
-              newData.push(newCandle); 
+              if (newData.length < 60) {
+                newData.push(newCandle);
+              } else {
+                newData.shift();
+                newData.push(newCandle);
+              }
             }
-            return newData; 
+            return newData;
           });
-
-               }
+        }
       },
     }
   );
@@ -74,7 +76,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/chart" element={<Chart data={data}/>} />
+          <Route path="/chart" element={<Chart data={data} />} />
           <Route path="/accountinfo" element={<Accountinfo user={user} />} />
           <Route path="/orderssetup" element={<OrdersSetup />} />
         </Routes>

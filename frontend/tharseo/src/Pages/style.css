@@ -1,13 +1,15 @@
 body {
     background: rgb(9, 27, 48);
     background: radial-gradient(circle, rgba(9, 27, 48, 1) 0%, rgba(8, 8, 8, 1) 100%);
+    font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .container-chart {
-    border: 1px solid #FFF;
     border-radius: 1rem;
-    width: 640ps;
-    height: 480px;
+    width: 640px;
+    height: 280px;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -16,10 +18,142 @@ body {
     justify-content: center;
 }
 
-.app-chart{
-    border: 1px solid red;
+.app-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 550px;
+    width: 700px;
+    background-color: rgba(21, 21, 21, .7);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 40px;
+
+}
+
+.chartData {
+    color: #FFF;
+    display: flex;
+}
+
+.chart-icon-data {
+    background-color: #2A2A2A;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    margin-right: 10px;
+
+}
+
+.chart-item-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.value-data {
+    font-size: 30px;
+}
+
+.container-header-data {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
+.container-header-options {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title-header-options {
+    color: #FFF;
+    font-size: 25px;
+}
+
+.container-header-options-bottom {
+    display: flex;
+    margin-top: 10px;
+
+
+    justify-content: space-between;
+}
+
+.button-asset {
+    background-color: #000000d0;
+    border-radius: 20px;
+    width: 80px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+
+
+}
+
+.icon-asset-btn {
+    width: 25px;
+    height: 25px;
+    background-color: #B9B9B9;
+    border-radius: 50%;
+
+
+}
+
+.name-asset-btn {
+    color: #FFF;
+    font-size: 13px;
+}
+
+.select-asset-btn {
+    color: #FFF;
+    font-size: 13px;
+}
+
+.type-chart {
+    width: 25px;
+    height: 25px;
+    background-color: #2A2A2A;
+    border-radius: 50%;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+
+.container-header-options-bottom-left {
+    display: flex;
+    align-items: center;
+}
+
+.btn-time-chart {
+    width: 30px;
+    height: 25px;
+    background-color: #2A2A2A;
+    border-radius: 7px;
+    margin-left: 5px;
+    font-size: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #FFF;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+
+.btn-time-chart:hover{
+    background: #FFF;
+    color: #2A2A2A;
+    transition: 1s;
+}
+
+.container-header-options-bottom-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
 }

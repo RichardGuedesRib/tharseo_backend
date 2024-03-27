@@ -28,8 +28,8 @@ export default function ChartConstructor({data}) {
       options={options}
       series={candles}
       type="candlestick"
-      width={640}
-      height={480}
+      width={730}
+      height={330}
     />
   );
 }
