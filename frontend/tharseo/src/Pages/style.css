@@ -43,6 +43,9 @@ body {
     height: 70px;
     border-radius: 20px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -85,7 +88,7 @@ body {
 .button-asset {
     background-color: #000000d0;
     border-radius: 20px;
-    width: 80px;
+    width: 125px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -93,6 +96,10 @@ body {
     cursor: pointer;
 
 
+}
+.button-asset:hover{
+    background-color: #2A2A2A;
+    transition: 1s;
 }
 
 .icon-asset-btn {
@@ -112,15 +119,26 @@ body {
 .select-asset-btn {
     color: #FFF;
     font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .type-chart {
-    width: 25px;
-    height: 25px;
-    background-color: #2A2A2A;
-    border-radius: 50%;
+    width: 40px;
+    height: 35px;
+    border-radius: 10px;
     margin-left: 20px;
     cursor: pointer;
+    color: #FFF;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.type-chart:hover{
+    background-color: #2A2A2A;
+    transition: 1s;
 }
 
 
