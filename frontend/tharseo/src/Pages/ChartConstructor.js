@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
 import ApexChart from "react-apexcharts";
-import useWebSocket from "react-use-websocket";
 
-export default function ChartConstructor({data}) {
- 
- 
- 
+export default function ChartConstructor({ data }) {
   const options = {
     xaxis: {
       type: "datetime",
@@ -14,8 +9,6 @@ export default function ChartConstructor({data}) {
       tooltip: true,
     },
   };
-
-  
 
   const candles = [
     {

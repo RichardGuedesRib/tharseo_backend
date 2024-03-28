@@ -4,6 +4,7 @@ import ChartConstructor from "./ChartConstructor";
 
 function Chart({ data }) {
   return (
+    
     <div className="app-chart">
       <div className="container-header-data">
         <div className="chartData">
