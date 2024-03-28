@@ -195,11 +195,7 @@ body {
     flex-direction: column;
 }
 
-.container-dashboard-right {
-    border: 1px solid blue;
-    height: 100%;
-    width: 100%
-}
+
 
 .container-title-menubar {
     display: flex;
@@ -278,11 +274,37 @@ body {
 
 }
 
-.link-button-menubar{
+.link-button-menubar {
     text-decoration: none;
     background-color: transparent;
     color: #EAECEF;
     width: 100%;
     height: 100%;
     display: flex;
+}
+
+.container-dashboard-right {
+    border: 1px solid blue;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 25px;
+}
+
+.container-dashboard-right-top {
+    border: 1px solid red;
+    height: 7%;
+}
+
+.container-dashboard-right-middle {
+    border: 1px solid blue;
+    height: 65%;
+}
+
+.container-dashboard-right-bottom {
+    border: 1px solid yellow;
+    height: 20%;
+
 }

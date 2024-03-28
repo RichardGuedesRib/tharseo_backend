@@ -1,34 +1,38 @@
-import "./style.css";
 import React from "react";
 import ChartConstructor from "./ChartConstructor";
 
 function Chart({ data }) {
   return (
-    
     <div className="app-chart">
       <div className="container-header-data">
         <div className="chartData">
-          <div className="chart-icon-data"><span class="material-symbols-outlined" style={{fontSize:35}}>
-payments
-</span></div>
+          <div className="chart-icon-data">
+            <span class="material-symbols-outlined" style={{ fontSize: 35 }}>
+              payments
+            </span>
+          </div>
           <div className="chart-item-data">
             <span className="title-data">Valor Total</span>
             <span className="value-data">$ 87.743</span>
           </div>
         </div>
         <div className="chartData">
-          <div className="chart-icon-data"><span class="material-symbols-outlined" style={{fontSize:35}}>
-monetization_on
-</span></div>
+          <div className="chart-icon-data">
+            <span class="material-symbols-outlined" style={{ fontSize: 35 }}>
+              monetization_on
+            </span>
+          </div>
           <div className="chart-item-data">
             <span className="title-data">Profit</span>
             <span className="value-data">$ 8.743</span>
           </div>
         </div>
         <div className="chartData">
-          <div className="chart-icon-data"><span class="material-symbols-outlined" style={{fontSize:35}}>
-finance_mode
-</span></div>
+          <div className="chart-icon-data">
+            <span class="material-symbols-outlined" style={{ fontSize: 35 }}>
+              finance_mode
+            </span>
+          </div>
           <div className="chart-item-data">
             <span className="title-data">Profit</span>
             <span className="value-data">+12.56%</span>
@@ -49,7 +53,7 @@ finance_mode
               </span>
             </div>
             <div className="type-chart">
-              <span class="material-symbols-outlined" style={{ fontSize: 40}}>
+              <span class="material-symbols-outlined" style={{ fontSize: 40 }}>
                 candlestick_chart
               </span>
             </div>

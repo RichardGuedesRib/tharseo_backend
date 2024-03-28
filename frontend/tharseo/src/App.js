@@ -1,7 +1,7 @@
-import "./App.css";
+import "./assets/css/App.css";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import Chart from "./Pages/Chart";
+import Chart from "./Components/Chart";
 import OrdersSetup from "./Pages/OrdersSetup";
 import Accountinfo from "./Pages/AccountInfo";
 import Home from "./Pages/Home";
@@ -75,7 +75,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home chart={data} />} />
           <Route path="/chart" element={<Chart data={data} />} />
           <Route path="/accountinfo" element={<Accountinfo user={user} />} />
           <Route path="/orderssetup" element={<OrdersSetup />} />
