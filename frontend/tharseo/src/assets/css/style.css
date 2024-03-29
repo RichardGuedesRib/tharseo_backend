@@ -1,6 +1,5 @@
 body {
-    background: rgb(9, 27, 48);
-    background: radial-gradient(circle, rgba(9, 27, 48, 1) 0%, rgba(8, 8, 8, 1) 100%);
+    background-color: #FFF;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -28,12 +27,13 @@ body {
     justify-content: space-between;
     height: 550px;
     width: 700px;
-    background-color: rgba(21, 21, 21, .7);
+    background-color: rgba(21, 21, 21, .5);
     backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 40px;
 
 }
+
 
 .chartData {
     color: #FFF;
@@ -180,15 +180,15 @@ body {
 }
 
 .container-dashboard {
-    border: 1px solid white;
-    width: 95vw;
+    width: 80vw;
     height: 95vh;
     display: flex;
     padding-top: 50px;
+    background: rgb(9, 27, 48);
+    background: radial-gradient(circle, rgba(11, 42, 75, 1) 0%, rgba(8, 8, 8, 1) 100%);
 }
 
 .container-dashboard-left {
-    border: 1px solid red;
     height: 100%;
     width: 20%;
     display: flex;
@@ -284,27 +284,216 @@ body {
 }
 
 .container-dashboard-right {
-    border: 1px solid blue;
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-left: 25px;
+    padding-right: 40px;
 }
 
 .container-dashboard-right-top {
-    border: 1px solid red;
     height: 7%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
 }
 
 .container-dashboard-right-middle {
-    border: 1px solid blue;
     height: 65%;
+    display: flex;
+    justify-content: space-between;
+
 }
 
 .container-dashboard-right-bottom {
-    border: 1px solid yellow;
-    height: 20%;
 
+    width: 97%;
+    background-color: rgba(21, 21, 21, .5);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 20px;
+    color: #EAECEF;
+    font-size: 1.2rem;
+    height: 80%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.container-dashboard-right-middle {
+    display: flex;
+
+}
+
+.menu-wallet {
+    width: 30%;
+    background-color: rgba(21, 21, 21, .5);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 20px;
+    color: #EAECEF;
+    font-size: 1.2rem;
+}
+
+.container-title-menu-wallet {
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.container-assets-wallet {
+    height: 83%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: none;
+}
+
+.item-asset-wallet {
+    color: #EAECEF;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.item-asset-wallet:hover {
+    background-color: #041a31;
+    transition: .5s;
+}
+
+.item-asset-wallet-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-asset-wallet-top-left {
+    width: 60%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.icon-asset-item {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.percent-asset-item {
+    font-size: 15px;
+}
+
+.item-asset-wallet-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+}
+
+.btn-view-all {
+    width: 60%;
+    height: 100%;
+    background-color: #2A2A2A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.btn-view-all:hover {
+    background-color: #006BFA;
+    transition: .5s;
+}
+
+.container-dashboard-right-top-left {
+    display: flex;
+    color: #EAECEF;
+    font-size: 1.5rem;
+}
+
+.container-dashboard-right-top-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+    color: #EAECEF;
+    font-size: 1.5rem;
+    font-weight: 300;
+
+}
+
+.icon-notification-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-notification-header:hover {
+    color: #006BFA;
+    transition: .5s;
+}
+
+.avatar-header-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.text-name-user:hover {
+    cursor: pointer;
+    color: #006BFA;
+    transition: .5s;
+}
+
+
+
+.label-active-trades {
+    font-weight: 300;
+}
+
+.title-active-trades {
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.container-dashboard-right-bottom-middle {
+    width: 100%;
+    border: 1px solid #FFF;
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-active-trades {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-active-trades {
+    display: flex;
+    justify-content: space-between;
 }

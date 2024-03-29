@@ -1,25 +1,24 @@
 body {
-  background: rgb(9,27,48);
-background: radial-gradient(circle, rgba(9,27,48,1) 0%, rgba(8,8,8,1) 100%);
+  background: #FFF;
 }
 
-.App{
+.App {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+background-color: #080808;
 }
 
-.container{
-  border: 1px solid white;
-  border-radius: 1rem;
+.container {
+   border-radius: 1rem;
   width: 300px;
   height: 300px;
   display: flex;
   flex-direction: column;
 }
 
-.container-menu{
+.container-menu {
   height: 100%;
   width: 100%;
   display: flex;
@@ -28,7 +27,7 @@ background: radial-gradient(circle, rgba(9,27,48,1) 0%, rgba(8,8,8,1) 100%);
   justify-content: center;
 }
 
-.btn{
+.btn {
   width: 100px;
   color: #FFF;
   text-decoration: none;
