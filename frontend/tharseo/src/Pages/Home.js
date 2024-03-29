@@ -5,8 +5,6 @@ import Menubar from "../Components/menubar.jsx";
 import Chart from "../Components/Chart.jsx";
 
 import Itemasset from "../Components/Itemasset.jsx";
-import Rowtableactivetrades from "../Components/Rowtableactivestrade.jsx";
-import Icon from "react-crypto-icons";
 import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 
 const testetable = [
@@ -17,7 +15,7 @@ const testetable = [
     balance: "1.56",
     value: "34345",
     performance: "+54",
-    trade: "Trade"
+    trade: "Trade",
   },
   {
     symbol: "ada",
@@ -26,7 +24,7 @@ const testetable = [
     balance: "1.56",
     value: "34345",
     performance: "+54",
-    trade: "Trade"
+    trade: "Trade",
   },
   {
     symbol: "sol",
@@ -35,9 +33,9 @@ const testetable = [
     balance: "1.56",
     value: "34345",
     performance: "+54",
-    trade: "Trade"
-  }
-]
+    trade: "Trade",
+  },
+];
 
 function Home({ chart }) {
   return (
@@ -106,7 +104,6 @@ function Home({ chart }) {
                   quantity={"25"}
                   percent="55%"
                 />
-                {/* <Itemasset symbol="ftm" name="Binance" quantity={"25"} percent="55%"/> */}
               </section>
               <section className="container-button">
                 <span className="btn-view-all" id="btnviewall">
@@ -121,7 +118,7 @@ function Home({ chart }) {
               <span className="title-active-trades">Ativar Trade</span>
             </section>
             <section className="container-dashboard-right-bottom-middle">
-             <Tableactivetrade table={testetable}/>
+              <Tableactivetrade table={testetable} />
             </section>
             <section className="register-active-trades">
               <aside className="item-active-trades"></aside>
