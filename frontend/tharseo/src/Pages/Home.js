@@ -5,7 +5,39 @@ import Menubar from "../Components/menubar.jsx";
 import Chart from "../Components/Chart.jsx";
 
 import Itemasset from "../Components/Itemasset.jsx";
+import Rowtableactivetrades from "../Components/Rowtableactivestrade.jsx";
 import Icon from "react-crypto-icons";
+import Tableactivetrade from "../Components/Tableactivetrade.jsx";
+
+const testetable = [
+  {
+    symbol: "btc",
+    name: "Bitcoin",
+    value: "1000",
+    balance: "1.56",
+    value: "34345",
+    performance: "+54",
+    trade: "Trade"
+  },
+  {
+    symbol: "ada",
+    name: "Cardano",
+    value: "1000",
+    balance: "1.56",
+    value: "34345",
+    performance: "+54",
+    trade: "Trade"
+  },
+  {
+    symbol: "sol",
+    name: "Solana",
+    value: "1000",
+    balance: "1.56",
+    value: "34345",
+    performance: "+54",
+    trade: "Trade"
+  }
+]
 
 function Home({ chart }) {
   return (
@@ -85,43 +117,14 @@ function Home({ chart }) {
             <Chart data={chart} />
           </aside>
           <aside className="container-dashboard-right-bottom">
-            
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">Ativar Trade</span>
             </section>
             <section className="container-dashboard-right-bottom-middle">
-            <span className="label-active-trades">
-                 Symbol
-                </span>
-              <span className="label-active-trades">Nome</span>
-              <span className="label-active-trades">Saldo</span>
-              <span className="label-active-trades">Valor</span>
-              <span className="label-active-trades">Performance</span>
-              <span className="label-active-trades">Trade</span>
+             <Tableactivetrade table={testetable}/>
             </section>
             <section className="register-active-trades">
-              <aside className="item-active-trades">
-                <span className="label-active-trades">
-                  {" "}
-                  <Icon name="btc" size={35} />
-                </span>
-                <span className="label-active-trades">Nome</span>
-                <span className="label-active-trades">Saldo</span>
-                <span className="label-active-trades">Valor</span>
-                <span className="label-active-trades">Performance</span>
-                <span className="label-active-trades">Trade</span>
-              </aside>
-              <aside className="item-active-trades">
-                <span className="label-active-trades">
-                  {" "}
-                  <Icon name="btc" size={35} />
-                </span>
-                <span className="label-active-trades">Nome</span>
-                <span className="label-active-trades">Saldo</span>
-                <span className="label-active-trades">Valor</span>
-                <span className="label-active-trades">Performance</span>
-                <span className="label-active-trades">Trade</span>
-              </aside>
+              <aside className="item-active-trades"></aside>
             </section>
           </aside>
         </aside>
