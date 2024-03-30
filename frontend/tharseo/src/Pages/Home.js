@@ -10,6 +10,7 @@ import Menuwallet from "../Components/Menuwallet.jsx";
 
 function Home({ chart, user, addressServer }) {
   const wallet = user.wallet;
+  
   const testetable = [
     {
       symbol: "btc",
@@ -40,27 +41,8 @@ function Home({ chart, user, addressServer }) {
     },
   ];
   const [limitAsset, setLimitAsset] = useState(5);
-  const [assetsPrice, setAssetsPrice] = useState([]);
+ 
 
-  useEffect(() => {
-    const getPrices = async () => {
-      try {
-        const addressUrl = addressServer + "/tharseo/getprices";
-        console.log(`Request in: ${addressUrl}`);
-        const res = await fetch(addressUrl);
-
-        if (!res.ok) {
-          throw new Error("Error when get assets price");
-        }
-        const pricesData = await res.json();
-        setAssetsPrice(pricesData);
-              } catch (error) {
-        console.error("Error Get Price Resquest", error);
-      }
-    };
-
-    getPrices();
-  }, []);
 
   return (
     <main className="app-dashboard">
@@ -96,7 +78,7 @@ function Home({ chart, user, addressServer }) {
               <section className="container-title-menu-wallet">
                 <span className="title-menu-wallet">Ativos em Carteira</span>
               </section>
-              <Menuwallet wallet={wallet} limit={limitAsset} assetsPrice={assetsPrice} />
+              <Menuwallet wallet={wallet} limit={limitAsset} />
 
               <section className="container-button">
                 <span

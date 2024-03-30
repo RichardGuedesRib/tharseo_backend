@@ -14,8 +14,8 @@ export default function Itemasset({ symbol, name, quantity, value, percent }) {
         <span className="quantity-asset-item">{quantity}</span>
       </section>
       <section className="item-asset-wallet-bottom">
-        <span>$ {value}</span>
-        <span className="percent-asset-item">{percent}</span>
+        <span className="value-asset-item">$ {value}</span>
+        <span className="percent-asset-item">{percent}%</span>
       </section>
     </aside>
   );

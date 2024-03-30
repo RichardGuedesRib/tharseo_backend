@@ -1,14 +1,18 @@
 package com.fatec.dsm.tharseo.external;
 
 import com.fatec.dsm.tharseo.config.Stage;
-import com.fatec.dsm.tharseo.models.Asset;
-import com.fatec.dsm.tharseo.models.AssetsPrices;
+import com.fatec.dsm.tharseo.models.AssetPrice;
+import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.Transaction;
 import com.fatec.dsm.tharseo.models.User;
+import com.fatec.dsm.tharseo.services.AssetService;
+import com.fatec.dsm.tharseo.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +26,12 @@ public class BinanceAPI {
     private final String addressServer = "https://testnet.binance.vision";
     private final String apiKey = System.getenv("BINANCE_API_KEY");
     private final String apiSecret = System.getenv("BINANCE_API_SECRET");
+
+    @Autowired
+    AssetService assetService;
+
+    @Autowired
+    UserService userService;
 
 
     public StringBuilder testConnection() {
@@ -91,14 +101,14 @@ public class BinanceAPI {
         }
     }
 
-    public List<Asset> getAssetsByUser(User user) {
-        List<Asset> listAssets = new ArrayList<>();
+    public List<AssetsUser> getAssetsByUser(User user) {
+        List<AssetsUser> listAssets = new ArrayList<>();
 
         StringBuilder assetsString = getBalanceAssets(user);
         JsonArray assetsJsonArray = JsonParser.parseString(assetsString.toString()).getAsJsonArray();
         for (int i = 0; i < assetsJsonArray.size(); i++) {
             JsonObject jsonObject = assetsJsonArray.get(i).getAsJsonObject();
-            Asset asset = new Asset();
+            AssetsUser asset = new AssetsUser();
             asset.setAcronym(jsonObject.get("asset").toString().replace("\"", ""));
             asset.setName(jsonObject.get("asset").toString().replace("\"", ""));
             asset.setQuantity(Double.parseDouble(jsonObject.get("free").toString().replace("\"", "")));
@@ -162,8 +172,47 @@ public class BinanceAPI {
         }
     }
 
-    public List<AssetsPrices> getUpdatePrices() {
-        List<AssetsPrices> prices = new ArrayList<>();
+    public User updateAssetsUser(User user) {
+        List<AssetsUser> assetsUser = user.getWallet();
+        List<AssetsUser> assets = getAssetsByUser(user);
+
+        List<AssetsUser> formatedAssetsBinance = assets.stream().map(asset -> {
+            asset.setAcronym(asset.getAcronym().toUpperCase() + "USDT");
+            asset.setName(asset.getName().toUpperCase() + "USDT");
+            return asset;
+        }).collect(Collectors.toList());
+
+        for (AssetsUser el : formatedAssetsBinance) {
+            boolean exists = false;
+            for (AssetsUser eluser : assetsUser) {
+                if (el.getAcronym().equals(eluser.getAcronym())) {
+                    eluser.setQuantity(el.getQuantity());
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                assetService.insertAsset(el);
+                user.addAsset(el);
+            }
+        }
+
+        for (AssetsUser el : assetsUser) {
+            for (AssetPrice price : Stage.getListPrices()) {
+                if (el.getAcronym().equals(price.getSymbol())) {
+                    el.setPrice(price.getPrice() * el.getQuantity());
+                    break;
+                }
+            }
+        }
+
+        userService.insertOne(user);
+        return user;
+    }
+
+    @Scheduled(cron = "*/10")
+    public List<AssetPrice> getUpdatePrices() {
+        List<AssetPrice> prices = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         String url = "/api/v3/ticker/price";
         HashMap<String, String> parameters = new HashMap<String, String>();
@@ -173,17 +222,18 @@ public class BinanceAPI {
             JsonArray pricesArrayJson = JsonParser.parseString(sb.toString()).getAsJsonArray();
             for (int i = 0; i < pricesArrayJson.size(); i++) {
                 JsonObject priceJson = pricesArrayJson.get(i).getAsJsonObject();
-                AssetsPrices assetPrice = new AssetsPrices();
+                AssetPrice assetPrice = new AssetPrice();
                 assetPrice.setSymbol(priceJson.get("symbol").toString().replace("\"", ""));
                 assetPrice.setPrice(Double.parseDouble(priceJson.get("price").toString().replace("\"", "")));
                 prices.add(assetPrice);
             }
 
-            List<AssetsPrices> pricesFilter = prices.stream()
+            List<AssetPrice> pricesFilter = prices.stream()
                     .filter(asset -> asset.getSymbol().endsWith("USDT"))
                     .collect(Collectors.toList());
 
             Stage.setListPrices(pricesFilter);
+            System.out.println(">>>PRICES UPDATED<<<");
 
 
             return Stage.getListPrices();
@@ -192,4 +242,5 @@ public class BinanceAPI {
             return Stage.getListPrices();
         }
     }
+
 }

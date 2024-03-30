@@ -1,17 +1,13 @@
 package com.fatec.dsm.tharseo.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AssetsPrices {
-
+public class AssetPrice {
     private String symbol;
     private Double price;
 
-    public AssetsPrices() {
+    public AssetPrice() {
     }
 
-    public AssetsPrices(String symbol, Double price) {
+    public AssetPrice(String symbol, Double price) {
         this.symbol = symbol;
         this.price = price;
     }

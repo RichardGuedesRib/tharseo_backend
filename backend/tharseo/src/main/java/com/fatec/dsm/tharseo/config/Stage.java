@@ -1,14 +1,14 @@
 package com.fatec.dsm.tharseo.config;
 
-import com.fatec.dsm.tharseo.models.AssetsPrices;
-import com.fatec.dsm.tharseo.models.User;
+import com.fatec.dsm.tharseo.models.AssetPrice;
+import com.fatec.dsm.tharseo.models.AssetsUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Stage {
     private static Double dollarNow;
-    private static List<AssetsPrices> listPrices = new ArrayList<>();
+    private static List<AssetPrice> listPrices = new ArrayList<>();
 
     public static Double getDollarNow() {
         return dollarNow;
@@ -18,11 +18,11 @@ public class Stage {
         Stage.dollarNow = dollarNow;
     }
 
-    public static List<AssetsPrices> getListPrices() {
+    public static List<AssetPrice> getListPrices() {
         return listPrices;
     }
 
-    public static void setListPrices(List<AssetsPrices> listPrices) {
+    public static void setListPrices(List<AssetPrice> listPrices) {
         Stage.listPrices = listPrices;
     }
 }

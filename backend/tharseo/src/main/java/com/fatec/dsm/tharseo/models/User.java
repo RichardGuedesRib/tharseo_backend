@@ -23,7 +23,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     @OneToMany(mappedBy = "user")
-    private List<Asset> wallet;
+    private List<AssetsUser> wallet;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Transaction> transactions = new ArrayList<>();
     private String apiKey;
@@ -94,11 +94,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<Asset> getWallet() {
+    public List<AssetsUser> getWallet() {
         return wallet;
     }
 
-    public void setWallet(List<Asset> wallet) {
+    public void setWallet(List<AssetsUser> wallet) {
         this.wallet = wallet;
     }
 
@@ -118,7 +118,7 @@ public class User implements Serializable {
         this.transactions = transactions;
     }
 
-    public void addAsset(Asset asset){
+    public void addAsset(AssetsUser asset){
         this.wallet.add(asset);
     }
     public void addTransaction(Transaction transaction) {this.transactions.add(transaction);}

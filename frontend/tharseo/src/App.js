@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch("http://localhost:8080/users/1");
+        const res = await fetch("http://localhost:8080/tharseo/updatedatauser/1");
         if (!res.ok) {
           throw new Error("Error when get user");
         }
