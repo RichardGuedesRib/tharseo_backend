@@ -1,16 +1,12 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
-
 import Menubar from "../Components/menubar.jsx";
 import Chart from "../Components/Chart.jsx";
-
-import Itemasset from "../Components/Itemasset.jsx";
 import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
 
 function Home({ chart, user, addressServer }) {
   const wallet = user.wallet;
-  
   const testetable = [
     {
       symbol: "btc",
@@ -41,8 +37,28 @@ function Home({ chart, user, addressServer }) {
     },
   ];
   const [limitAsset, setLimitAsset] = useState(5);
- 
+  const btnIsVisible = document.getElementById("icon-visible");
 
+  let visibleBalance = false;
+
+  const showBalance = () => {
+    const balance = document.getElementById("balance-text");
+    const iconEye = document.getElementById("icon-visible");
+    const usdt = wallet.find((item) => item.acronym === "USDTUSDT");
+    const balanceUsdt = usdt.quantity.toFixed(0);
+    if (visibleBalance === true) {
+      balance.innerText = "$ -----";
+      iconEye.innerText = "visibility_off";
+      visibleBalance = false;
+    } else {
+      balance.innerText = `$ ${balanceUsdt}`;
+      visibleBalance = true;
+      iconEye.innerText = "visibility";
+    }
+  };
+  if (btnIsVisible) {
+    btnIsVisible.addEventListener("click", showBalance);
+  }
 
   return (
     <main className="app-dashboard">
@@ -54,6 +70,21 @@ function Home({ chart, user, addressServer }) {
               <span className="text-header-welcome">Bem Vindo, João</span>
             </section>
             <section className="container-dashboard-right-top-right">
+              <section className="container-balance-visible">
+                <span className="icon-visible-balance">
+                  <span
+                    class="material-symbols-outlined"
+                    id="icon-visible"
+                    style={{ fontSize: 20 }}
+                  >
+                    visibility_off
+                  </span>
+                </span>
+                <span className="text-balance" id="balance-text">
+                  $ -----
+                </span>
+              </section>
+
               <span className="icon-notification-header">
                 <span
                   class="material-symbols-outlined"
