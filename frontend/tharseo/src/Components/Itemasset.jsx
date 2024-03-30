@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from "react-crypto-icons";
 
-export default function Itemasset({ symbol, name, quantity, percent }) {
+export default function Itemasset({ symbol, name, quantity, value, percent }) {
   return (
     <aside className="item-asset-wallet">
       <section className="item-asset-wallet-top">
@@ -14,7 +14,7 @@ export default function Itemasset({ symbol, name, quantity, percent }) {
         <span className="quantity-asset-item">{quantity}</span>
       </section>
       <section className="item-asset-wallet-bottom">
-        <span>------------------------</span>
+        <span>$ {value}</span>
         <span className="percent-asset-item">{percent}</span>
       </section>
     </aside>

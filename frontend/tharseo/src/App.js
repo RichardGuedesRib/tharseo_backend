@@ -1,6 +1,6 @@
 import "./assets/css/App.css";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Chart from "./Components/Chart";
 import OrdersSetup from "./Pages/OrdersSetup";
 import Accountinfo from "./Pages/AccountInfo";
@@ -13,6 +13,10 @@ function App() {
   const [symbol, setSymbol] = useState("BTCUSDT");
   const [interval, setInterval] = useState("1m");
 
+  const [addressServerTharseo, setAddressServerTharseo] = useState(
+    "http://localhost:8080"
+  );
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -23,6 +27,7 @@ function App() {
         const userData = await res.json();
         setUser(userData);
         console.log("Return by Variable: ", userData);
+
         return user;
       } catch (error) {
         console.error("Error User Resquest", error);
@@ -75,7 +80,17 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Home chart={data} />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <Home
+                chart={data}
+                user={user}
+                addressServer={addressServerTharseo}
+              />
+            }
+          />
           <Route path="/chart" element={<Chart data={data} />} />
           <Route path="/accountinfo" element={<Accountinfo user={user} />} />
           <Route path="/orderssetup" element={<OrdersSetup />} />

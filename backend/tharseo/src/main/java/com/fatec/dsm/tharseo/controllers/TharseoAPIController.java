@@ -1,7 +1,9 @@
 package com.fatec.dsm.tharseo.controllers;
 
+import com.fatec.dsm.tharseo.config.Stage;
 import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.AssetsPrices;
 import com.fatec.dsm.tharseo.models.Transaction;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
@@ -17,6 +19,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/tharseo")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TharseoAPIController {
 
 
@@ -125,6 +128,13 @@ public class TharseoAPIController {
         userService.insertOne(user);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(listTransactions);
+    }
+
+    @GetMapping(value = "/getprices")
+    public ResponseEntity<?> getPrices(){
+//       List<AssetsPrices> prices = Stage.getListPrices();
+       List<AssetsPrices> prices = binanceAPI.getUpdatePrices();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(prices);
     }
 
 

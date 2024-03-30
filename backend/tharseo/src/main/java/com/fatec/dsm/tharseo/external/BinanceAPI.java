@@ -1,6 +1,8 @@
 package com.fatec.dsm.tharseo.external;
 
+import com.fatec.dsm.tharseo.config.Stage;
 import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.AssetsPrices;
 import com.fatec.dsm.tharseo.models.Transaction;
 import com.fatec.dsm.tharseo.models.User;
 import com.google.gson.Gson;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BinanceAPI {
@@ -72,7 +75,6 @@ public class BinanceAPI {
         HashMap<String, String> parameters = new HashMap<String, String>();
         StringBuilder sb = new StringBuilder();
         try {
-//            BinanceRequests binanceRequests = new BinanceRequests(addressServer, apiKey, apiSecret);
             BinanceRequests binanceRequests = new BinanceRequests(addressServer);
 
             sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/account", "GET", apiKey, apiSecret);
@@ -116,7 +118,6 @@ public class BinanceAPI {
             parameters.put("side", side);
             parameters.put("type", type);
             parameters.put("quantity", quantity);
-//            parameters.put("price", price);
             BinanceRequests binanceRequests = new BinanceRequests(addressServer);
             sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/order", "POST", apiKey, apiSecret);
             return sb;
@@ -132,13 +133,13 @@ public class BinanceAPI {
     public List<Transaction> getUserTransations(User user, String acronym) {
         HashMap<String, String> parameters = new HashMap<>();
         List<Transaction> listTransactions = new ArrayList<>();
-        parameters.put("symbol",acronym);
+        parameters.put("symbol", acronym);
         StringBuilder sb = new StringBuilder();
         try {
             BinanceRequests binanceRequests = new BinanceRequests(addressServer);
             sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/allOrders", "GET", apiKey, apiSecret);
             JsonArray transactionsJsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
-            for(int i = 0; i < transactionsJsonArray.size(); i++){
+            for (int i = 0; i < transactionsJsonArray.size(); i++) {
                 JsonObject transactionJson = transactionsJsonArray.get(i).getAsJsonObject();
                 Transaction transaction = new Transaction();
                 transaction.setOrderId(Long.parseLong(transactionJson.get("orderId").toString().replace("\"", "")));
@@ -158,6 +159,37 @@ public class BinanceAPI {
         } catch (Exception e) {
             System.out.println("Transactions Request Error" + e);
             return null;
+        }
+    }
+
+    public List<AssetsPrices> getUpdatePrices() {
+        List<AssetsPrices> prices = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        String url = "/api/v3/ticker/price";
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        try {
+            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
+            sb = binanceRequests.sendPublicRequest(parameters, url, null, null);
+            JsonArray pricesArrayJson = JsonParser.parseString(sb.toString()).getAsJsonArray();
+            for (int i = 0; i < pricesArrayJson.size(); i++) {
+                JsonObject priceJson = pricesArrayJson.get(i).getAsJsonObject();
+                AssetsPrices assetPrice = new AssetsPrices();
+                assetPrice.setSymbol(priceJson.get("symbol").toString().replace("\"", ""));
+                assetPrice.setPrice(Double.parseDouble(priceJson.get("price").toString().replace("\"", "")));
+                prices.add(assetPrice);
+            }
+
+            List<AssetsPrices> pricesFilter = prices.stream()
+                    .filter(asset -> asset.getSymbol().endsWith("USDT"))
+                    .collect(Collectors.toList());
+
+            Stage.setListPrices(pricesFilter);
+
+
+            return Stage.getListPrices();
+        } catch (Exception e) {
+            sb.append(e);
+            return Stage.getListPrices();
         }
     }
 }

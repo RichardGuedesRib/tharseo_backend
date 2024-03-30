@@ -180,7 +180,7 @@ body {
 }
 
 .container-dashboard {
-    width: 80vw;
+    width: 72vw;
     height: 95vh;
     display: flex;
     padding-top: 50px;
@@ -230,7 +230,7 @@ body {
     color: #EAECEF;
     align-items: center;
     height: 60px;
-    width: 80%;
+    width: 85%;
     border-radius: 1rem;
     margin-bottom: 7px;
     font-weight: 300;
@@ -330,7 +330,7 @@ body {
 }
 
 .menu-wallet {
-    width: 30%;
+    width: 25%;
     background-color: rgba(21, 21, 21, .5);
     backdrop-filter: blur(20px);
     border-radius: 20px;
@@ -474,7 +474,7 @@ body {
 
 .label-active-trades {
     font-weight: 300;
-       text-align: center;
+    text-align: center;
     font-weight: 300;
     font-size: 1rem;
 }
@@ -486,13 +486,14 @@ body {
 
 .container-dashboard-right-bottom-middle {
     width: 100%;
-       display: flex;
+    display: flex;
     justify-content: space-between;
 }
 
 
 .table-actives-trades {
     width: 100%;
+    margin-top: 10px;
 }
 
 
@@ -548,3 +549,11 @@ body {
 
 
 }
+
+.show-more {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+
+/* #181A20 */
