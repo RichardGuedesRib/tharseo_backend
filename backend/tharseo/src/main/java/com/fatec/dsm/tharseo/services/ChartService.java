@@ -19,7 +19,7 @@ public class ChartService {
 
     public void insertOne(Kline kline) {
         List<Kline> klines = findAll();
-        if(klines.size() == 60){
+        if(klines.size() == 120){
             Kline first = klines.get(0);
             deleteKline(first);
             chartRepository.save(kline);

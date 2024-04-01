@@ -27,7 +27,7 @@ body {
     justify-content: space-between;
     height: 520px;
     width: 700px;
-    background-color: rgba(21, 21, 21, .5);
+    background-color: rgba(24, 26, 32, .8);
     backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 40px;
@@ -310,7 +310,7 @@ body {
 .container-dashboard-right-bottom {
 
     width: 97%;
-    background-color: rgba(21, 21, 21, .5);
+    background-color: rgba(24, 26, 32, .8);
     backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 20px;
@@ -331,7 +331,7 @@ body {
 
 .menu-wallet {
     width: 25%;
-    background-color: rgba(21, 21, 21, .5);
+    background-color: rgba(24, 26, 32, .8);
     backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 20px;

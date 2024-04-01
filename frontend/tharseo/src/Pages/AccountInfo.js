@@ -1,7 +1,16 @@
 import "./account-style.css";
-import React from "react";
+import React, { useEffect } from "react";
+import WebSocketComponent from "../Services/WebSocketComponent";
 
 function Accountinfo({ user }) {
+
+  useEffect(() => {
+  
+    
+  }, [])
+  
+  
+
   return (
     <div className="App">
       <div className="container-account">
@@ -29,7 +38,8 @@ function Accountinfo({ user }) {
         </div>
 
         <div className="container-transactions">
-          <h2> --- User Transactions ---</h2>
+          <WebSocketComponent />
+          {/* <h2> --- User Transactions ---</h2>
           {user.transactions &&
             user.transactions.map((transaction, index) => (
               <div className="item-transaction" key={index}>
@@ -42,7 +52,7 @@ function Accountinfo({ user }) {
                 <span>{transaction.typeTransaction}</span>
                 
               </div>
-            ))}
+            ))} */}
         </div>
       </div>
     </div>

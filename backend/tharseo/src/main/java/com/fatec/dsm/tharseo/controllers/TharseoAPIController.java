@@ -87,12 +87,12 @@ public class TharseoAPIController {
 
         CompletableFuture<Void> updatedTasks = CompletableFuture.runAsync(() -> {
             user.setTransactions(binanceAPI.getUserTransations(user, "BNBUSDT"));
-            System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
+//            System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
         });
 
         CompletableFuture<Void> updatedTasks2 = CompletableFuture.runAsync(() -> {
             binanceAPI.updateAssetsUser(user);
-            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
+//            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
         });
 
         CompletableFuture<Void> await = CompletableFuture.allOf(updatedTasks, updatedTasks2);

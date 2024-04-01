@@ -9,7 +9,7 @@ public class CreateKline {
         Kline kline = new Kline();
         kline.setSymbol(data.get("s").toString().replace("\"", ""));
         kline.setStartTime(data.get("t").toString().replace("\"", ""));
-        kline.setStartTime(data.get("T").toString().replace("\"", ""));
+        kline.setCloseTime(data.get("T").toString().replace("\"", ""));
         kline.setInterval(data.get("i").toString().replace("\"", ""));
         kline.setOpenPrice(data.get("o").toString().replace("\"", ""));
         kline.setClosePrice(data.get("c").toString().replace("\"", ""));

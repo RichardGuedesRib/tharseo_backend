@@ -5,7 +5,41 @@ import Chart from "../Components/Chart.jsx";
 import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
 
-function Home({ chart, user, addressServer }) {
+function Home({user, addressServer}) {
+  const [chartInfo, setChartInfo] = useState([]);
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      try {
+        const res = await fetch(addressServer + "/chart");
+
+        if (!res.ok) {
+          throw new Error("Error when get chart info");
+        }
+        const data = await res.json();
+        let chartCandles = [];
+        for (let i = 0; i < data.length; i++) {
+          const candleRequest = data[i];
+          const startTimeInMillis = parseInt(candleRequest.startTime);
+          const newCandle = {
+            x: new Date(startTimeInMillis),
+            y: [
+              parseFloat(candleRequest.openPrice),
+              parseFloat(candleRequest.highPrice),
+              parseFloat(candleRequest.lowPrice),
+              parseFloat(candleRequest.closePrice),
+            ],
+          };
+          chartCandles.push(newCandle);
+        }
+        setChartInfo(chartCandles);
+      } catch (error) {
+        console.error("Error Chart Resquest", error);
+      }
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   const wallet = user.wallet;
   const testetable = [
     {
@@ -123,7 +157,7 @@ function Home({ chart, user, addressServer }) {
                 </span>
               </section>
             </aside>
-            <Chart data={chart} />
+            <Chart data={chartInfo} />
           </aside>
           <aside className="container-dashboard-right-bottom">
             <section className="container-dashboard-right-bottom-top">
