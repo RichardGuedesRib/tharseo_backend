@@ -5,7 +5,7 @@ import Chart from "../Components/Chart.jsx";
 import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
 
-function Home({user, addressServer}) {
+function Home({ user, addressServer }) {
   const [chartInfo, setChartInfo] = useState([]);
 
   useEffect(() => {
@@ -98,6 +98,7 @@ function Home({user, addressServer}) {
     <main className="app-dashboard">
       <section className="container-dashboard">
         <Menubar />
+
         <aside className="container-dashboard-right">
           <aside className="container-dashboard-right-top">
             <section className="container-dashboard-right-top-left">
@@ -138,6 +139,7 @@ function Home({user, addressServer}) {
               </span>
             </section>
           </aside>
+
           <aside className="container-dashboard-right-middle">
             <aside className="menu-wallet">
               <section className="container-title-menu-wallet">
@@ -157,8 +159,9 @@ function Home({user, addressServer}) {
                 </span>
               </section>
             </aside>
-            <Chart data={chartInfo} />
+            <Chart data={chartInfo} wallet={wallet} />
           </aside>
+
           <aside className="container-dashboard-right-bottom">
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">Ativar Trade</span>
@@ -166,9 +169,7 @@ function Home({user, addressServer}) {
             <section className="container-dashboard-right-bottom-middle">
               <Tableactivetrade table={testetable} />
             </section>
-            <section className="register-active-trades">
-              <aside className="item-active-trades"></aside>
-            </section>
+         
           </aside>
         </aside>
       </section>

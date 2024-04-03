@@ -44,15 +44,15 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<?> insertTransaction(@RequestBody Transaction transaction,
-                                               @RequestParam(value = "asset", required = true) Long idAsset,
+                                               @RequestParam(value = "asset", required = true) String acronymAsset,
                                                @RequestParam(value = "user", required = true) Long idUser) {
-        Asset asset = assetService.findById(idAsset);
+        Asset asset = assetService.findByAcronym(acronymAsset);
         User user = userService.findById(idUser);
         if (asset == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset informed in parameter does exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset informed in parameter does exist: " + acronymAsset);
         }
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User informed in parameter does exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User informed in parameter does exist: " + idUser);
         }
         transaction.setAsset(asset);
         transaction.setUser(user);
@@ -60,7 +60,7 @@ public class TransactionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Value is invalid");
         }
         if (!Validator.validateString(transaction.getTypeTransaction())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Type Transaction is invalid. Use Pay or Sell");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Type Transaction is invalid. Use BUY or SELL");
         }
         transactionService.insertTransaction(transaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(transaction);

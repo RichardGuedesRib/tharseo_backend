@@ -12,7 +12,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -120,7 +119,7 @@ public class BinanceAPI {
 
     }
 
-    public StringBuilder newOrder(User user, String acronym, String side, String type, String timeInForce, String quantity) {
+    public StringBuilder newOrderMarket(String acronym, String side, String type, String timeInForce, String quantity) {
         StringBuilder sb = new StringBuilder();
         try {
             HashMap<String, String> parameters = new HashMap<String, String>();
@@ -128,6 +127,28 @@ public class BinanceAPI {
             parameters.put("side", side);
             parameters.put("type", type);
             parameters.put("quantity", quantity);
+            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
+            sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/order", "POST", apiKey, apiSecret);
+            return sb;
+
+
+        } catch (Exception e) {
+            sb.append("Error in new order request! ");
+            sb.append(e);
+            return sb;
+        }
+    }
+
+    public StringBuilder newOrderLimit(String acronym, String side, String type, String timeInForce, String quantity, String price) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            HashMap<String, String> parameters = new HashMap<String, String>();
+            parameters.put("symbol", acronym);
+            parameters.put("side", side);
+            parameters.put("type", type);
+            parameters.put("timeInForce", timeInForce);
+            parameters.put("quantity", quantity);
+            parameters.put("price", price);
             BinanceRequests binanceRequests = new BinanceRequests(addressServer);
             sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/order", "POST", apiKey, apiSecret);
             return sb;
@@ -153,8 +174,8 @@ public class BinanceAPI {
                 JsonObject transactionJson = transactionsJsonArray.get(i).getAsJsonObject();
                 Transaction transaction = new Transaction();
                 transaction.setOrderId(Long.parseLong(transactionJson.get("orderId").toString().replace("\"", "")));
-                transaction.setOrigQty(Double.parseDouble(transactionJson.get("origQty").toString().replace("\"", "")));
-                transaction.setExecutedQty(Double.parseDouble(transactionJson.get("executedQty").toString().replace("\"", "")));
+                transaction.setOrigQty(transactionJson.get("origQty").toString().replace("\"", ""));
+                transaction.setExecutedQty(transactionJson.get("executedQty").toString().replace("\"", ""));
                 transaction.setSide(transactionJson.get("side").toString().replace("\"", ""));
                 transaction.setUser(user);
                 transaction.setPrice(Double.parseDouble(transactionJson.get("price").toString().replace("\"", "")));
@@ -210,37 +231,37 @@ public class BinanceAPI {
         return user;
     }
 
-    @Scheduled(cron = "*/10")
-    public List<AssetPrice> getUpdatePrices() {
-        List<AssetPrice> prices = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        String url = "/api/v3/ticker/price";
-        HashMap<String, String> parameters = new HashMap<String, String>();
-        try {
-            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
-            sb = binanceRequests.sendPublicRequest(parameters, url, null, null);
-            JsonArray pricesArrayJson = JsonParser.parseString(sb.toString()).getAsJsonArray();
-            for (int i = 0; i < pricesArrayJson.size(); i++) {
-                JsonObject priceJson = pricesArrayJson.get(i).getAsJsonObject();
-                AssetPrice assetPrice = new AssetPrice();
-                assetPrice.setSymbol(priceJson.get("symbol").toString().replace("\"", ""));
-                assetPrice.setPrice(Double.parseDouble(priceJson.get("price").toString().replace("\"", "")));
-                prices.add(assetPrice);
-            }
-
-            List<AssetPrice> pricesFilter = prices.stream()
-                    .filter(asset -> asset.getSymbol().endsWith("USDT"))
-                    .collect(Collectors.toList());
-
-            Stage.setListPrices(pricesFilter);
-            System.out.println(">>>PRICES UPDATED<<<");
-
-
-            return Stage.getListPrices();
-        } catch (Exception e) {
-            sb.append(e);
-            return Stage.getListPrices();
-        }
-    }
+//    @Scheduled(cron = "*/10")
+//    public List<AssetPrice> getUpdatePrices() {
+//        List<AssetPrice> prices = new ArrayList<>();
+//        StringBuilder sb = new StringBuilder();
+//        String url = "/api/v3/ticker/price";
+//        HashMap<String, String> parameters = new HashMap<String, String>();
+//        try {
+//            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
+//            sb = binanceRequests.sendPublicRequest(parameters, url, null, null);
+//            JsonArray pricesArrayJson = JsonParser.parseString(sb.toString()).getAsJsonArray();
+//            for (int i = 0; i < pricesArrayJson.size(); i++) {
+//                JsonObject priceJson = pricesArrayJson.get(i).getAsJsonObject();
+//                AssetPrice assetPrice = new AssetPrice();
+//                assetPrice.setSymbol(priceJson.get("symbol").toString().replace("\"", ""));
+//                assetPrice.setPrice(Double.parseDouble(priceJson.get("price").toString().replace("\"", "")));
+//                prices.add(assetPrice);
+//            }
+//
+//            List<AssetPrice> pricesFilter = prices.stream()
+//                    .filter(asset -> asset.getSymbol().endsWith("USDT"))
+//                    .collect(Collectors.toList());
+//
+//            Stage.setListPrices(pricesFilter);
+//            System.out.println(">>>PRICES UPDATED<<<");
+//
+//
+//            return Stage.getListPrices();
+//        } catch (Exception e) {
+//            sb.append(e);
+//            return Stage.getListPrices();
+//        }
+//    }
 
 }

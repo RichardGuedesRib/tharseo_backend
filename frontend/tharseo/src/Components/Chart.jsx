@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ChartConstructor from "./ChartConstructor";
 
-function Chart({ data }) {
+function Chart({ data, wallet }) {
+  const [assetSelected, setAssetSelected] = useState("BTCUSDT");
+  const [valueAsset, setValueAsset] = useState(null);
+  const [assetProfitValue, setAssetProfitValue] = useState(0.0);
+  const [assetProfitPercent, setAssetProfitPercent] = useState(0.0);
+
+  useEffect(() => {
+    const getValueAsset = () => {
+      if (wallet && wallet.length > 0) {
+        const item = wallet.find((item) => item.acronym === assetSelected);
+        if (item) {
+          setValueAsset(item.price ? item.price.toFixed(2) : 0.0);
+        } else {
+          setValueAsset(0.0);
+        }
+      } else {
+        setValueAsset(null);
+      }
+    };
+
+    getValueAsset();
+  }, [assetSelected, wallet]);
+
+  const btnSelectAsset = document.getElementById("btn-Select-asset");
+  if (btnSelectAsset) {
+    btnSelectAsset.addEventListener("click", () => {
+      setAssetSelected("ETHUSDT");
+    });
+  }
+
   return (
     <div className="app-chart">
       <div className="container-header-data">
@@ -13,7 +42,9 @@ function Chart({ data }) {
           </div>
           <div className="chart-item-data">
             <span className="title-data">Valor Total</span>
-            <span className="value-data">$ 87.743</span>
+            <span className="value-data">
+              $ {valueAsset === null ? "Carregando..." : valueAsset}
+            </span>
           </div>
         </div>
         <div className="chartData">
@@ -24,7 +55,7 @@ function Chart({ data }) {
           </div>
           <div className="chart-item-data">
             <span className="title-data">Profit</span>
-            <span className="value-data">$ 8.743</span>
+            <span className="value-data">$ {assetProfitValue}</span>
           </div>
         </div>
         <div className="chartData">
@@ -35,7 +66,7 @@ function Chart({ data }) {
           </div>
           <div className="chart-item-data">
             <span className="title-data">Profit</span>
-            <span className="value-data">+12.56%</span>
+            <span className="value-data">{assetProfitPercent}%</span>
           </div>
         </div>
       </div>
@@ -47,8 +78,8 @@ function Chart({ data }) {
           <div className="container-header-options-bottom-left">
             <div className="button-asset">
               <span className="icon-asset-btn"></span>
-              <span className="name-asset-btn">BTCUSDT</span>
-              <span className="select-asset-btn">
+              <span className="name-asset-btn">{assetSelected}</span>
+              <span className="select-asset-btn" id="btn-Select-asset">
                 <span class="material-symbols-outlined">expand_more</span>
               </span>
             </div>

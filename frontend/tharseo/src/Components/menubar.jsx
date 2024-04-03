@@ -9,7 +9,9 @@ export default function Menubar() {
       </section>
 
       <aside className="container-menubar-buttons">
+
         <section className="container-menubar-buttons-top">
+
           <article className="button-menubar">
             <Link to="/" className="link-button-menubar">
               <span className="icon-button-menubar">
@@ -25,8 +27,9 @@ export default function Menubar() {
               </span>
             </Link>
           </article>
+        
           <article className="button-menubar">
-            <Link to="/accountinfo" className="link-button-menubar">
+            <Link to="/trade" className="link-button-menubar">
               <span className="icon-button-menubar">
                 <span
                   class="material-symbols-outlined"
@@ -40,6 +43,7 @@ export default function Menubar() {
               </span>
             </Link>
           </article>
+        
           <article className="button-menubar">
             <Link to="chart" className="link-button-menubar">
               <span className="icon-button-menubar">
@@ -55,8 +59,9 @@ export default function Menubar() {
               </span>
             </Link>
           </article>
+        
           <article className="button-menubar">
-            <Link to="/orderssetup" className="link-button-menubar">
+            <Link to="/oldtransactions" className="link-button-menubar">
               <span className="icon-button-menubar">
                 <span
                   class="material-symbols-outlined"
@@ -70,6 +75,7 @@ export default function Menubar() {
               </span>
             </Link>
           </article>
+         
           <article className="button-menubar">
             <Link to="/" className="link-button-menubar">
               <span className="icon-button-menubar">
@@ -85,7 +91,8 @@ export default function Menubar() {
               </span>
             </Link>
           </article>
-          <article className="button-menubar">
+         
+         <article className="button-menubar">
             <Link to="/" className="link-button-menubar">
               <span className="icon-button-menubar">
                 <span
@@ -101,7 +108,9 @@ export default function Menubar() {
             </Link>
           </article>
         </section>
+      
         <section className="container-menubar-buttons-bottom">
+       
           <article className="button-menubar">
             <Link to="/" className="link-button-menubar">
               <span className="icon-button-menubar">
@@ -117,6 +126,7 @@ export default function Menubar() {
               </span>
             </Link>
           </article>
+       
         </section>
       </aside>
     </aside>

@@ -1,27 +1,21 @@
 package com.fatec.dsm.tharseo.controllers;
 
-import com.fatec.dsm.tharseo.config.Stage;
 import com.fatec.dsm.tharseo.external.BinanceAPI;
-import com.fatec.dsm.tharseo.models.AssetPrice;
-import com.fatec.dsm.tharseo.models.AssetsUser;
+import com.fatec.dsm.tharseo.models.Asset;
 import com.fatec.dsm.tharseo.models.Transaction;
+import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
+import com.fatec.dsm.tharseo.services.TharseoAPIService;
 import com.fatec.dsm.tharseo.services.TransactionService;
 import com.fatec.dsm.tharseo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/tharseo")
@@ -37,6 +31,9 @@ public class TharseoAPIController {
     AssetService assetService;
     @Autowired
     TransactionService transactionService;
+    @Autowired
+    TharseoAPIService tharseoAPIService;
+
 
     @GetMapping(value = "/testconnection")
     public ResponseEntity<?> testConnection() {
@@ -85,24 +82,23 @@ public class TharseoAPIController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User ID: " + id + " not found");
         }
 
-        CompletableFuture<Void> updatedTasks = CompletableFuture.runAsync(() -> {
-            user.setTransactions(binanceAPI.getUserTransations(user, "BNBUSDT"));
-//            System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
-        });
-
-        CompletableFuture<Void> updatedTasks2 = CompletableFuture.runAsync(() -> {
-            binanceAPI.updateAssetsUser(user);
-//            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
-        });
-
-        CompletableFuture<Void> await = CompletableFuture.allOf(updatedTasks, updatedTasks2);
+//        CompletableFuture<Void> updatedTasks = CompletableFuture.runAsync(() -> {
+//            user.setTransactions(binanceAPI.getUserTransations(user, "BTCUSDT"));
+////            System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
+//        });
+//
+//        CompletableFuture<Void> updatedTasks2 = CompletableFuture.runAsync(() -> {
+//            binanceAPI.updateAssetsUser(user);
+////            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
+//        });
+//
+//        CompletableFuture<Void> await = CompletableFuture.allOf(updatedTasks, updatedTasks2);
 
         try {
-            await.get();
+//            await.get();
 
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
 
@@ -130,20 +126,47 @@ public class TharseoAPIController {
 
 
     @PostMapping(value = "/newordermarket")
-    public ResponseEntity<?> neworder(@RequestParam(name = "user", required = true) Long id,
-                                      @RequestParam(name = "acronym", required = true) String acronym,
-                                      @RequestParam(name = "side", required = true) String side,
-                                      @RequestParam(name = "type", required = true) String type,
-                                      @RequestParam(name = "timeinforce", required = true) String timeInForce,
-                                      @RequestParam(name = "quantity", required = true) String quantity
+    public ResponseEntity<?> newOrderMarket(@RequestParam(name = "user", required = true) Long idUser,
+                                            @RequestParam(name = "acronym", required = true) String acronym,
+                                            @RequestParam(name = "side", required = true) String side,
+                                            @RequestParam(name = "timeinforce", required = true) String timeInForce,
+                                            @RequestParam(name = "quantity", required = true) String quantity
     ) {
 
-        User user = new User();
-        StringBuilder sb = new StringBuilder();
-        sb = binanceAPI.newOrder(user, acronym, side, type, timeInForce, quantity);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
+        User user = userService.findById(idUser);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
+        }
+        Asset asset = assetService.findByAcronym(acronym);
+        if (asset == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
+        }
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderMarket(user, asset, side, timeInForce, quantity);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
 
     }
+
+    @PostMapping(value = "/neworderlimit")
+    public ResponseEntity<?> newOrderLimit(@RequestParam(name = "user", required = true) Long idUser,
+                                           @RequestParam(name = "acronym", required = true) String acronym,
+                                           @RequestParam(name = "side", required = true) String side,
+                                           @RequestParam(name = "quantity", required = true) String quantity,
+                                           @RequestParam(name = "price", required = true) String price
+    ) {
+
+        User user = userService.findById(idUser);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
+        }
+        Asset asset = assetService.findByAcronym(acronym);
+        if (asset == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
+        }
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderLimit(user, asset, side, quantity, price);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
+
+    }
+
 
     @GetMapping(value = "/getusertransactions")
     public ResponseEntity<?> getUserTransactions(@RequestParam(name = "user", required = true) Long id,
@@ -169,15 +192,6 @@ public class TharseoAPIController {
         userService.insertOne(user);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(listTransactions);
-    }
-
-    @Scheduled
-    @GetMapping(value = "/getprices")
-    public ResponseEntity<?> getPrices() {
-//       List<AssetsPrices> prices = Stage.getListPrices();
-        List<AssetPrice> prices = binanceAPI.getUpdatePrices();
-        Stage.setListPrices(prices);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(prices);
     }
 
 

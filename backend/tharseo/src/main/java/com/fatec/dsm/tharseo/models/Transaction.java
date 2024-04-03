@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 
 @Entity
@@ -17,10 +16,9 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private Long orderId;
-    private Double origQty;
-    private Double executedQty;
+    private String origQty;
+    private String executedQty;
     private String side;
     @JsonIgnore
     @ManyToOne
@@ -29,9 +27,11 @@ public class Transaction implements Serializable {
     private Asset asset;
     private Double price;
     private Double stopPrice;
-    private LocalDateTime openDate;
+    private Long openDate;
     private String typeTransaction;
     private Boolean openTrade;
+    private String status;
+    private Long orderPairTrade;
     private Integer isActive;
 
     public Transaction() {
@@ -43,7 +43,6 @@ public class Transaction implements Serializable {
         this.user = user;
         this.asset = asset;
         this.price = price;
-        this.openDate = LocalDateTime.now();
         this.typeTransaction = typeTransaction;
         this.isActive = isActive;
     }
@@ -80,11 +79,11 @@ public class Transaction implements Serializable {
         this.price = price;
     }
 
-    public LocalDateTime getOpenDate() {
+    public Long getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(LocalDateTime openDate) {
+    public void setOpenDate(Long openDate) {
         this.openDate = openDate;
     }
 
@@ -112,19 +111,19 @@ public class Transaction implements Serializable {
         this.orderId = orderId;
     }
 
-    public Double getOrigQty() {
+    public String getOrigQty() {
         return origQty;
     }
 
-    public void setOrigQty(Double origQty) {
+    public void setOrigQty(String origQty) {
         this.origQty = origQty;
     }
 
-    public Double getExecutedQty() {
+    public String getExecutedQty() {
         return executedQty;
     }
 
-    public void setExecutedQty(Double executedQty) {
+    public void setExecutedQty(String executedQty) {
         this.executedQty = executedQty;
     }
 
@@ -150,5 +149,21 @@ public class Transaction implements Serializable {
 
     public void setOpenTrade(Boolean openTrade) {
         this.openTrade = openTrade;
+    }
+
+    public Long getOrderPairTrade() {
+        return orderPairTrade;
+    }
+
+    public void setOrderPairTrade(Long orderPairTrade) {
+        this.orderPairTrade = orderPairTrade;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
