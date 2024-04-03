@@ -45,7 +45,7 @@ export default function Menubar() {
           </article>
         
           <article className="button-menubar">
-            <Link to="chart" className="link-button-menubar">
+            <Link to="/opentrades" className="link-button-menubar">
               <span className="icon-button-menubar">
                 <span
                   class="material-symbols-outlined"

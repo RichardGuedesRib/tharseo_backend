@@ -7,6 +7,7 @@ import Accountinfo from "./Pages/AccountInfo";
 import Home from "./Pages/Home";
 import Trade from "./Pages/Trade";
 import OldTransactions from "./Pages/OldTransactions";
+import OpenTrades from "./Pages/OpenTrades";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -44,13 +45,24 @@ function App() {
             path="/"
             element={<Home user={user} addressServer={addressServerTharseo} />}
           />
-           <Route
+          <Route
             path="/trade"
             element={<Trade user={user} addressServer={addressServerTharseo} />}
           />
-           <Route
+          <Route
             path="/oldtransactions"
-            element={<OldTransactions user={user} addressServer={addressServerTharseo} />}
+            element={
+              <OldTransactions
+                user={user}
+                addressServer={addressServerTharseo}
+              />
+            }
+          />
+          <Route
+            path="/opentrades"
+            element={
+              <OpenTrades user={user} addressServer={addressServerTharseo} />
+            }
           />
           <Route path="/chart" element={<Chart />} />
           <Route path="/accountinfo" element={<Accountinfo user={user} />} />
