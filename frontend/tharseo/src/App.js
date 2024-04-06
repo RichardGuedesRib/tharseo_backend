@@ -6,7 +6,7 @@ import Home from "./Pages/Home";
 import Trade from "./Pages/Trade";
 import OldTransactions from "./Pages/OldTransactions";
 import OpenTrades from "./Pages/OpenTrades";
-import Teste from "./Pages/teste";
+import Config from "./Pages/Config";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -30,7 +30,6 @@ function App() {
   };
 
   useEffect(() => {
-   
     getUser();
   }, []);
 
@@ -43,7 +42,13 @@ function App() {
           <Route
             exact
             path="/"
-            element={<Home user={user} addressServer={addressServerTharseo} getUser={getUser}/>}
+            element={
+              <Home
+                user={user}
+                addressServer={addressServerTharseo}
+                getUser={getUser}
+              />
+            }
           />
           <Route
             path="/trade"
@@ -61,13 +66,19 @@ function App() {
           <Route
             path="/opentrades"
             element={
-              <OpenTrades user={user} addressServer={addressServerTharseo} />
+              <OpenTrades user={user} addressServer={addressServerTharseo} getUser={getUser} />
+            }
+          />
+          <Route
+            path="/config"
+            element={
+              <Config user={user} addressServer={addressServerTharseo} getUser={getUser} />
             }
           />
           <Route path="/chart" element={<Chart />} />
           <Route
-            path="/teste"
-            element={<Teste user={user} addressServer={addressServerTharseo} />}
+            path="/"
+            element={""}
           />
         </Routes>
       </div>

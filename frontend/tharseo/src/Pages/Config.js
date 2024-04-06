@@ -1,26 +1,29 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import Menubar from "../Components/menubar.jsx";
-import Tableopentrade from "../Components/Tableopentrade.jsx";
 
-function OpenTrades({ user, addressServer, getUser }) {
-  const [limitAsset, setLimitAsset] = useState(14);
-  const [openTransactions, setOpenTransactions] = useState([]);
-  const [userTransactions, setUserTransactions] = useState(user.transactions);
+function Config({ user, addressServer, getUser }) {
   const wallet = user.wallet;
-
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
 
-  useEffect(() => {
-    if (userTransactions && userTransactions.length > 0) {
-      const open = userTransactions.filter(
-        (item) => item.status === "Open"
-      );
-      setOpenTransactions(open);
-    }
-   
-  }, [userTransactions]);
+  // const updateAssetsExchange = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       addressServer + "/tharseo/updatedatauser/1"
+  //     );
+  //     if (!res.ok) {
+  //       throw new Error("Error when get user");
+  //     }
+  //     const userData = await res.json();
+  //     setUser(userData);
+  //     console.log("Return by Variable: ", userData);
+  //   } catch (error) {
+  //     console.error("Error User Resquest", error);
+  //   }
+  // };
+
+  useEffect(() => {}, []);
 
   const showBalance = () => {
     const balance = document.getElementById("balance-text");
@@ -39,13 +42,6 @@ function OpenTrades({ user, addressServer, getUser }) {
   };
   if (btnIsVisible) {
     btnIsVisible.addEventListener("click", showBalance);
-  }
-
-  function showMoreAssets() {
-    setLimitAsset((prevLimit) => prevLimit + 5);
-    document
-      .getElementsByClassName("table-trades")[0]
-      ?.classList.add("show-more");
   }
 
   return (
@@ -96,28 +92,15 @@ function OpenTrades({ user, addressServer, getUser }) {
 
           <aside className="container-trades">
             <section className="container-dashboard-right-bottom-top">
-              <span className="title-active-trades">
-                Trades Pendentes
-              </span>
+              <span className="title-active-trades">Configurações</span>
             </section>
 
             <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
-              <Tableopentrade
-                transactions={openTransactions}
-                limit={limitAsset}
-                getUser={getUser}
-                user={user}
-                addressServer={addressServer}
-              />
-
-              <aside className="container-btn-showmore-trade">
-                <span
-                  className="btn-showmore-trade"
-                  id="btn-showmore-trade"
-                  onClick={showMoreAssets}
-                >
-                  Ver Mais
+              <aside className="conteiner-line-config">
+                <span className="config-line">
+                  Sincronizar ativos com corretora
                 </span>
+                <span className="btn-config update">Sincronizar Agora</span>
               </aside>
             </section>
           </aside>
@@ -127,4 +110,4 @@ function OpenTrades({ user, addressServer, getUser }) {
   );
 }
 
-export default OpenTrades;
+export default Config;

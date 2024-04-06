@@ -77,7 +77,7 @@ export default function Menubar() {
           </article>
          
           <article className="button-menubar">
-            <Link to="/" className="link-button-menubar">
+            <Link to="/config" className="link-button-menubar">
               <span className="icon-button-menubar">
                 <span
                   class="material-symbols-outlined"
@@ -93,7 +93,7 @@ export default function Menubar() {
           </article>
          
          <article className="button-menubar">
-            <Link to="/teste" className="link-button-menubar">
+            <Link to="/" className="link-button-menubar">
               <span className="icon-button-menubar">
                 <span
                   class="material-symbols-outlined"

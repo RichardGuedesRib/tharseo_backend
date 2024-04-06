@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Rowtableoldtransaction from "./Rowtableoldtransaction";
+import Rowtableopentransaction from "./Rowtableopentransaction";
 
-export default function Tableoldtrade({ transactions, limit }) {
+export default function Tableopentrade({
+  transactions,
+  limit,
+  getUser,
+  user,
+  addressServer,
+}) {
   const [transactionsFilter, setTransactionsFilter] = useState([]);
+
 
   useEffect(() => {
     const filter = Array.isArray(transactions)
@@ -17,7 +24,7 @@ export default function Tableoldtrade({ transactions, limit }) {
         <thead>
           <tr className=" ">
             <th className="label-column-old-trades">Symbol</th>
-            <th className="label-column-old-trades">Nome</th>
+            <th className=" label-column-old-trades">Nome</th>
             <th className="label-column-old-trades">Order ID</th>
             <th className="label-column-old-trades">Data</th>
             <th className="label-column-old-trades">Side</th>
@@ -28,13 +35,14 @@ export default function Tableoldtrade({ transactions, limit }) {
             <th className="label-column-old-trades">Trans. Par</th>
             <th className="label-column-old-trades">Op. Ativa?</th>
             <th className="label-column-old-trades">Status</th>
+            <th className="label-column-old-trades">Cancel</th>
           </tr>
         </thead>
         <tbody className="body-table-actives-trades">
           {transactionsFilter &&
             transactionsFilter.length > 0 &&
             transactionsFilter.map((item, index) => (
-              <Rowtableoldtransaction
+              <Rowtableopentransaction
                 key={index}
                 symbol={
                   item.acronym
@@ -42,7 +50,7 @@ export default function Tableoldtrade({ transactions, limit }) {
                     : ""
                 }
                 acronym={item.asset.acronym}
-                orderid={item.orderId}
+                orderid={item.id}
                 date={new Date(item.openDate * 1000).toLocaleString()}
                 side={item.side}
                 quantity={item.executedQty}
@@ -52,6 +60,10 @@ export default function Tableoldtrade({ transactions, limit }) {
                 pairTransaction={item.pairTransaction}
                 active={item.openTrade === false ? "Não" : "Sim"}
                 status={item.status}
+                user={user}
+                getUser={getUser}
+                addressServer={addressServer}
+                
               />
             ))}
         </tbody>

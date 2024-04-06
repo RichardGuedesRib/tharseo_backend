@@ -1,0 +1,3 @@
+2024-04-06 17:17:11.032329-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TRANSACTIONS" not found; SQL statement:
+drop table transactions [42102-224]

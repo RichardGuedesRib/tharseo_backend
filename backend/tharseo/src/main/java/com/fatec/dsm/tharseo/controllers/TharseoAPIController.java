@@ -5,10 +5,7 @@ import com.fatec.dsm.tharseo.models.Asset;
 import com.fatec.dsm.tharseo.models.Transaction;
 import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
 import com.fatec.dsm.tharseo.models.User;
-import com.fatec.dsm.tharseo.services.AssetService;
-import com.fatec.dsm.tharseo.services.TharseoAPIService;
-import com.fatec.dsm.tharseo.services.TransactionService;
-import com.fatec.dsm.tharseo.services.UserService;
+import com.fatec.dsm.tharseo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(value = "/tharseo")
@@ -31,6 +29,8 @@ public class TharseoAPIController {
     AssetService assetService;
     @Autowired
     TransactionService transactionService;
+    @Autowired
+    TransactionSpotGridService transactionSpotGridService;
     @Autowired
     TharseoAPIService tharseoAPIService;
 
@@ -87,15 +87,15 @@ public class TharseoAPIController {
 ////            System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
 //        });
 //
-//        CompletableFuture<Void> updatedTasks2 = CompletableFuture.runAsync(() -> {
-//            binanceAPI.updateAssetsUser(user);
-////            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
-//        });
-//
-//        CompletableFuture<Void> await = CompletableFuture.allOf(updatedTasks, updatedTasks2);
+        CompletableFuture<Void> updatedTasks2 = CompletableFuture.runAsync(() -> {
+            binanceAPI.updateAssetsUser(user);
+//            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
+        });
+
+        CompletableFuture<Void> await = CompletableFuture.allOf(updatedTasks2);
 
         try {
-//            await.get();
+            await.get();
 
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
         } catch (Exception e) {
@@ -194,5 +194,21 @@ public class TharseoAPIController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(listTransactions);
     }
 
+
+    @DeleteMapping(value = "/cancelopenorder")
+            public ResponseEntity<?> cancelOpenOrder(@RequestParam(name = "user", required = true) Long idUser,
+                                                     @RequestParam(name = "orderid", required = true) Long orderId){
+        User user = userService.findById(idUser);
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " not found");
+        }
+        TransactionSpotGrid transactionSpotGrid = transactionSpotGridService.findTransactionSpotGridById(orderId);
+        if(transactionSpotGrid == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order Id: " + orderId + " not found");
+        }
+        StringBuilder sb =new StringBuilder();
+        sb = tharseoAPIService.cancelOpenOrder(user, transactionSpotGrid);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
+        }
 
 }

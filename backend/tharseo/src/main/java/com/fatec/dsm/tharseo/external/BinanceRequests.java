@@ -109,7 +109,7 @@ public class BinanceRequests {
         queryPath += "&signature=" + signature;
 
         URL url = new URL(baseUrl + urlRequest + "?" + queryPath);
-//        System.out.println("Request in: " + url.toString());
+        System.out.println("Request in: " + url.toString());
 
         sb = sendRequest(url, httpMethod, apiKey, apiSecret);
 

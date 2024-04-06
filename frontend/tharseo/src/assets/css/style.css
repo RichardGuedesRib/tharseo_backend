@@ -945,9 +945,51 @@ body {
 .container-dashboard-right-bottom-top {
     display: flex;
     justify-content: space-between;
-     height: 30px;
+    height: 30px;
 }
 
+.conteiner-line-config {
+    display: flex;
+    padding: 0px 60px 0 60px;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 200;
+}
+
+.btn-config {
+    width: 200px;
+    height: 25px;
+    background-color: #2A2A2A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    text-decoration: none;
+    color: #EAECEF;
+
+}
+
+.btn-config:hover {
+    background-color: #006BFA;
+    transition: .5s;
+}
+
+.btn-cancel-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.btn-cancel-order:hover{
+    transition: .5s;
+    color: #E55764;
+
+}
 
 
 

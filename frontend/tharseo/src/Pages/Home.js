@@ -250,7 +250,7 @@ function Home({ user, addressServer, getUser }) {
 
           <aside className="container-dashboard-right-top">
             <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">TESTE</span>
+              <span className="text-header-welcome">João</span>
             </section>
             <section className="container-dashboard-right-top-right">
               <section className="container-balance-visible">
@@ -268,7 +268,7 @@ function Home({ user, addressServer, getUser }) {
                 </span>
                 <span className="text-balance" id="balance-text">
                   {visibleBalance
-                    ? `$${wallet
+                    ? `$ ${wallet
                         .find((item) => item.acronym === "USDTUSDT")
                         .quantity.toFixed(0)}`
                     : "$ -----"}

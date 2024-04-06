@@ -231,7 +231,6 @@ public class BinanceAPI {
         return user;
     }
 
-
     public List<AssetPrice> getUpdatePrices() {
         List<AssetPrice> prices = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -264,4 +263,25 @@ public class BinanceAPI {
         }
     }
 
+    public StringBuilder cancelOpenOrder(User user, String acronym, String orderId){
+        StringBuilder sb = new StringBuilder();
+        try {
+            HashMap<String, String> parameters = new HashMap<String, String>();
+            parameters.put("symbol", acronym);
+            parameters.put("orderId", orderId);
+
+            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
+            sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/order", "DELETE", apiKey, apiSecret);
+            System.out.println(" BINANCEAPI" );
+            System.out.println(sb);
+            return sb;
+
+
+        } catch (Exception e) {
+            sb.append("Error in new order request! ");
+            sb.append(e);
+            return sb;
+        }
+
+    }
 }

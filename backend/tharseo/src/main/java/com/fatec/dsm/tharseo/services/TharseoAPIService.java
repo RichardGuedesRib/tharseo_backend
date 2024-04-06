@@ -35,7 +35,7 @@ public class TharseoAPIService {
         transactionSpotGrid.setTypeTransaction(jsonOrder.get("type").toString().replace("\"", ""));
         transactionSpotGrid.setAsset(asset);
         JsonArray fills = jsonOrder.getAsJsonArray("fills");
-        JsonObject firstFill = fills.get(0).getAsJsonObject(); // Supondo que você queira acessar o primeiro item do array
+        JsonObject firstFill = fills.get(0).getAsJsonObject();
         String price = firstFill.get("price").getAsString();
         transactionSpotGrid.setPrice(Double.parseDouble(price.replace("\"", "")));
         transactionSpotGrid.setOpenDate(Long.parseLong(jsonOrder.get("transactTime").toString()));
@@ -69,6 +69,21 @@ public class TharseoAPIService {
         transactionSpotGrid.setStatus("Open");
         transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
         return transactionSpotGrid;
+    }
+
+    public StringBuilder cancelOpenOrder(User user, TransactionSpotGrid transactionSpotGrid) {
+        StringBuilder sb = new StringBuilder();
+        sb = binanceAPI.cancelOpenOrder(user, transactionSpotGrid.getAsset().getAcronym(), transactionSpotGrid.getOrderId().toString());
+              JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
+        String status = jsonOrder.get("status").toString().replace("\"", "");
+        if(status.equals("CANCELED")){
+            transactionSpotGrid.setStatus("Canceled");
+            transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
+            sb.append("Order id: " + transactionSpotGrid.getOrderId() + " Canceled");
+        } else {
+            sb.append("Error when canceling order");
+        }
+        return sb;
     }
 
 

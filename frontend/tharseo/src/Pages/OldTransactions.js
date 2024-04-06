@@ -15,11 +15,10 @@ function OldTransactions({ user, addressServer }) {
   useEffect(() => {
     if (userTransactions && userTransactions.length > 0) {
       const closedTransactions = userTransactions.filter(
-        (item) => item.status === "Closed"
+        (item) => item.status === "Closed" || item.status === "Canceled"
       );
       setOldTransactions(closedTransactions);
     }
-   
   }, [userTransactions]);
 
   const showBalance = () => {
