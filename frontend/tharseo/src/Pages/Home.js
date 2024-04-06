@@ -2,8 +2,9 @@ import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import Menubar from "../Components/menubar.jsx";
 import Chart from "../Components/Chart.jsx";
-import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
+import Tabletrade from "../Components/Tabletrade.jsx";
+import { Link } from "react-router-dom";
 
 function Home({ user, addressServer, getUser }) {
   const [chartInfo, setChartInfo] = useState([]);
@@ -44,6 +45,8 @@ function Home({ user, addressServer, getUser }) {
     },
   ];
   const [limitAsset, setLimitAsset] = useState(5);
+  const [limitActiveTrade, setLimiteActiveTrade] = useState(3);
+  const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -75,37 +78,41 @@ function Home({ user, addressServer, getUser }) {
       }
     }, 5000);
 
+    if (wallet) {
+      const walletFilter = Array.isArray(wallet)
+        ? wallet.slice(0, limitActiveTrade)
+        : [];
+      console.log(walletFilter);
+      setAssetsActiveTrade(walletFilter);
+    }
+
     return () => clearInterval(intervalId);
   }, []);
 
   const openOrder = async () => {
     let urlRequest;
-    if(amount === ""){
+    if (amount === "") {
       alert("Digite a quantidade");
     }
     if (typeOperation === "LIMIT") {
-      if(price === ""){
-        alert("Digite o preço desejado")
+      if (price === "") {
+        alert("Digite o preço desejado");
       }
       urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BTCUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
     } else if (typeOperation === "MARKET") {
       urlRequest = `${addressServer}/tharseo/newordermarket?user=1&acronym=BTCUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
     } else {
-      alert('Escolha o lado da operação');
+      alert("Escolha o lado da operação");
     }
 
     try {
-         const request = await fetch(
-        urlRequest,
-        { method: "POST" }
-      );
+      const request = await fetch(urlRequest, { method: "POST" });
       if (!request.ok) {
         throw new Error("Error when post order");
       }
       await getUser();
-      alert("OK!")
+      alert("OK!");
       setContainerOrder(false);
-      
     } catch (error) {
       console.error(`Error Requesting Order:`, error);
     }
@@ -302,7 +309,7 @@ function Home({ user, addressServer, getUser }) {
                   onClick={showMoreAssets}
                 >
                   <span className="text-btn-view-all" id="btn-view-all">
-                    Ver Todos
+                    Ver Mais
                   </span>
                 </span>
               </section>
@@ -317,9 +324,12 @@ function Home({ user, addressServer, getUser }) {
           <aside className="container-dashboard-right-bottom">
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">Ativar Trade</span>
+              <Link to="/trade" className="btn-showmore">
+                <span>Ver Todos</span>
+              </Link>
             </section>
-            <section className="container-dashboard-right-bottom-middle">
-              <Tableactivetrade table={testetable} />
+            <section className="container-dashboard-right-bottom-middle footer-home">
+              <Tabletrade table={assetsActiveTrade} />
             </section>
           </aside>
         </aside>

@@ -859,7 +859,7 @@ body {
     height: 30px;
     display: flex;
     justify-content: start;
- 
+
 }
 
 .input-order {
@@ -873,17 +873,19 @@ body {
 
 .label-input {
     display: flex;
-       width: 100%;
+    width: 100%;
     justify-content: space-between;
     color: #2A2A2A;
     font-weight: 400;
     padding-left: 10px;
 }
-.container-buttons-order{
+
+.container-buttons-order {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
+
 .btn-type-order,
 .btn-order-cancel {
     display: flex;
@@ -898,7 +900,7 @@ body {
     letter-spacing: 2px;
 }
 
-.btn-type-order{
+.btn-type-order {
     margin-bottom: 15px;
 }
 
@@ -908,8 +910,42 @@ body {
     transition: 1s;
 }
 
-.text-btn-cancel-order{
+.text-btn-cancel-order {
     margin-left: 10px;
+}
+
+.footer-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.btn-showmore {
+    width: 200px;
+    height: 25px;
+    background-color: #2A2A2A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    text-decoration: none;
+    color: #EAECEF;
+
+}
+
+.btn-showmore:hover {
+    background-color: #006BFA;
+    transition: .5s;
+}
+
+.container-dashboard-right-bottom-top {
+    display: flex;
+    justify-content: space-between;
+     height: 30px;
 }
 
 
