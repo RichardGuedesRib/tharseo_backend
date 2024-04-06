@@ -78,6 +78,38 @@ function Home({ user, addressServer }) {
     return () => clearInterval(intervalId);
   }, []);
 
+  const openOrder = async () => {
+    let urlRequest;
+    if(amount === ""){
+      alert("Digite a quantidade");
+    }
+    if (typeOperation === "LIMIT") {
+      if(price === ""){
+        alert("Digite o preço desejado")
+      }
+      urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BTCUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
+    } else if (typeOperation === "MARKET") {
+      urlRequest = `${addressServer}/tharseo/newordermarket?user=1&acronym=BTCUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
+    } else {
+      alert('Escolha o lado da operação');
+    }
+
+    try {
+      const request = await fetch(
+        urlRequest,
+        { method: "POST" }
+      );
+      if (!request.ok) {
+        throw new Error("Error when post order");
+      }
+      alert("OK!")
+      setContainerOrder(false);
+      
+    } catch (error) {
+      console.error(`Error Requesting Order:`, error);
+    }
+  };
+
   return (
     <main className="app-dashboard">
       <section className="container-dashboard">
@@ -117,7 +149,8 @@ function Home({ user, addressServer }) {
               <span
                 className="type-order"
                 style={{
-                  backgroundColor: typeOperation === "LIMIT" ? "#006BFA" : "#2A2A2A",
+                  backgroundColor:
+                    typeOperation === "LIMIT" ? "#006BFA" : "#2A2A2A",
                 }}
                 onClick={() => setTypeOperation("LIMIT")}
               >
@@ -127,7 +160,8 @@ function Home({ user, addressServer }) {
               <span
                 className="type-order"
                 style={{
-                  backgroundColor: typeOperation === "MARKET" ? "#006BFA" : "#2A2A2A",
+                  backgroundColor:
+                    typeOperation === "MARKET" ? "#006BFA" : "#2A2A2A",
                 }}
                 onClick={() => setTypeOperation("MARKET")}
               >
@@ -136,16 +170,21 @@ function Home({ user, addressServer }) {
             </aside>
 
             <div className="container-inputs-order">
-              <label className="label-input" style={{backgroundColor:typeOperation === "MARKET" ? "#2A2A2A" : ""}}>
+              <label
+                className="label-input"
+                style={{
+                  backgroundColor: typeOperation === "MARKET" ? "#2A2A2A" : "",
+                }}
+              >
                 Price:{" "}
                 <input
+                  required
                   type="number"
                   name="price"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   className="input-order"
                   disabled={typeOperation === "MARKET"}
-                   
                 />
               </label>
             </div>
@@ -153,6 +192,7 @@ function Home({ user, addressServer }) {
               <label className="label-input">
                 Amount:{" "}
                 <input
+                  required
                   type="number"
                   name="amount"
                   value={amount}
@@ -165,6 +205,7 @@ function Home({ user, addressServer }) {
             <section className="container-buttons-order">
               <section
                 className="btn-type-order"
+                onClick={openOrder}
                 style={{
                   backgroundColor:
                     sideOperation === "SELL" ? "#E55764" : "#56BC7C",

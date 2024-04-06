@@ -64,7 +64,10 @@ function App() {
             }
           />
           <Route path="/chart" element={<Chart />} />
-          <Route path="/teste" element={<Teste user={user} addressServer={addressServerTharseo}/>} />
+          <Route
+            path="/teste"
+            element={<Teste user={user} addressServer={addressServerTharseo} />}
+          />
         </Routes>
       </div>
     </Router>
