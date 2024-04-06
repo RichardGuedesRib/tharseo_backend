@@ -291,6 +291,7 @@ body {
     justify-content: space-between;
     margin-left: 25px;
     padding-right: 40px;
+    position: relative;
 }
 
 .container-dashboard-right-top {
@@ -644,10 +645,6 @@ body {
     transition: .5s;
 }
 
-.row-table-trades {}
-
-.body-table-trades {}
-
 .table-trades {
     width: 100%;
     overflow-y: auto;
@@ -671,8 +668,6 @@ body {
     background-color: #006BFA;
     transition: .5s;
 }
-
-.label-toogle-trade {}
 
 .btn-toogle-trade {
     cursor: pointer;
@@ -701,7 +696,7 @@ body {
     justify-content: center;
     align-items: start;
     height: 90%;
-   }
+}
 
 .label-column-old-trades {
     font-weight: 300;
@@ -716,6 +711,207 @@ body {
     font-weight: 400;
 
 }
+
+
+.container-order {
+    width: 400px;
+    height: 600px;
+    background-color: rgba(24, 26, 32, .95);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    border-radius: 20px;
+    display: none;
+    flex-direction: column;
+    transition: opacity 0.5s ease;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.effect-disable {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 98;
+    display: none;
+}
+
+.container-order.active {
+    display: flex;
+}
+
+.container-order.active+.effect-disable {
+    display: flex;
+}
+
+.container-order.hidden+.effect-disable {
+    display: none;
+
+}
+
+.btn-purchase {
+    color: #EAECEF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-purchase:hover {
+    background: #EAECEF;
+    color: #2A2A2A;
+    transition: 1s;
+}
+
+.title-container-order {
+    color: #EAECEF;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+
+}
+
+.container-side-order {
+    display: flex;
+    justify-content: center;
+    color: #EAECEF;
+    padding-top: 10px;
+}
+
+.container-side-buy,
+.container-side-sell {
+    color: #EAECEF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.container-side-buy:hover,
+.container-side-sell:hover {
+    transform: scale(1.05);
+    transition: 1s;
+}
+
+.container-side-sell {
+    margin-left: 20px;
+}
+
+.btn-order-buy {
+    margin-left: 10px;
+}
+
+.btn-order-sell {
+    margin-left: 10px;
+}
+
+.container-side-buy {
+    background-color: #56BC7C;
+    height: 30px;
+}
+
+.container-side-sell {
+    background-color: #E55764;
+}
+
+.asset-container-order {
+    color: #EAECEF;
+    letter-spacing: 4px;
+    font-size: 1.2rem;
+}
+
+.container-type-order {
+    display: flex;
+    color: #EAECEF;
+    justify-content: space-around;
+    width: 100%;
+    font-weight: 300;
+}
+
+.type-order {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2A2A2A;
+    cursor: pointer;
+    border: none;
+    letter-spacing: 3px;
+}
+
+.type-order:hover {
+    background-color: #006BFA;
+    transition: 1s;
+}
+
+.container-inputs-order {
+    background-color: #b9b9b99d;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: start;
+ 
+}
+
+.input-order {
+    background-color: transparent;
+    border: none;
+    width: 300px;
+    padding-left: 10px;
+    color: #2A2A2A;
+
+}
+
+.label-input {
+    display: flex;
+       width: 100%;
+    justify-content: space-between;
+    color: #2A2A2A;
+    font-weight: 400;
+    padding-left: 10px;
+}
+.container-buttons-order{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.btn-type-order,
+.btn-order-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background-color: #2A2A2A;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #EAECEF;
+    letter-spacing: 2px;
+}
+
+.btn-type-order{
+    margin-bottom: 15px;
+}
+
+.btn-type-order:hover,
+.btn-order-cancel:hover {
+    background-color: #006BFA;
+    transition: 1s;
+}
+
+.text-btn-cancel-order{
+    margin-left: 10px;
+}
+
 
 
 

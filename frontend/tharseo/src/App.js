@@ -2,12 +2,11 @@ import "./assets/css/App.css";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Chart from "./Components/Chart";
-import OrdersSetup from "./Pages/OrdersSetup";
-import Accountinfo from "./Pages/AccountInfo";
 import Home from "./Pages/Home";
 import Trade from "./Pages/Trade";
 import OldTransactions from "./Pages/OldTransactions";
 import OpenTrades from "./Pages/OpenTrades";
+import Teste from "./Pages/teste";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -65,8 +64,7 @@ function App() {
             }
           />
           <Route path="/chart" element={<Chart />} />
-          <Route path="/accountinfo" element={<Accountinfo user={user} />} />
-          <Route path="/orderssetup" element={<OrdersSetup />} />
+          <Route path="/teste" element={<Teste user={user} addressServer={addressServerTharseo}/>} />
         </Routes>
       </div>
     </Router>

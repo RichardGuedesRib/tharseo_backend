@@ -5,7 +5,7 @@ import Chart from "../Components/Chart.jsx";
 import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
 
-function Home({ user, addressServer }) {
+function Teste({ user, addressServer }) {
   const [chartInfo, setChartInfo] = useState([]);
   const [containerOrder, setContainerOrder] = useState(false);
   const [visibleBalance, setVisibleBalance] = useState(false);
@@ -293,4 +293,4 @@ function Home({ user, addressServer }) {
   }
 }
 
-export default Home;
+export default Teste;

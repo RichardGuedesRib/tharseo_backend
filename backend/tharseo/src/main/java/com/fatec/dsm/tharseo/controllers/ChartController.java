@@ -25,6 +25,7 @@ public class ChartController {
     @GetMapping
     ResponseEntity<?> getChartBtc1m(){
         List<Kline> klines = chartService.findAll();
+        System.out.println(klines);
              return ResponseEntity.status(HttpStatus.ACCEPTED).body(klines);
     }
 }
