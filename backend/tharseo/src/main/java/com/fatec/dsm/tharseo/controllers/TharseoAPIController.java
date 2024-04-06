@@ -164,7 +164,7 @@ public class TharseoAPIController {
         }
         TransactionSpotGrid transaction = tharseoAPIService.newOrderLimit(user, asset, side, quantity, price);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
-    
+
     }
 
 

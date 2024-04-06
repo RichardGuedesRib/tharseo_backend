@@ -5,7 +5,7 @@ import Chart from "../Components/Chart.jsx";
 import Tableactivetrade from "../Components/Tableactivetrade.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
 
-function Home({ user, addressServer }) {
+function Home({ user, addressServer, getUser }) {
   const [chartInfo, setChartInfo] = useState([]);
   const [containerOrder, setContainerOrder] = useState(false);
   const [visibleBalance, setVisibleBalance] = useState(false);
@@ -95,13 +95,14 @@ function Home({ user, addressServer }) {
     }
 
     try {
-      const request = await fetch(
+         const request = await fetch(
         urlRequest,
         { method: "POST" }
       );
       if (!request.ok) {
         throw new Error("Error when post order");
       }
+      await getUser();
       alert("OK!")
       setContainerOrder(false);
       

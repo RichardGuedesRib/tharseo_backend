@@ -13,23 +13,24 @@ function App() {
   const [addressServerTharseo, setAddressServerTharseo] = useState(
     "http://localhost:8080"
   );
+  const getUser = async () => {
+    try {
+      const res = await fetch(
+        addressServerTharseo + "/tharseo/updatedatauser/1"
+      );
+      if (!res.ok) {
+        throw new Error("Error when get user");
+      }
+      const userData = await res.json();
+      setUser(userData);
+      console.log("Return by Variable: ", userData);
+    } catch (error) {
+      console.error("Error User Resquest", error);
+    }
+  };
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await fetch(
-          addressServerTharseo + "/tharseo/updatedatauser/1"
-        );
-        if (!res.ok) {
-          throw new Error("Error when get user");
-        }
-        const userData = await res.json();
-        setUser(userData);
-        console.log("Return by Variable: ", userData);
-      } catch (error) {
-        console.error("Error User Resquest", error);
-      }
-    };
+   
     getUser();
   }, []);
 
@@ -42,7 +43,7 @@ function App() {
           <Route
             exact
             path="/"
-            element={<Home user={user} addressServer={addressServerTharseo} />}
+            element={<Home user={user} addressServer={addressServerTharseo} getUser={getUser}/>}
           />
           <Route
             path="/trade"

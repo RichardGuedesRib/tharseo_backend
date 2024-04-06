@@ -231,37 +231,37 @@ public class BinanceAPI {
         return user;
     }
 
-//    @Scheduled(cron = "*/10")
-//    public List<AssetPrice> getUpdatePrices() {
-//        List<AssetPrice> prices = new ArrayList<>();
-//        StringBuilder sb = new StringBuilder();
-//        String url = "/api/v3/ticker/price";
-//        HashMap<String, String> parameters = new HashMap<String, String>();
-//        try {
-//            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
-//            sb = binanceRequests.sendPublicRequest(parameters, url, null, null);
-//            JsonArray pricesArrayJson = JsonParser.parseString(sb.toString()).getAsJsonArray();
-//            for (int i = 0; i < pricesArrayJson.size(); i++) {
-//                JsonObject priceJson = pricesArrayJson.get(i).getAsJsonObject();
-//                AssetPrice assetPrice = new AssetPrice();
-//                assetPrice.setSymbol(priceJson.get("symbol").toString().replace("\"", ""));
-//                assetPrice.setPrice(Double.parseDouble(priceJson.get("price").toString().replace("\"", "")));
-//                prices.add(assetPrice);
-//            }
-//
-//            List<AssetPrice> pricesFilter = prices.stream()
-//                    .filter(asset -> asset.getSymbol().endsWith("USDT"))
-//                    .collect(Collectors.toList());
-//
-//            Stage.setListPrices(pricesFilter);
-//            System.out.println(">>>PRICES UPDATED<<<");
-//
-//
-//            return Stage.getListPrices();
-//        } catch (Exception e) {
-//            sb.append(e);
-//            return Stage.getListPrices();
-//        }
-//    }
+
+    public List<AssetPrice> getUpdatePrices() {
+        List<AssetPrice> prices = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        String url = "/api/v3/ticker/price";
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        try {
+            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
+            sb = binanceRequests.sendPublicRequest(parameters, url, null, null);
+            JsonArray pricesArrayJson = JsonParser.parseString(sb.toString()).getAsJsonArray();
+            for (int i = 0; i < pricesArrayJson.size(); i++) {
+                JsonObject priceJson = pricesArrayJson.get(i).getAsJsonObject();
+                AssetPrice assetPrice = new AssetPrice();
+                assetPrice.setSymbol(priceJson.get("symbol").toString().replace("\"", ""));
+                assetPrice.setPrice(Double.parseDouble(priceJson.get("price").toString().replace("\"", "")));
+                prices.add(assetPrice);
+            }
+
+            List<AssetPrice> pricesFilter = prices.stream()
+                    .filter(asset -> asset.getSymbol().endsWith("USDT"))
+                    .collect(Collectors.toList());
+
+            Stage.setListPrices(pricesFilter);
+            System.out.println(">>>PRICES UPDATED<<<");
+
+
+            return Stage.getListPrices();
+        } catch (Exception e) {
+            sb.append(e);
+            return Stage.getListPrices();
+        }
+    }
 
 }
