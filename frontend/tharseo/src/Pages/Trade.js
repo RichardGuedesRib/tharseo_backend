@@ -2,10 +2,12 @@ import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import Menubar from "../Components/menubar.jsx";
 import Tabletrade from "../Components/Tabletrade.jsx";
+import Containergrid from "../Components/Containergrid.jsx";
 
 function Trade({ user, addressServer }) {
   const [walletFilter, setWalletFilter] = useState([]);
   const [limitAsset, setLimitAsset] = useState(14);
+  const [containerInputGrid, setContainerInputGrid] = useState(false);
   const wallet = user.wallet;
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
@@ -44,10 +46,20 @@ function Trade({ user, addressServer }) {
       ?.classList.add("show-more");
   }
 
+  function show() {
+    setContainerInputGrid(true);
+    console.log("Chamou Visible");
+    console.log(containerInputGrid);
+  }
+
   return (
     <main className="app-dashboard">
       <section className="container-dashboard">
         <Menubar />
+        <Containergrid
+          containerInputGrid={containerInputGrid}
+          setContainerInputGrid={setContainerInputGrid}
+             />
 
         <aside className="container-dashboard-trades">
           <aside className="container-dashboard-right-top">
@@ -95,11 +107,14 @@ function Trade({ user, addressServer }) {
               <span className="title-active-trades">
                 Configurar Automatização
               </span>
+              <span className="title-active-trades" onClick={() => show()}>
+                Abrir Container
+              </span>
             </section>
 
             <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
               <aside className="container-table-trade-assets">
-                <Tabletrade table={walletFilter} className="show-more" />
+                <Tabletrade table={walletFilter} setContainerInputGrid={setContainerInputGrid} className="show-more" />
               </aside>
 
               <aside className="container-btn-showmore-trade">

@@ -1,7 +1,10 @@
 import React from "react";
 import Rowtabletrades from "./Rowtabletrade";
 
-export default function Tabletrade({ table }) {
+export default function Tabletrade({
+  table,
+   setContainerInputGrid,
+}) {
   return (
     <table className="table-trades">
       <thead>
@@ -25,8 +28,13 @@ export default function Tabletrade({ table }) {
             name={item.name}
             balance={item.price ? item.price.toFixed(2) : ""}
             profit={item.profit ? item.profit.toFixes(2) : "0.00"}
-            performance={item.performance ? item.performance.toFixed(2) : "0.00"}
+            performance={
+              item.performance ? item.performance.toFixed(2) : "0.00"
+            }
             trade={"Trade"}
+           
+            setContainerInputGrid={setContainerInputGrid}
+
           />
         ))}
       </tbody>

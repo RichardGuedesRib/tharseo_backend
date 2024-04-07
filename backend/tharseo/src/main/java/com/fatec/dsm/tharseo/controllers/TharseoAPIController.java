@@ -1,5 +1,6 @@
 package com.fatec.dsm.tharseo.controllers;
 
+import com.fatec.dsm.tharseo.config.Stage;
 import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
 import com.fatec.dsm.tharseo.models.Transaction;
@@ -77,19 +78,15 @@ public class TharseoAPIController {
 
     @GetMapping(value = "/updatedatauser/{id}")
     public ResponseEntity<?> updateDataUser(@PathVariable Long id) {
+
         User user = userService.findById(id);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User ID: " + id + " not found");
         }
 
-//        CompletableFuture<Void> updatedTasks = CompletableFuture.runAsync(() -> {
-//            user.setTransactions(binanceAPI.getUserTransations(user, "BTCUSDT"));
-////            System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
-//        });
-//
         CompletableFuture<Void> updatedTasks2 = CompletableFuture.runAsync(() -> {
             binanceAPI.updateAssetsUser(user);
-//            System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
+
         });
 
         CompletableFuture<Void> await = CompletableFuture.allOf(updatedTasks2);
@@ -102,26 +99,7 @@ public class TharseoAPIController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
 
-//        ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(1);
-//
-//        try {
-//            scheduled.schedule(() -> {
-//                user.setTransactions(binanceAPI.getUserTransations(user, "BNBUSDT"));
-//                System.out.println(">>>>>>>>>>>>>>Transactions UPDATED<<<<<<<<<<<<<");
-//            }, 0, TimeUnit.SECONDS);
-//            scheduled.schedule(() -> {
-//                setAssetsUser(id);
-//                System.out.println(">>>>>>>>>>>>>>Assets UPDATED<<<<<<<<<<<<<");
-//            }, 2, TimeUnit.SECONDS);
-//
-//            scheduled.awaitTermination(3, TimeUnit.SECONDS);
-//            scheduled.shutdown();
-//
-//
-//            return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-//        }
+
     }
 
 
@@ -196,19 +174,21 @@ public class TharseoAPIController {
 
 
     @DeleteMapping(value = "/cancelopenorder")
-            public ResponseEntity<?> cancelOpenOrder(@RequestParam(name = "user", required = true) Long idUser,
-                                                     @RequestParam(name = "orderid", required = true) Long orderId){
+    public ResponseEntity<?> cancelOpenOrder(@RequestParam(name = "user", required = true) Long idUser,
+                                             @RequestParam(name = "orderid", required = true) Long orderId) {
         User user = userService.findById(idUser);
-        if(user == null){
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " not found");
         }
         TransactionSpotGrid transactionSpotGrid = transactionSpotGridService.findTransactionSpotGridById(orderId);
-        if(transactionSpotGrid == null) {
+        if (transactionSpotGrid == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order Id: " + orderId + " not found");
         }
-        StringBuilder sb =new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb = tharseoAPIService.cancelOpenOrder(user, transactionSpotGrid);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
-        }
+    }
+
+
 
 }

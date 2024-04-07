@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,6 @@ public class User implements Serializable {
     private List<Transaction> transactions = new ArrayList<>();
     private String apiKey;
     private String secretKey;
-
     private Integer isactive;
 
     public User() {
@@ -138,4 +138,6 @@ public class User implements Serializable {
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
     }
+
+
 }

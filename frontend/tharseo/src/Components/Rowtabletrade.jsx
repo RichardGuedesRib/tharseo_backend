@@ -8,10 +8,14 @@ export default function Rowtabletrades({
   profit,
   performance,
   trade,
+  setContainerInputGrid
+
+  
 }) {
   const [toggle, setToggle] = useState(false);
   const [toggleColor, setToggleColor] = useState("#EAECEF");
   const [performanceColor, setPerformanceColor] = useState("#EAECEF");
+
 
   
 
@@ -34,7 +38,7 @@ export default function Rowtabletrades({
       <td className="label-active-trades">$ {profit}</td>
       <td className="label-active-trades">{performance}%</td>
       <td className="label-active-trades container-btn-active-trade">
-        <span className="btn-trades">{trade}</span>
+        <span className="btn-trades" onClick={() => setContainerInputGrid(true)}>{trade}</span>
       </td>
       <td className="label-active-trades label-toogle-trade">
         <span className="btn-toogle-trade" onClick={toggled}>

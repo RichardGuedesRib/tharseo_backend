@@ -15,35 +15,6 @@ function Home({ user, addressServer, getUser }) {
   const [sideOperation, setSideOperation] = useState("BUY");
   const [typeOperation, setTypeOperation] = useState("");
   const wallet = user.wallet;
-  const testetable = [
-    {
-      symbol: "btc",
-      name: "Bitcoin",
-      value: "1000",
-      balance: "1.56",
-      value: "34345",
-      performance: "+54",
-      trade: "Trade",
-    },
-    {
-      symbol: "ada",
-      name: "Cardano",
-      value: "1000",
-      balance: "1.56",
-      value: "34345",
-      performance: "+54",
-      trade: "Trade",
-    },
-    {
-      symbol: "sol",
-      name: "Solana",
-      value: "1000",
-      balance: "1.56",
-      value: "34345",
-      performance: "+54",
-      trade: "Trade",
-    },
-  ];
   const [limitAsset, setLimitAsset] = useState(5);
   const [limitActiveTrade, setLimiteActiveTrade] = useState(3);
   const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);

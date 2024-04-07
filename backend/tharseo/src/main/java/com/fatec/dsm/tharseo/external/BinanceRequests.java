@@ -85,7 +85,7 @@ public class BinanceRequests {
     public StringBuilder sendPublicRequest(HashMap<String, String> parameters, String urlRequest, String apiKey, String apiSecret) throws Exception {
         String queryPath = joinQueryParameters(parameters);
         URL url = new URL(baseUrl + urlRequest + "?" + queryPath);
-        System.out.println("url:" + url.toString());
+//        System.out.println("url:" + url.toString());
 
         StringBuilder sb = new StringBuilder();
         sb = sendRequest(url, null, apiKey, apiSecret);
@@ -109,7 +109,7 @@ public class BinanceRequests {
         queryPath += "&signature=" + signature;
 
         URL url = new URL(baseUrl + urlRequest + "?" + queryPath);
-        System.out.println("Request in: " + url.toString());
+//        System.out.println("Request in: " + url.toString());
 
         sb = sendRequest(url, httpMethod, apiKey, apiSecret);
 

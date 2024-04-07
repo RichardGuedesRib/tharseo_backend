@@ -194,6 +194,7 @@ public class BinanceAPI {
     }
 
     public User updateAssetsUser(User user) {
+        getUpdatePrices();
         List<AssetsUser> assetsUser = user.getWallet();
         List<AssetsUser> assets = getAssetsByUser(user);
 
@@ -231,7 +232,7 @@ public class BinanceAPI {
         return user;
     }
 
-    public List<AssetPrice> getUpdatePrices() {
+    public void getUpdatePrices() {
         List<AssetPrice> prices = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         String url = "/api/v3/ticker/price";
@@ -256,10 +257,11 @@ public class BinanceAPI {
             System.out.println(">>>PRICES UPDATED<<<");
 
 
-            return Stage.getListPrices();
+//            return Stage.getListPrices();
         } catch (Exception e) {
             sb.append(e);
-            return Stage.getListPrices();
+            System.out.println(e.getMessage());
+          //            return Stage.getListPrices();
         }
     }
 
