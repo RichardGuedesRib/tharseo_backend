@@ -8,6 +8,7 @@ function Trade({ user, addressServer }) {
   const [walletFilter, setWalletFilter] = useState([]);
   const [limitAsset, setLimitAsset] = useState(14);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
+  const [gridData, setGridData] = useState(null);
   const wallet = user.wallet;
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
@@ -19,7 +20,11 @@ function Trade({ user, addressServer }) {
         : [];
       setWalletFilter(walletFilter);
     }
-  }, [limitAsset]);
+  }, [limitAsset, gridData]);
+
+  const getGridData = (data) => {
+    setGridData(data);
+  };
 
   const showBalance = () => {
     const balance = document.getElementById("balance-text");
@@ -59,7 +64,9 @@ function Trade({ user, addressServer }) {
         <Containergrid
           containerInputGrid={containerInputGrid}
           setContainerInputGrid={setContainerInputGrid}
-             />
+          gridData={gridData}
+          addressServer={addressServer}
+        />
 
         <aside className="container-dashboard-trades">
           <aside className="container-dashboard-right-top">
@@ -114,7 +121,14 @@ function Trade({ user, addressServer }) {
 
             <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
               <aside className="container-table-trade-assets">
-                <Tabletrade table={walletFilter} setContainerInputGrid={setContainerInputGrid} className="show-more" />
+                <Tabletrade
+                  table={walletFilter}
+                  setContainerInputGrid={setContainerInputGrid}
+                  getGridData={getGridData}
+                  setGridConfig={user.grids}
+                  addressServer={addressServer}
+                  className="show-more"
+                />
               </aside>
 
               <aside className="container-btn-showmore-trade">

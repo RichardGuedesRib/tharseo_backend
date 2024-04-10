@@ -33,8 +33,6 @@ function App() {
     getUser();
   }, []);
 
-  console.log("Return by Variable: ", user);
-
   return (
     <Router>
       <div className="App">
@@ -66,20 +64,25 @@ function App() {
           <Route
             path="/opentrades"
             element={
-              <OpenTrades user={user} addressServer={addressServerTharseo} getUser={getUser} />
+              <OpenTrades
+                user={user}
+                addressServer={addressServerTharseo}
+                getUser={getUser}
+              />
             }
           />
           <Route
             path="/config"
             element={
-              <Config user={user} addressServer={addressServerTharseo} getUser={getUser} />
+              <Config
+                user={user}
+                addressServer={addressServerTharseo}
+                getUser={getUser}
+              />
             }
           />
           <Route path="/chart" element={<Chart />} />
-          <Route
-            path="/"
-            element={""}
-          />
+          <Route path="/" element={""} />
         </Routes>
       </div>
     </Router>

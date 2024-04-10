@@ -25,6 +25,8 @@ public class User implements Serializable {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<AssetsUser> wallet;
+    @OneToMany(mappedBy = "user")
+    private List<StrategyGridUser> grids;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Transaction> transactions = new ArrayList<>();
     private String apiKey;
@@ -139,5 +141,15 @@ public class User implements Serializable {
         this.secretKey = secretKey;
     }
 
+    public List<StrategyGridUser> getGrids() {
+        return grids;
+    }
 
+    public void setGrids(List<StrategyGridUser> grids) {
+        this.grids = grids;
+    }
+
+    public void addGrid(StrategyGridUser strategyGridUser){
+        this.grids.add(strategyGridUser);
+    }
 }

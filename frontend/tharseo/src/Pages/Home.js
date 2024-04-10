@@ -18,6 +18,8 @@ function Home({ user, addressServer, getUser }) {
   const [limitAsset, setLimitAsset] = useState(5);
   const [limitActiveTrade, setLimiteActiveTrade] = useState(3);
   const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);
+  const [gridData, setGridData] = useState(null);
+  const [containerInputGrid, setContainerInputGrid] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -53,12 +55,16 @@ function Home({ user, addressServer, getUser }) {
       const walletFilter = Array.isArray(wallet)
         ? wallet.slice(0, limitActiveTrade)
         : [];
-      console.log(walletFilter);
+    
       setAssetsActiveTrade(walletFilter);
     }
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const getGridData = (data) => {
+    setGridData(data);
+  };
 
   const openOrder = async () => {
     let urlRequest;
@@ -300,7 +306,14 @@ function Home({ user, addressServer, getUser }) {
               </Link>
             </section>
             <section className="container-dashboard-right-bottom-middle footer-home">
-              <Tabletrade table={assetsActiveTrade} />
+                <Tabletrade
+                  table={assetsActiveTrade}
+                  setContainerInputGrid={setContainerInputGrid}
+                  getGridData={getGridData}
+                  setGridConfig={user.grids}
+                  addressServer={addressServer}
+                  className="show-more"
+                />
             </section>
           </aside>
         </aside>

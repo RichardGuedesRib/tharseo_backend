@@ -2,10 +2,7 @@ package com.fatec.dsm.tharseo.controllers;
 
 import com.fatec.dsm.tharseo.config.Stage;
 import com.fatec.dsm.tharseo.external.BinanceAPI;
-import com.fatec.dsm.tharseo.models.Asset;
-import com.fatec.dsm.tharseo.models.Transaction;
-import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
-import com.fatec.dsm.tharseo.models.User;
+import com.fatec.dsm.tharseo.models.*;
 import com.fatec.dsm.tharseo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +31,8 @@ public class TharseoAPIController {
     TransactionSpotGridService transactionSpotGridService;
     @Autowired
     TharseoAPIService tharseoAPIService;
+    @Autowired
+    StrategyGridUserService strategyGridUserService;
 
 
     @GetMapping(value = "/testconnection")
@@ -101,6 +100,31 @@ public class TharseoAPIController {
 
 
     }
+    @GetMapping(value = "/getusertransactions")
+    public ResponseEntity<?> getUserTransactions(@RequestParam(name = "user", required = true) Long id,
+                                                 @RequestParam(name = "acronym", required = true) String acronym) {
+        User user = userService.findById(id);
+        List<Transaction> oldTransactions = user.getTransactions();
+        List<Transaction> listTransactions = binanceAPI.getUserTransations(user, acronym);
+
+        for (Transaction el : listTransactions) {
+            boolean exists = false;
+            for (Transaction elTransaction : oldTransactions) {
+                if (Objects.equals(el.getOrderId(), elTransaction.getOrderId())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                transactionService.insertTransaction(el);
+                user.addTransaction(el);
+
+            }
+        }
+        userService.insertOne(user);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(listTransactions);
+    }
 
 
     @PostMapping(value = "/newordermarket")
@@ -145,35 +169,7 @@ public class TharseoAPIController {
 
     }
 
-
-    @GetMapping(value = "/getusertransactions")
-    public ResponseEntity<?> getUserTransactions(@RequestParam(name = "user", required = true) Long id,
-                                                 @RequestParam(name = "acronym", required = true) String acronym) {
-        User user = userService.findById(id);
-        List<Transaction> oldTransactions = user.getTransactions();
-        List<Transaction> listTransactions = binanceAPI.getUserTransations(user, acronym);
-
-        for (Transaction el : listTransactions) {
-            boolean exists = false;
-            for (Transaction elTransaction : oldTransactions) {
-                if (Objects.equals(el.getOrderId(), elTransaction.getOrderId())) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) {
-                transactionService.insertTransaction(el);
-                user.addTransaction(el);
-
-            }
-        }
-        userService.insertOne(user);
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(listTransactions);
-    }
-
-
-    @DeleteMapping(value = "/cancelopenorder")
+     @DeleteMapping(value = "/cancelopenorder")
     public ResponseEntity<?> cancelOpenOrder(@RequestParam(name = "user", required = true) Long idUser,
                                              @RequestParam(name = "orderid", required = true) Long orderId) {
         User user = userService.findById(idUser);
