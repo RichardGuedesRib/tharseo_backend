@@ -156,7 +156,8 @@ public class TharseoAPIService {
     }
     public List<TransactionSpotGrid> initGrid(User user, Asset asset, Double quota, Double percentGrid, Double price){
 //        TransactionSpotGrid newOrderBuy = newOrderMarket(user, asset, "BUY", "GTC", quota.toString());
-        Double targetPrice = (price * percentGrid) + price;
+        String formatPrice = String.format("%.2f", (price * percentGrid) + price);
+        Double targetPrice = Double.parseDouble(formatPrice);
         TransactionSpotGrid newOrderBuy = awaitOrder(user, asset, "BUY", quota.toString(), price, targetPrice);
         newOrderBuy.setPriceTarget(targetPrice);
         newOrderBuy.setStatus("Open");
