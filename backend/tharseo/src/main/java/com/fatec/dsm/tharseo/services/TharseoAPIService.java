@@ -10,6 +10,10 @@ import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 @Service
 public class TharseoAPIService {
 
@@ -41,7 +45,7 @@ public class TharseoAPIService {
         transactionSpotGrid.setOpenDate(Long.parseLong(jsonOrder.get("transactTime").toString()));
         transactionSpotGrid.setOpenTrade(false);
         transactionSpotGrid.setIsActive(1);
-        transactionSpotGrid.setStatus("Closed");
+        transactionSpotGrid.setStatus("Open");
         transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
         return transactionSpotGrid;
     }
@@ -51,13 +55,144 @@ public class TharseoAPIService {
         String type = "LIMIT";
         String timeInForce = "GTC";
         sb = binanceAPI.newOrderLimit(asset.getAcronym(), side, type, timeInForce, quantity, price);
-        JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
-        TransactionSpotGrid transactionSpotGrid = new TransactionSpotGrid();
-        System.out.println(">>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>RETURN DO NEWORDERLIMIT<<<<<<<<<<<<");
         System.out.println(sb.toString());
-        transactionSpotGrid.setOrderId(Long.parseLong(jsonOrder.get("orderId").toString()));
+        TransactionSpotGrid transactionSpotGrid = convertSBtoTransaction(sb, user, asset);
+        transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
+        return transactionSpotGrid;
+    }
+
+
+    public List<TransactionSpotGrid> newOrderLimitGrid(User user, Asset asset, String side, String quantity, Double price, Double priceTarget) {
+        List<TransactionSpotGrid> operation = new ArrayList<>();
+
+        TransactionSpotGrid buyTransaction = new TransactionSpotGrid();
+        buyTransaction.setUser(user);
+        buyTransaction.setAsset(asset);
+        buyTransaction.setOrigQty(quantity);
+        buyTransaction.setPrice(price);
+        buyTransaction.setPriceTarget(priceTarget);
+        buyTransaction.setSide(side);
+        buyTransaction.setStatus("Await");
+        buyTransaction.setOpenTrade(true);
+        buyTransaction.setTypeTransaction("LIMIT");
+        buyTransaction.setIsActive(1);
+
+
+        TransactionSpotGrid sellTransaction = new TransactionSpotGrid();
+        sellTransaction.setPrice(priceTarget);
+        sellTransaction.setIsActive(1);
+        sellTransaction.setStatus("Await");
+        sellTransaction.setOpenTrade(true);
+        sellTransaction.setOrigQty(quantity);
+        sellTransaction.setSide("SELL");
+        sellTransaction.setTypeTransaction("LIMIT");
+        sellTransaction.setPriceTarget(priceTarget);
+        sellTransaction.setAsset(asset);
+        sellTransaction.setUser(user);
+
+
+        transactionSpotGridService.insertTransactionSpotGrid(sellTransaction);
+        buyTransaction.setOrderPairTrade(sellTransaction.getId());
+        transactionSpotGridService.insertTransactionSpotGrid(buyTransaction);
+        sellTransaction.setOrderPairTrade(buyTransaction.getId());
+        transactionSpotGridService.insertTransactionSpotGrid(sellTransaction);
+
+        operation.add(buyTransaction);
+        operation.add(sellTransaction);
+        return operation;
+    }
+
+//    public TransactionSpotGrid awaitOrder(User user, Asset asset, String side, String quantity, Double priceTarget){
+//        TransactionSpotGrid sellTransaction = new TransactionSpotGrid();
+//        sellTransaction.setPrice(priceTarget);
+//        sellTransaction.setIsActive(1);
+//        sellTransaction.setStatus("Await");
+//        sellTransaction.setOpenTrade(true);
+//        sellTransaction.setOrigQty(quantity);
+//        sellTransaction.setSide(side);
+//        sellTransaction.setTypeTransaction("MARKET");
+//        sellTransaction.setPriceTarget(priceTarget);
+//        sellTransaction.setAsset(asset);
+//        sellTransaction.setUser(user);
+//
+//        return sellTransaction;
+//    }
+
+//    public List<TransactionSpotGrid> initGrid(User user, Asset asset, Double quota, Double percentGrid){
+//        TransactionSpotGrid newOrderBuy = newOrderMarket(user, asset, "BUY", "GTC", quota.toString());
+//        Double targetPrice = (newOrderBuy.getPrice() * percentGrid) + newOrderBuy.getPrice();
+//        newOrderBuy.setPriceTarget(targetPrice);
+//        newOrderBuy.setStatus("Open");
+//        transactionSpotGridService.insertTransactionSpotGrid(newOrderBuy);
+//
+//        TransactionSpotGrid newOrderSell = awaitOrder(user, asset, "SELL", quota.toString(), Double.parseDouble(String.format(Locale.US,"%.2f", targetPrice)));
+//        newOrderSell.setStatus("Open");
+//        newOrderSell.setOrderPairTrade(newOrderBuy.getId());
+//        transactionSpotGridService.insertTransactionSpotGrid(newOrderSell);
+//        newOrderBuy.setOrderPairTrade(newOrderSell.getId());
+//        transactionSpotGridService.insertTransactionSpotGrid(newOrderBuy);
+//
+//        List<TransactionSpotGrid> operations = new ArrayList<>();
+//        operations.add(newOrderBuy);
+//        operations.add(newOrderSell);
+//        return operations;
+//    }
+
+    public TransactionSpotGrid awaitOrder(User user, Asset asset, String side, String quantity, Double price, Double priceTarget){
+        TransactionSpotGrid sellTransaction = new TransactionSpotGrid();
+        sellTransaction.setPrice(price);
+        sellTransaction.setIsActive(1);
+        sellTransaction.setStatus("Await");
+        sellTransaction.setOpenTrade(true);
+        sellTransaction.setOrigQty(quantity);
+        sellTransaction.setSide(side);
+        sellTransaction.setTypeTransaction("MARKET");
+        sellTransaction.setPriceTarget(priceTarget);
+        sellTransaction.setAsset(asset);
+        sellTransaction.setUser(user);
+
+        return sellTransaction;
+    }
+    public List<TransactionSpotGrid> initGrid(User user, Asset asset, Double quota, Double percentGrid, Double price){
+//        TransactionSpotGrid newOrderBuy = newOrderMarket(user, asset, "BUY", "GTC", quota.toString());
+        Double targetPrice = (price * percentGrid) + price;
+        TransactionSpotGrid newOrderBuy = awaitOrder(user, asset, "BUY", quota.toString(), price, targetPrice);
+        newOrderBuy.setPriceTarget(targetPrice);
+        newOrderBuy.setStatus("Open");
+        transactionSpotGridService.insertTransactionSpotGrid(newOrderBuy);
+
+        TransactionSpotGrid newOrderSell = awaitOrder(user, asset, "SELL", quota.toString(), targetPrice, Double.parseDouble(String.format(Locale.US,"%.2f", targetPrice)));
+        newOrderSell.setStatus("Open");
+        newOrderSell.setOrderPairTrade(newOrderBuy.getId());
+        transactionSpotGridService.insertTransactionSpotGrid(newOrderSell);
+        newOrderBuy.setOrderPairTrade(newOrderSell.getId());
+        transactionSpotGridService.insertTransactionSpotGrid(newOrderBuy);
+
+        List<TransactionSpotGrid> operations = new ArrayList<>();
+        operations.add(newOrderBuy);
+        operations.add(newOrderSell);
+        return operations;
+    }
+
+    public TransactionSpotGrid executeOrder(TransactionSpotGrid transactionSpotGrid) {
+        TransactionSpotGrid transaction = new TransactionSpotGrid();
+        transaction = newOrderLimit(transactionSpotGrid.getUser(), transactionSpotGrid.getAsset(), transactionSpotGrid.getSide(), transactionSpotGrid.getOrigQty(), transactionSpotGrid.getPrice().toString());
+        return transaction;
+    }
+
+
+    public TransactionSpotGrid convertSBtoTransaction(StringBuilder sb, User user, Asset asset) {
+        TransactionSpotGrid transactionSpotGrid = new TransactionSpotGrid();
+        JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
+        if (jsonOrder.get("orderId") != null) {
+            transactionSpotGrid.setOrderId(Long.parseLong(jsonOrder.get("orderId").toString()));
+        }
+
         transactionSpotGrid.setOrigQty(jsonOrder.get("origQty").toString().replace("\"", ""));
-        transactionSpotGrid.setExecutedQty(jsonOrder.get("executedQty").toString().replace("\"", ""));
+        if (jsonOrder.get("executedQty") != null) {
+            transactionSpotGrid.setExecutedQty(jsonOrder.get("executedQty").toString().replace("\"", ""));
+        }
         transactionSpotGrid.setSide(jsonOrder.get("side").toString().replace("\"", ""));
         transactionSpotGrid.setUser(user);
         transactionSpotGrid.setTypeTransaction(jsonOrder.get("type").toString().replace("\"", ""));
@@ -67,16 +202,20 @@ public class TharseoAPIService {
         transactionSpotGrid.setOpenTrade(true);
         transactionSpotGrid.setIsActive(1);
         transactionSpotGrid.setStatus("Open");
-        transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
         return transactionSpotGrid;
     }
 
+
     public StringBuilder cancelOpenOrder(User user, TransactionSpotGrid transactionSpotGrid) {
         StringBuilder sb = new StringBuilder();
+        System.out.println("CANCEL ORDER>>>>>>>>>>>");
+        System.out.println(user);
+        System.out.println("ASSET: " + transactionSpotGrid.getAsset().getAcronym());
+        System.out.println("ORDERID: " + transactionSpotGrid.getOrderId());
         sb = binanceAPI.cancelOpenOrder(user, transactionSpotGrid.getAsset().getAcronym(), transactionSpotGrid.getOrderId().toString());
-              JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
+        JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
         String status = jsonOrder.get("status").toString().replace("\"", "");
-        if(status.equals("CANCELED")){
+        if (status.equals("CANCELED")) {
             transactionSpotGrid.setStatus("Canceled");
             transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
             sb.append("Order id: " + transactionSpotGrid.getOrderId() + " Canceled");
@@ -85,8 +224,6 @@ public class TharseoAPIService {
         }
         return sb;
     }
-
-
 
 
 }

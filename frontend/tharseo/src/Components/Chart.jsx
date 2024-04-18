@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ChartConstructor from "./ChartConstructor";
 
 function Chart({ data, wallet, setContainerOrder }) {
-  const [assetSelected, setAssetSelected] = useState("BTCUSDT");
+  const [assetSelected, setAssetSelected] = useState("BNBUSDT");
   const [valueAsset, setValueAsset] = useState(null);
   const [assetProfitValue, setAssetProfitValue] = useState(0.0);
   const [assetProfitPercent, setAssetProfitPercent] = useState(0.0);
@@ -30,11 +30,6 @@ function Chart({ data, wallet, setContainerOrder }) {
       setAssetSelected("ETHUSDT");
     });
   }
-
-
-  
-
-
 
   return (
     <div className="app-chart">
@@ -94,7 +89,11 @@ function Chart({ data, wallet, setContainerOrder }) {
                 candlestick_chart
               </span>
             </div>
-            <div className="btn-purchase" id="btn-purchase-manual" onClick={() => setContainerOrder(true)}>
+            <div
+              className="btn-purchase"
+              id="btn-purchase-manual"
+              onClick={() => setContainerOrder(true)}
+            >
               <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
                 shopping_cart
               </span>

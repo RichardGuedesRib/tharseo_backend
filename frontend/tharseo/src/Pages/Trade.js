@@ -115,7 +115,7 @@ function Trade({ user, addressServer }) {
                 Configurar Automatização
               </span>
               <span className="title-active-trades" onClick={() => show()}>
-                Abrir Container
+                Separado para Buttons Filter
               </span>
             </section>
 

@@ -29,7 +29,7 @@ export default function Rowtabletrades({
 
     const isActive = { isActive: toggle ? 0 : 1 };
 
-    const urlRequest = `${addressServer}/strategygriduser?user=1&acronym=${name}`;
+    const urlRequest = `${addressServer}/strategygriduser/insertgrid?user=1&acronym=${name}`;
 
     fetch(urlRequest, {
       method: "POST",

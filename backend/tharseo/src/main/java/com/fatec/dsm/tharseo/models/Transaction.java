@@ -166,4 +166,25 @@ public class Transaction implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", origQty='" + origQty + '\'' +
+                ", executedQty='" + executedQty + '\'' +
+                ", side='" + side + '\'' +
+                ", user=" + user +
+                ", asset=" + asset +
+                ", price=" + price +
+                ", stopPrice=" + stopPrice +
+                ", openDate=" + openDate +
+                ", typeTransaction='" + typeTransaction + '\'' +
+                ", openTrade=" + openTrade +
+                ", status='" + status + '\'' +
+                ", orderPairTrade=" + orderPairTrade +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

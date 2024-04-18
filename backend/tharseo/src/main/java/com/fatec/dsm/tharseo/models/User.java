@@ -27,7 +27,7 @@ public class User implements Serializable {
     private List<AssetsUser> wallet;
     @OneToMany(mappedBy = "user")
     private List<StrategyGridUser> grids;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transaction> transactions = new ArrayList<>();
     private String apiKey;
     private String secretKey;

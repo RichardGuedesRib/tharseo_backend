@@ -31,7 +31,7 @@ public class BinanceWebSocketClient {
         WebSocketSession session;
 
         try {
-            session = client.doHandshake(handler, new WebSocketHttpHeaders(), URI.create("wss://stream.binance.com:9443/ws/btcusdt@kline_1m")).get();
+            session = client.doHandshake(handler, new WebSocketHttpHeaders(), URI.create("wss://stream.binance.com:9443/ws/bnbusdt@kline_1m")).get();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao conectar ao WebSocket da Binance", e);
         }

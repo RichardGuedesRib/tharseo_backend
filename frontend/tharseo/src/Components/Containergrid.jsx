@@ -56,7 +56,7 @@ export default function Containergrid({
 
     console.log("STRINGFY", configStrategy);
 
-    const urlRequest = `${addressServer}/strategygriduser?user=1&acronym=${gridData.name}`;
+    const urlRequest = `${addressServer}/strategygriduser/insertgrid?user=1&acronym=${gridData.name}`;
 
     await fetch(urlRequest, {
       method: "POST",

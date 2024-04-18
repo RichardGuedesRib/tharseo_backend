@@ -57,7 +57,7 @@ export default function Tableopentrade({
                 price={item.price}
                 profit={item.profit ? item.profit : "0.00"}
                 typeTransaction={item.typeTransaction}
-                pairTransaction={item.pairTransaction}
+                pairTransaction={item.orderPairTrade}
                 active={item.openTrade === false ? "Não" : "Sim"}
                 status={item.status}
                 user={user}

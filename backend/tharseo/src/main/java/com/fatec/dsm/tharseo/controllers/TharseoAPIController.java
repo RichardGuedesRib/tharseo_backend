@@ -1,8 +1,10 @@
 package com.fatec.dsm.tharseo.controllers;
 
-import com.fatec.dsm.tharseo.config.Stage;
 import com.fatec.dsm.tharseo.external.BinanceAPI;
-import com.fatec.dsm.tharseo.models.*;
+import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.Transaction;
+import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
+import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,8 @@ public class TharseoAPIController {
     TharseoAPIService tharseoAPIService;
     @Autowired
     StrategyGridUserService strategyGridUserService;
+    @Autowired
+    EngineTradeSystemGrid engineTradeSystemGrid;
 
 
     @GetMapping(value = "/testconnection")
@@ -100,6 +104,7 @@ public class TharseoAPIController {
 
 
     }
+
     @GetMapping(value = "/getusertransactions")
     public ResponseEntity<?> getUserTransactions(@RequestParam(name = "user", required = true) Long id,
                                                  @RequestParam(name = "acronym", required = true) String acronym) {
@@ -169,7 +174,7 @@ public class TharseoAPIController {
 
     }
 
-     @DeleteMapping(value = "/cancelopenorder")
+    @DeleteMapping(value = "/cancelopenorder")
     public ResponseEntity<?> cancelOpenOrder(@RequestParam(name = "user", required = true) Long idUser,
                                              @RequestParam(name = "orderid", required = true) Long orderId) {
         User user = userService.findById(idUser);
@@ -185,6 +190,17 @@ public class TharseoAPIController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
     }
 
+    @PostMapping(value = "/operatinggrid")
+    public ResponseEntity<?> operatingGrid(@RequestParam(name = "price", required = true) Double price) {
+        List<TransactionSpotGrid> operations = engineTradeSystemGrid.operatingGridMode();
+        return ResponseEntity.ok().body(operations);
+    }
+
+    @PostMapping(value = "/checkorders")
+    public ResponseEntity<?> checkOrders(@RequestParam(name = "price", required = true) Double price) {
+       List<TransactionSpotGrid> order = engineTradeSystemGrid.checkOrders();
+        return ResponseEntity.ok().body(order);
+    }
 
 
 }

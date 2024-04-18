@@ -1,8 +1,10 @@
 package com.fatec.dsm.tharseo.controllers;
 
 import com.fatec.dsm.tharseo.models.StrategyGridUser;
+import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
+import com.fatec.dsm.tharseo.services.EngineTradeSystemGrid;
 import com.fatec.dsm.tharseo.services.StrategyGridUserService;
 import com.fatec.dsm.tharseo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/strategygriduser")
@@ -23,6 +26,8 @@ public class StrategyGridUserController {
     UserService userService;
     @Autowired
     AssetService assetService;
+    @Autowired
+    EngineTradeSystemGrid engineTradeSystemGrid;
 
 
     @GetMapping
@@ -41,13 +46,11 @@ public class StrategyGridUserController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<?> insertOne(@RequestParam(name = "user", required = true) Long idUser,
-                                       @RequestParam(name = "acronym", required = true) String acronym,
-                                       @RequestBody StrategyGridUser strategyGridUser) {
+    @PostMapping(value = "/insertgrid")
+    public ResponseEntity<?> insertGrid(@RequestParam(name = "user", required = true) Long idUser,
+                                        @RequestParam(name = "acronym", required = true) String acronym,
+                                        @RequestBody StrategyGridUser strategyGridUser) {
 
-        System.out.println(">>>>>>>>>>>>>>>>>");
-        System.out.println(strategyGridUser);
         User user = userService.findById(idUser);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " not found");
@@ -62,17 +65,12 @@ public class StrategyGridUserController {
         }
 
         if (grid != null) {
-            System.out.println("GRID>>>>>>");
-            System.out.println(grid);
             grid.setIsActive(strategyGridUser.getIsActive());
-            if(strategyGridUser.getConfigStrategy() != null){
+            if (strategyGridUser.getConfigStrategy() != null) {
                 grid.setConfigStrategy(strategyGridUser.getConfigStrategy());
             }
-            System.out.println("GRID>>>OK!>>>");
-            System.out.println(grid);
-
             int index = grids.indexOf(grid);
-            if(index != -1){
+            if (index != -1) {
                 grids.set(index, grid);
             }
 
@@ -90,6 +88,23 @@ public class StrategyGridUserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(strategyGridUser);
     }
 
+    @PostMapping(value = "/creategridorders")
+    public ResponseEntity<?> createGridOrders(@RequestParam(name = "user", required = true) Long idUser, @RequestParam(name = "acronym", required = true) String acronym) {
+        User user = userService.findById(idUser);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " not found");
+        }
+        Optional<StrategyGridUser> asset = user.getGrids().stream().filter(el -> el.getAcronym().equals(acronym)).findFirst();
+        if (asset.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " not found");
+        }
+        List<List<TransactionSpotGrid>> operations = strategyGridUserService.createGridOrder(user, acronym);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(operations);
+
+
+    }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteStrategyGridUser(@PathVariable Long id) {
         StrategyGridUser strategyGridUser = strategyGridUserService.findById(id);
@@ -100,5 +115,11 @@ public class StrategyGridUserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Strategy id: " + id + " deleted");
 
     }
+
+//    @GetMapping(value = "/testengine")
+//    public ResponseEntity<?> testeengine() {
+//      List<TransactionSpotGrid> transactions = engineTradeSystemGrid.checkOrders();
+//        return ResponseEntity.ok().body(transactions);
+//    }
 
 }

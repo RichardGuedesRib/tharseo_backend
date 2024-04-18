@@ -47,4 +47,13 @@ public class TransactionSpotGrid  extends Transaction {
     public void setProfit(Double profit) {
         this.profit = profit;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionSpotGrid{" +
+                "priceTarget=" + priceTarget +
+                ", closeDate=" + closeDate +
+                ", profit=" + profit +
+                '}';
+    }
 }

@@ -75,9 +75,9 @@ function Home({ user, addressServer, getUser }) {
       if (price === "") {
         alert("Digite o preço desejado");
       }
-      urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BTCUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
+      urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
     } else if (typeOperation === "MARKET") {
-      urlRequest = `${addressServer}/tharseo/newordermarket?user=1&acronym=BTCUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
+      urlRequest = `${addressServer}/tharseo/newordermarket?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
     } else {
       alert("Escolha o lado da operação");
     }
@@ -111,7 +111,7 @@ function Home({ user, addressServer, getUser }) {
           >
             <span className="title-container-order">Ordem Manual</span>
 
-            <span className="asset-container-order">BTCUSDT</span>
+            <span className="asset-container-order">BNBUSDT</span>
 
             <aside className="container-side-order">
               <span

@@ -15,11 +15,10 @@ function OpenTrades({ user, addressServer, getUser }) {
   useEffect(() => {
     if (userTransactions && userTransactions.length > 0) {
       const open = userTransactions.filter(
-        (item) => item.status === "Open"
+        (item) => item.status === "Open" || item.status === "Await"
       );
       setOpenTransactions(open);
     }
-   
   }, [userTransactions]);
 
   const showBalance = () => {
@@ -96,9 +95,7 @@ function OpenTrades({ user, addressServer, getUser }) {
 
           <aside className="container-trades">
             <section className="container-dashboard-right-bottom-top">
-              <span className="title-active-trades">
-                Trades Pendentes
-              </span>
+              <span className="title-active-trades">Trades Pendentes</span>
             </section>
 
             <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
