@@ -17,7 +17,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/strategygriduser")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class StrategyGridUserController {
 
     @Autowired

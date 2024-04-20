@@ -29,11 +29,11 @@ public class EngineTradeSystemGrid {
     AssetService assetService;
 
     public List<TransactionSpotGrid> operatingGridMode() {
-        System.out.println(">>>OperatingGrid Escope<<<");
+//        System.out.println(">>>OperatingGrid Escope<<<");
         List<Kline> chart = chartService.findAll();
         Kline lastCandlestick = chart.get(chart.size() - 1);
         Double price = Double.parseDouble(lastCandlestick.getClosePrice());
-        System.out.println("PRICE: " + price);
+//        System.out.println("PRICE: " + price);
         List<StrategyGridUser> strategyGridUsers = strategyGridUserService.findAll();
         List<StrategyGridUser> activeGrids = strategyGridUsers.stream().filter(item -> item.getIsActive() == 1).toList();
         List<TransactionSpotGrid> operations = new ArrayList<>();
@@ -56,20 +56,20 @@ public class EngineTradeSystemGrid {
             if (!activeTransactions.isEmpty()) {
 
                 if (activeTransactions.size() <= nGrids) {
-                    System.out.println(">>>>>Transactions Active<<<<");
+//                    System.out.println(">>>>>Transactions Active<<<<");
 
                     Transaction checkFirstGrid = activeTransactions.get(0);
-                    System.out.println("CHECKFIRSTGRID>>  " + checkFirstGrid.getPrice());
+//                    System.out.println("CHECKFIRSTGRID>>  " + checkFirstGrid.getPrice());
                     if (price < (checkFirstGrid.getPrice() - (checkFirstGrid.getPrice() * percentGrid))) {
                         operations = tharseoAPIService.initGrid(user, asset, quota, percentGrid, price);
-                        System.out.println(">>>ORDER BY FIRST IN QUEUE<<<");
+//                        System.out.println(">>>ORDER BY FIRST IN QUEUE<<<");
                         return operations;
                     }
                     Transaction checkLastGrid = activeTransactions.get(activeTransactions.size() - 1);
-                    System.out.println("CHECKLASTGRID>>  " + checkLastGrid.getPrice());
+//                    System.out.println("CHECKLASTGRID>>  " + checkLastGrid.getPrice());
                     if (price > (checkLastGrid.getPrice() + (checkLastGrid.getPrice() * percentGrid))) {
                         operations = tharseoAPIService.initGrid(user, asset, quota, percentGrid, price);
-                        System.out.println(">>>ORDER BY LAST IN QUEUE<<<");
+//                        System.out.println(">>>ORDER BY LAST IN QUEUE<<<");
                         return operations;
                     }
 
@@ -77,8 +77,8 @@ public class EngineTradeSystemGrid {
                     Double previousTransactionPrice = null;
                     Double nextTransactionPrice = null;
                     for (Transaction item : activeTransactions) {
-                        System.out.println("PRICE: " + price);
-                        System.out.println("TESTANDO BETWEEN PRICE: " + item.getPrice());
+//                        System.out.println("PRICE: " + price);
+//                        System.out.println("TESTANDO BETWEEN PRICE: " + item.getPrice());
                         if (item.getPrice() >= price && (nextTransactionPrice == null || item.getPrice() < nextTransactionPrice)) {
                             nextTransactionPrice = item.getPrice();
                         }
@@ -86,28 +86,28 @@ public class EngineTradeSystemGrid {
                             previousTransactionPrice = item.getPrice();
                         }
                     }
-                    System.out.println("Smaller: " + previousTransactionPrice);
-                    System.out.println("Larger: " + nextTransactionPrice);
+//                    System.out.println("Smaller: " + previousTransactionPrice);
+//                    System.out.println("Larger: " + nextTransactionPrice);
                     if (previousTransactionPrice != null && nextTransactionPrice != null) {
                         Double previousMargin = previousTransactionPrice + (previousTransactionPrice * percentGrid);
                         Double nextMargin = nextTransactionPrice - (nextTransactionPrice * percentGrid);
-                        System.out.println("SMALLER E LARGER TARGET: " + previousMargin + " | " + nextMargin);
+//                        System.out.println("SMALLER E LARGER TARGET: " + previousMargin + " | " + nextMargin);
                         if (price > previousMargin && price < nextMargin) {
                             operations = tharseoAPIService.initGrid(user, asset, quota, percentGrid, price);
-                            System.out.println(">>>ORDER BETWEEN TRANSACTIONS<<<");
+//                            System.out.println(">>>ORDER BETWEEN TRANSACTIONS<<<");
                             return operations;
                         }
                     }
 
 
-                    System.out.println("##### NO ORDERS ####");
+//                    System.out.println("##### NO ORDERS ####");
                     return operations;
 
                 } else {
                     break;
                 }
             } else {
-                System.out.println(">>>>>QUEUE EMPTY -> DIRECT ORDER<<<<");
+//                System.out.println(">>>>>QUEUE EMPTY -> DIRECT ORDER<<<<");
                 operations = tharseoAPIService.initGrid(user, asset, quota, percentGrid, price);
                 return operations;
             }
@@ -129,14 +129,14 @@ public class EngineTradeSystemGrid {
         if(!openSellTransactions.isEmpty()){
             for(TransactionSpotGrid transaction: openSellTransactions){
                 if(price > transaction.getPrice()){
-                    System.out.println("Transaction id: " + transaction.getId() + "is Closed");
+//                    System.out.println("Transaction id: " + transaction.getId() + "is Closed");
                     transaction.setStatus("Closed");
                     TransactionSpotGrid transactionBuy = transactionSpotGridService.findTransactionSpotGridById(transaction.getOrderPairTrade());
                     operations.add(transaction);
                     if(transactionBuy != null){
                         transactionBuy.setStatus("Closed");
                         transactionSpotGridService.insertTransactionSpotGrid(transactionBuy);
-                        System.out.println("Transaction Buy Id: " +transactionBuy.getId() + "is closed");
+//                        System.out.println("Transaction Buy Id: " +transactionBuy.getId() + "is closed");
                         operations.add(transactionBuy);
                     }
                     transactionSpotGridService.insertTransactionSpotGrid(transaction);
@@ -144,13 +144,13 @@ public class EngineTradeSystemGrid {
             }
 
         }
-        System.out.println(">>>>NO TARGET SELL ORDERS<<<<");
+//        System.out.println(">>>>NO TARGET SELL ORDERS<<<<");
         return operations;
     }
 
     @Scheduled(fixedDelay = 5000)
     public void activeOperation(){
-        System.out.println("New Check Wave");
+//        System.out.println("New Check Wave");
         operatingGridMode();
         checkOrders();
     }

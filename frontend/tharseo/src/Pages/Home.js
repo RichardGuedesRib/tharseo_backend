@@ -55,7 +55,7 @@ function Home({ user, addressServer, getUser }) {
       const walletFilter = Array.isArray(wallet)
         ? wallet.slice(0, limitActiveTrade)
         : [];
-    
+
       setAssetsActiveTrade(walletFilter);
     }
 
@@ -77,7 +77,7 @@ function Home({ user, addressServer, getUser }) {
       }
       urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
     } else if (typeOperation === "MARKET") {
-      urlRequest = `${addressServer}/tharseo/newordermarket?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
+      urlRequest = `${addressServer}/tharseo/newordermarketmanual?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
     } else {
       alert("Escolha o lado da operação");
     }
@@ -306,14 +306,14 @@ function Home({ user, addressServer, getUser }) {
               </Link>
             </section>
             <section className="container-dashboard-right-bottom-middle footer-home">
-                <Tabletrade
-                  table={assetsActiveTrade}
-                  setContainerInputGrid={setContainerInputGrid}
-                  getGridData={getGridData}
-                  setGridConfig={user.grids}
-                  addressServer={addressServer}
-                  className="show-more"
-                />
+              <Tabletrade
+                table={assetsActiveTrade}
+                setContainerInputGrid={setContainerInputGrid}
+                getGridData={getGridData}
+                setGridConfig={user.grids}
+                addressServer={addressServer}
+                className="show-more"
+              />
             </section>
           </aside>
         </aside>

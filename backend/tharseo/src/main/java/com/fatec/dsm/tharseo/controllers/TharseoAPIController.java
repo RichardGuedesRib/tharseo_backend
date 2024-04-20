@@ -17,7 +17,8 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(value = "/tharseo")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class TharseoAPIController {
 
 
@@ -149,6 +150,27 @@ public class TharseoAPIController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
         }
         TransactionSpotGrid transaction = tharseoAPIService.newOrderMarket(user, asset, side, timeInForce, quantity);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
+
+    }
+
+    @PostMapping(value = "/newordermarketmanual")
+    public ResponseEntity<?> newOrderMarketManual(@RequestParam(name = "user", required = true) Long idUser,
+                                            @RequestParam(name = "acronym", required = true) String acronym,
+                                            @RequestParam(name = "side", required = true) String side,
+                                            @RequestParam(name = "timeinforce", required = true) String timeInForce,
+                                            @RequestParam(name = "quantity", required = true) String quantity
+    ) {
+
+        User user = userService.findById(idUser);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
+        }
+        Asset asset = assetService.findByAcronym(acronym);
+        if (asset == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
+        }
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderMarketManual(user, asset, side, timeInForce, quantity);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
 
     }
