@@ -37,6 +37,11 @@ public class UserService {
         return user.orElse(null);
     }
 
+    public User findByPhoneNumber(String phoneNumber) {
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+        return user.orElse(null);
+    }
+
     public User updateUser(Long id, User user) {
         User oldUser = findById(id);
         if (oldUser == null) {

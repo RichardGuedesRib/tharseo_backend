@@ -27,6 +27,8 @@ public class ChartController {
     ResponseEntity<?> getChartBtc1m(){
         List<Kline> klines = chartService.findAll();
 //        System.out.println(klines);
+//        System.out.println("Acessou o grafico!");
              return ResponseEntity.status(HttpStatus.ACCEPTED).body(klines);
     }
+
 }

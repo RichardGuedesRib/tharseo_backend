@@ -96,6 +96,7 @@ function Home({ user, addressServer, getUser }) {
   };
 
   return (
+    
     <main className="app-dashboard">
       <section className="container-dashboard">
         <Menubar />

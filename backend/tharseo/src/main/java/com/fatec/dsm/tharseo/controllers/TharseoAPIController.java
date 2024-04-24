@@ -83,6 +83,8 @@ public class TharseoAPIController {
     @GetMapping(value = "/updatedatauser/{id}")
     public ResponseEntity<?> updateDataUser(@PathVariable Long id) {
 
+//        System.out.println(">>>Acessou data User<<<");
+
         User user = userService.findById(id);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User ID: " + id + " not found");

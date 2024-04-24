@@ -7,6 +7,8 @@ import Trade from "./Pages/Trade";
 import OldTransactions from "./Pages/OldTransactions";
 import OpenTrades from "./Pages/OpenTrades";
 import Config from "./Pages/Config";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -39,8 +41,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route
-            exact
-            path="/"
+            path="/home"
             element={
               <Home
                 user={user}
@@ -83,7 +84,9 @@ function App() {
             }
           />
           <Route path="/chart" element={<Chart />} />
-          <Route path="/" element={""} />
+          <Route  exact path="/" element={<Login addressServerTharseo={addressServerTharseo} />} />
+          <Route path="/register" element={<Register />} />
+          {/* <Route path="/" element={""} /> */}
         </Routes>
       </div>
     </Router>

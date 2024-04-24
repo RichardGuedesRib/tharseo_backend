@@ -1,332 +1,149 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
-import Menubar from "../Components/menubar.jsx";
-import Chart from "../Components/Chart.jsx";
-import Menuwallet from "../Components/Menuwallet.jsx";
-import Tabletrade from "../Components/Tabletrade.jsx";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Home({ user, addressServer, getUser }) {
-  const [chartInfo, setChartInfo] = useState([]);
-  const [containerOrder, setContainerOrder] = useState(false);
-  const [visibleBalance, setVisibleBalance] = useState(false);
-  const [price, setPrice] = useState("");
-  const [amount, setAmount] = useState("");
-  const [sideOperation, setSideOperation] = useState("BUY");
-  const [typeOperation, setTypeOperation] = useState("");
-  const wallet = user.wallet;
-  const [limitAsset, setLimitAsset] = useState(5);
-  const [limitActiveTrade, setLimiteActiveTrade] = useState(3);
-  const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);
-  const [gridData, setGridData] = useState(null);
-  const [containerInputGrid, setContainerInputGrid] = useState(false);
+function Login({ addressServerTharseo }) {
+  const [userLogin, setUserLogin] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [firstContainer, setFirstContainer] = useState("");
+  const [secondContainer, setSecondContainer] = useState("close");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
-      try {
-        const res = await fetch(addressServer + "/chart");
-
-        if (!res.ok) {
-          throw new Error("Error when get chart info");
-        }
-        const data = await res.json();
-        let chartCandles = [];
-        for (let i = 0; i < data.length; i++) {
-          const candleRequest = data[i];
-          const startTimeInMillis = parseInt(candleRequest.startTime);
-          const newCandle = {
-            x: new Date(startTimeInMillis),
-            y: [
-              parseFloat(candleRequest.openPrice),
-              parseFloat(candleRequest.highPrice),
-              parseFloat(candleRequest.lowPrice),
-              parseFloat(candleRequest.closePrice),
-            ],
-          };
-          chartCandles.push(newCandle);
-        }
-        setChartInfo(chartCandles);
-      } catch (error) {
-        console.error("Error Chart Resquest", error);
-      }
-    }, 5000);
-
-    if (wallet) {
-      const walletFilter = Array.isArray(wallet)
-        ? wallet.slice(0, limitActiveTrade)
-        : [];
-
-      setAssetsActiveTrade(walletFilter);
-    }
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const getGridData = (data) => {
-    setGridData(data);
-  };
-
-  const openOrder = async () => {
-    let urlRequest;
-    if (amount === "") {
-      alert("Digite a quantidade");
-    }
-    if (typeOperation === "LIMIT") {
-      if (price === "") {
-        alert("Digite o preço desejado");
-      }
-      urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
-    } else if (typeOperation === "MARKET") {
-      urlRequest = `${addressServer}/tharseo/newordermarketmanual?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
-    } else {
-      alert("Escolha o lado da operação");
-    }
-
+  const checkUser = async () => {
+    const urlRequest = `${addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
     try {
-      const request = await fetch(urlRequest, { method: "POST" });
+      const request = await fetch(urlRequest, { method: "GET" });
       if (!request.ok) {
-        throw new Error("Error when post order");
+        alert("Login ou senha incorreto");
+      } else {
+        alert("Login Ok");
+        setFirstContainer("close");
+        setSecondContainer("");
       }
-      await getUser();
-      alert("OK!");
-      setContainerOrder(false);
     } catch (error) {
-      console.error(`Error Requesting Order:`, error);
+      console.error(error);
     }
   };
+  const backLogin = () => {
+    setSecondContainer("close");
+    setFirstContainer("");
+  };
+  const authenticate = async () => {
+    const urlRequest = `${addressServerTharseo}/authenticate/checkpassword`;
+    try {
+      const request = await fetch(urlRequest, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          login: userLogin,
+          password: userPassword,
+        }),
+      });
+      if (!request.ok) {
+        alert("Usuário ou Senha Inválidos");
+      } else {
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {}, []);
 
   return (
     <main className="app-dashboard">
-      <section className="container-dashboard">
-        <Menubar />
+      <section className="container-dashboard container-login">
+        <section className="section-login-elements">
+          <section className="login-title">THARSEO</section>
 
-        <aside className="container-dashboard-right">
-          {/* Inicio Componente */}
-
-          <section
-            className={`container-order ${
-              containerOrder ? "active" : "hidden"
-            }`}
-            id="container_order"
-          >
-            <span className="title-container-order">Ordem Manual</span>
-
-            <span className="asset-container-order">BNBUSDT</span>
-
-            <aside className="container-side-order">
-              <span
-                className="container-side-buy"
-                onClick={() => setSideOperation("BUY")}
-              >
-                <span class="material-symbols-outlined">shopping_cart</span>
-                <span className="btn-order-buy">BUY</span>
+          <section className={`section-login-elements-one ${firstContainer}`}>
+            <section className="login-description">E-mail ou Celular*</section>
+            <section className="login-user">
+              <span className="login-user-icon">
+                <span class="material-symbols-outlined">person</span>
               </span>
-              <span
-                className="container-side-sell"
-                onClick={() => setSideOperation("SELL")}
-              >
-                <span class="material-symbols-outlined">paid</span>
-                <span className="btn-order-sell">SELL</span>
-              </span>
-            </aside>
-
-            <aside className="container-type-order">
-              <span
-                className="type-order"
-                style={{
-                  backgroundColor:
-                    typeOperation === "LIMIT" ? "#006BFA" : "#2A2A2A",
-                }}
-                onClick={() => setTypeOperation("LIMIT")}
-              >
-                LIMIT
-              </span>
-
-              <span
-                className="type-order"
-                style={{
-                  backgroundColor:
-                    typeOperation === "MARKET" ? "#006BFA" : "#2A2A2A",
-                }}
-                onClick={() => setTypeOperation("MARKET")}
-              >
-                MARKET
-              </span>
-            </aside>
-
-            <div className="container-inputs-order">
-              <label
-                className="label-input"
-                style={{
-                  backgroundColor: typeOperation === "MARKET" ? "#2A2A2A" : "",
-                }}
-              >
-                Price:{" "}
-                <input
-                  required
-                  type="number"
-                  name="price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="input-order"
-                  disabled={typeOperation === "MARKET"}
-                />
-              </label>
-            </div>
-            <div className="container-inputs-order">
-              <label className="label-input">
-                Amount:{" "}
-                <input
-                  required
-                  type="number"
-                  name="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="input-order"
-                />
-              </label>
-            </div>
-
-            <section className="container-buttons-order">
-              <section
-                className="btn-type-order"
-                onClick={openOrder}
-                style={{
-                  backgroundColor:
-                    sideOperation === "SELL" ? "#E55764" : "#56BC7C",
-                }}
-              >
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
-                >
-                  {sideOperation === "SELL" ? "paid" : "shopping_cart"}
-                </span>
-                <span className="text-btn-cancel-order">
-                  {sideOperation === "SELL" ? "SELL" : "BUY"}
-                </span>
-              </section>
-
-              <aside
-                className="btn-order-cancel"
-                onClick={() => setContainerOrder(false)}
-              >
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
-                >
-                  close
-                </span>
-                <span className="text-btn-cancel-order">CANCELAR</span>
-              </aside>
-            </section>
-          </section>
-          <section className="effect-disable"></section>
-
-          {/* Final Componente */}
-
-          <aside className="container-dashboard-right-top">
-            <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">João</span>
-            </section>
-            <section className="container-dashboard-right-top-right">
-              <section className="container-balance-visible">
-                <span
-                  className="icon-visible-balance"
-                  onClick={() => setVisibleBalance(!visibleBalance)}
-                >
-                  <span
-                    class="material-symbols-outlined"
-                    id="icon-visible"
-                    style={{ fontSize: 20 }}
-                  >
-                    {visibleBalance ? "visibility" : "visibility_off"}
-                  </span>
-                </span>
-                <span className="text-balance" id="balance-text">
-                  {visibleBalance
-                    ? `$ ${wallet
-                        .find((item) => item.acronym === "USDTUSDT")
-                        .quantity.toFixed(0)}`
-                    : "$ -----"}
-                </span>
-              </section>
-
-              <span className="icon-notification-header">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
-                >
-                  notifications_unread
-                </span>
-              </span>
-              <span className="text-name-user">Joao</span>
-              <span className="avatar-header-user">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 50 }}
-                >
-                  face
-                </span>
-              </span>
-            </section>
-          </aside>
-
-          <aside className="container-dashboard-right-middle">
-            <aside className="menu-wallet">
-              <section className="container-title-menu-wallet">
-                <span className="title-menu-wallet">Ativos em Carteira</span>
-              </section>
-              <Menuwallet wallet={wallet} limit={limitAsset} />
-
-              <section className="container-button">
-                <span
-                  className="btn-view-all"
-                  id="btnviewall"
-                  onClick={showMoreAssets}
-                >
-                  <span className="text-btn-view-all" id="btn-view-all">
-                    Ver Mais
-                  </span>
-                </span>
-              </section>
-            </aside>
-            <Chart
-              data={chartInfo}
-              wallet={wallet}
-              setContainerOrder={setContainerOrder}
-            />
-          </aside>
-
-          <aside className="container-dashboard-right-bottom">
-            <section className="container-dashboard-right-bottom-top">
-              <span className="title-active-trades">Ativar Trade</span>
-              <Link to="/trade" className="btn-showmore">
-                <span>Ver Todos</span>
-              </Link>
-            </section>
-            <section className="container-dashboard-right-bottom-middle footer-home">
-              <Tabletrade
-                table={assetsActiveTrade}
-                setContainerInputGrid={setContainerInputGrid}
-                getGridData={getGridData}
-                setGridConfig={user.grids}
-                addressServer={addressServer}
-                className="show-more"
+              <input
+                type="text"
+                placeholder="Digite aqui..."
+                className="login-user-text"
+                onChange={(e) => setUserLogin(e.target.value)}
               />
             </section>
-          </aside>
-        </aside>
+            <section className="login-select-account">
+              <span className="login-select-account-icon">
+                {" "}
+                <span class="material-symbols-outlined">g_translate</span>
+              </span>
+
+              <span className="login-select-account-description">
+                <span className="login-select-account-description-text">
+                  {" "}
+                  Login com o Google
+                </span>
+              </span>
+            </section>
+            <section className="login-select-account">
+              <span className="login-select-account-icon">
+                {" "}
+                <span class="material-symbols-outlined">nutrition</span>
+              </span>
+
+              <span className="login-select-account-description">
+                <span className="login-select-account-text">
+                  Login com a Apple
+                </span>
+              </span>
+            </section>
+            <section className="login-btn">
+              <a href="/register" className="login-btn-createacc">
+                Criar Conta
+              </a>
+
+              <span className="login-btn-acess" onClick={checkUser}>
+                <span>Acessar</span>{" "}
+              </span>
+            </section>
+          </section>
+
+          <section className={`section-login-elements-two ${secondContainer}`}>
+            <section className="login-btn " onClick={backLogin}>
+              <span className="login-btn-createacc btn-back-login">Voltar</span>
+            </section>
+            <section className="login-description text-welcome-login">
+              Bem vindo de volta, {userLogin}
+            </section>
+
+            <section className="description-password">
+              <section className="login-description description-title-password ">
+                Senha*
+              </section>
+              <section className="login-password">
+                <span className="login-password-icon">
+                  <span class="material-symbols-outlined">key</span>
+                </span>
+                <input
+                  type="password"
+                  placeholder="Digite aqui sua senha..."
+                  className="login-user-text"
+                  onChange={(e) => setUserPassword(e.target.value)}
+                />
+              </section>
+            </section>
+
+            <section className="login-btn login-btn-section-two">
+              <a href="/" className="login-btn-createacc">
+                Esqueceu sua senha
+              </a>
+
+              <span className="login-btn-acess" onClick={authenticate}>
+                <span>Acessar</span>{" "}
+              </span>
+            </section>
+          </section>
+        </section>
       </section>
     </main>
   );
-
-  function showMoreAssets() {
-    setLimitAsset((prevLimit) => prevLimit + 5);
-    document
-      .getElementsByClassName("container-assets-wallet")[0]
-      ?.classList.add("show-more");
-  }
 }
 
-export default Home;
+export default Login;
