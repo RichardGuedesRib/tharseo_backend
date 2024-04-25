@@ -1381,8 +1381,6 @@ body {
     transition: .5s;
     background-color: #9CA3AF;
     color: #374151;
-
-
 }
 
 .section-sections-register {
@@ -1596,8 +1594,31 @@ body {
     transition: .5s;
 }
 
+.alert-log-register{
+    font-size: .8rem;
+    color: #E55764;
+}
+
 .close{
     display: none;
 }
+
+.register-btn-acess-form-two{
+    border: none;
+}
+
+.btn-section-three{
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: #9CA3AF;
+}
+
+.btn-section-three:hover{
+    text-decoration-color:#006BFA ;
+    transition: .5s;
+    color: #006BFA;
+}
+
+
 
 /* #181A20 */

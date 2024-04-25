@@ -48,6 +48,19 @@ public class User implements Serializable {
         this.isactive = isactive;
     }
 
+    public User(Long id, String name, String lastname, String phoneNumber, String email, String password, Integer isactive, String apiKey, String secretKey) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+        this.wallet = new ArrayList<>();
+        this.isactive = isactive;
+        this.apiKey = apiKey;
+        this.secretKey = secretKey;
+    }
+
     public Long getId() {
         return id;
     }

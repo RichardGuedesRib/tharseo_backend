@@ -21,7 +21,7 @@ function Login({ addressServerTharseo }) {
         setSecondContainer("");
       }
     } catch (error) {
-      console.error(error);
+     
     }
   };
   const backLogin = () => {

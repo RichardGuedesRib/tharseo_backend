@@ -85,7 +85,7 @@ function App() {
           />
           <Route path="/chart" element={<Chart />} />
           <Route  exact path="/" element={<Login addressServerTharseo={addressServerTharseo} />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register addressServerTharseo={addressServerTharseo} />} />
           {/* <Route path="/" element={""} /> */}
         </Routes>
       </div>

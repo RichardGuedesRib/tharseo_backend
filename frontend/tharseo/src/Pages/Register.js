@@ -1,7 +1,90 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Register({}) {
+function Register({ addressServerTharseo }) {
+  const [logform, setLogForm] = useState("");
+  const [userLogin, setUserLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [apiKey, setApiKey] = useState("");
+  const [secretKey, setSecretKey] = useState("");
+  const [firstSectionOk, setFirstSectionOk] = useState(false);
+  const [secondSectionOk, setSecondSectionOk] = useState(false);
+  const [thirdSectionOk, setThirdSectionOk] = useState(false);
+  const [firstContainerRegister, setFirstContainerRegister] = useState("");
+  const [secondContainerRegister, setSecondContainerRegister] =
+    useState("close");
+  const [thirdContainerRegister, setThirdContainerRegister] = useState("close");
+  const navigate = useNavigate();
+  const activeFormTwo = () => {
+    if (userLogin === "") {
+      setLogForm("Digite um usuário válido");
+      return;
+    }
+    if (password === "") {
+      setLogForm("Digite uma senha");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setLogForm("Senhas não coincidem");
+      return;
+    }
+
+    setFirstContainerRegister("close");
+    setSecondContainerRegister("");
+    setFirstSectionOk(true);
+    setLogForm("");
+  };
+
+  const activeFormThree = (event) => {
+    event.preventDefault();
+
+    setSecondContainerRegister("close");
+    setThirdContainerRegister("");
+    setSecondSectionOk(true);
+    setLogForm("");
+  };
+
+  const getData = {
+    name: name,
+    lastname: lastName,
+    phoneNumber: phoneNumber,
+    email: email,
+    password: password,
+    apiKey: apiKey,
+    secretKey: secretKey,
+  };
+
+  const sendRegister = async () => {
+    const urlRequest = `${addressServerTharseo}/users`;
+
+    console.log(getData);
+    try {
+      const request = await fetch(urlRequest, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(getData),
+      });
+
+      if (!request.ok) {
+        alert("Error Register");
+      }
+
+      setThirdContainerRegister("");
+      setThirdSectionOk(true);
+      navigate("/");
+
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {}, []);
 
   return (
@@ -10,12 +93,17 @@ function Register({}) {
         <section className="container-register-elements">
           <section className="section-sections-register">
             <aside className="section-sections">
-              <span className="section-sections-circle">
+              <span
+                className="section-sections-circle"
+                style={{
+                  backgroundColor: firstSectionOk ? "#006BFA" : "#374151",
+                }}
+              >
                 <span
                   class="material-symbols-outlined"
                   style={{ fontSize: 20 }}
                 >
-                  badge
+                  {firstSectionOk ? "done" : "badge"}
                 </span>
               </span>
               <span className="section-sections-text">
@@ -31,12 +119,17 @@ function Register({}) {
             <aside className="divisor-sections"></aside>
 
             <aside className="section-sections">
-              <span className="section-sections-circle">
+              <span
+                className="section-sections-circle"
+                style={{
+                  backgroundColor: secondSectionOk ? "#006BFA" : "#374151",
+                }}
+              >
                 <span
                   class="material-symbols-outlined"
                   style={{ fontSize: 20 }}
                 >
-                  description
+                  {secondSectionOk ? "done" : "description"}
                 </span>
               </span>
               <span className="section-sections-text">
@@ -52,12 +145,17 @@ function Register({}) {
             <aside className="divisor-sections"></aside>
 
             <aside className="section-sections">
-              <span className="section-sections-circle">
+              <span
+                className="section-sections-circle"
+                style={{
+                  backgroundColor: thirdSectionOk ? "#006BFA" : "#374151",
+                }}
+              >
                 <span
                   class="material-symbols-outlined"
                   style={{ fontSize: 20 }}
                 >
-                  done_all
+                  {thirdSectionOk ? "done" : "done_all"}
                 </span>
               </span>
               <span className="section-sections-text">
@@ -74,7 +172,9 @@ function Register({}) {
           <section className="section-register-elements">
             <section className="register-title">THARSEO</section>
 
-            <section className="section-elements-one close">
+            <section
+              className={`section-elements-one ${firstContainerRegister}`}
+            >
               <section className="register-description">Cadastro:</section>
 
               <section className="register-description">
@@ -88,6 +188,9 @@ function Register({}) {
                   type="text"
                   placeholder="Digite aqui..."
                   className="register-user-text"
+                  onChange={(e) => {
+                    setUserLogin(e.target.value);
+                  }}
                 />
               </section>
 
@@ -102,6 +205,9 @@ function Register({}) {
                   type="password"
                   placeholder="Digite aqui..."
                   className="register-user-text"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </section>
 
@@ -116,6 +222,9 @@ function Register({}) {
                   type="password"
                   placeholder="Digite aqui..."
                   className="register-user-text"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                 />
               </section>
 
@@ -125,20 +234,23 @@ function Register({}) {
               <section className="register-description ">
                 Confira nossa <b>Política de Privacidade.</b>{" "}
               </section>
+              <p className="alert-log-register">{logform}</p>
 
               <section className="register-btn">
-                <a href="/login" className="login-btn-createacc">
+                <a href="/" className="login-btn-createacc">
                   Ja tenho uma conta
                 </a>
 
-                <span className="register-btn-acess">
+                <span className="register-btn-acess" onClick={activeFormTwo}>
                   <span>Próximo</span>{" "}
                 </span>
               </section>
             </section>
 
-            <section className="section-elements-two close">
-              <form className="form-register-two">
+            <section
+              className={`section-elements-two ${secondContainerRegister}`}
+            >
+              <form className="form-register-two" onSubmit={activeFormThree}>
                 <aside className="container-input-register">
                   <section className="register-description">Nome:</section>
                   <section className="input-register">
@@ -149,6 +261,10 @@ function Register({}) {
                       type="text"
                       placeholder="Digite Aqui"
                       className="input-register-text"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      required
                     />
                   </section>
                 </aside>
@@ -162,6 +278,10 @@ function Register({}) {
                       type="text"
                       placeholder="Digite Aqui"
                       className="input-register-text"
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
+                      required
                     />
                   </section>
                 </aside>
@@ -175,6 +295,10 @@ function Register({}) {
                       type="text"
                       placeholder="Digite Aqui"
                       className="input-register-text"
+                      onChange={(e) => {
+                        setPhoneNumber(e.target.value);
+                      }}
+                      required
                     />
                   </section>
                 </aside>
@@ -188,6 +312,10 @@ function Register({}) {
                       type="email"
                       placeholder="Digite Aqui"
                       className="input-register-text"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      required
                     />
                   </section>
                 </aside>
@@ -198,64 +326,77 @@ function Register({}) {
                 <section className="register-description ">
                   Confira nossa <b>Política de Privacidade.</b>{" "}
                 </section>
+                <p className="alert-log-register">{logform}</p>
 
                 <section className="register-btn btn-section-two">
-                  <span className="register-btn-acess">
+                  <button
+                    className="register-btn-acess register-btn-acess-form-two"
+                    type="submit"
+                  >
                     <span>Próximo</span>{" "}
-                  </span>
+                  </button>
                 </section>
               </form>
             </section>
 
-            <section className="section-elements-third close">
+            <section
+              className={`section-elements-third ${thirdContainerRegister}`}
+            >
+              <section className="register-description text-acc-create">
+                Sua Conta foi Criada com Sucesso!
+              </section>
 
-            <section className="register-description text-acc-create">Sua Conta foi Criada com Sucesso!</section>
+              <section className="register-description description-title-register-third">
+                Agora vamos configurar a API da Binance:
+              </section>
 
-            <section className="register-description description-title-register-third">Agora vamos configurar a API da Binance:</section>
-             
-                <aside className="container-input-register">
-                  <section className="register-description">APIKEY:</section>
-                  <section className="input-register">
-                    <span className="input-register-icon">
-                      <span class="material-symbols-outlined">key</span>
-                    </span>
-                    <input
-                      type="text"
-                      placeholder="Digite Aqui"
-                      className="input-register-text"
-                    />
-                  </section>
-                </aside>
-                <aside className="container-input-register">
-                  <section className="register-description">SECRETKEY:</section>
-                  <section className="input-register">
-                    <span className="input-register-icon">
-                      <span class="material-symbols-outlined">key</span>
-                    </span>
-                    <input
-                      type="text"
-                      placeholder="Digite Aqui"
-                      className="input-register-text"
-                    />
-                  </section>
-                </aside>
-               
-                 <section className="register-description description-bottom">
-                 Suas Keys serão criptografadas ao serem salvas
-                </section>
-                <section className="register-description ">
-                 
-                </section>
-
-                <section className="register-btn btn-section-two">
-                  <span className="register-btn-acess">
-                    <span>Finalizar</span>{" "}
+              <aside className="container-input-register">
+                <section className="register-description">APIKEY:</section>
+                <section className="input-register">
+                  <span className="input-register-icon">
+                    <span class="material-symbols-outlined">key</span>
                   </span>
+                  <input
+                    type="text"
+                    placeholder="Digite Aqui"
+                    className="input-register-text"
+                    onChange={(e) => {
+                      setApiKey(e.target.value);
+                    }}
+                  />
                 </section>
-            
+              </aside>
+              <aside className="container-input-register">
+                <section className="register-description">SECRETKEY:</section>
+                <section className="input-register">
+                  <span className="input-register-icon">
+                    <span class="material-symbols-outlined">key</span>
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Digite Aqui"
+                    className="input-register-text"
+                    onChange={(e) => {
+                      setSecretKey(e.target.value);
+                    }}
+                  />
+                </section>
+              </aside>
+
+              <section className="register-description description-bottom">
+                Suas Keys serão criptografadas ao serem salvas
+              </section>
+              <section className="register-description "></section>
+
+              <section className="register-btn ">
+                <span className="login-btn-createacc btn-section-three" onClick={sendRegister}>
+                  Pular essa etapa
+                </span>
+                <span className="register-btn-acess" onClick={sendRegister}>
+                  <span>Finalizar</span>{" "}
+                </span>
+              </section>
             </section>
-
-
           </section>
         </section>
       </section>
