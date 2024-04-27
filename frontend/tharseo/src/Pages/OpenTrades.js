@@ -11,9 +11,21 @@ function OpenTrades({ user, addressServer, getUser }) {
 
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
+  
+
+  
 
   useEffect(() => {
     if (userTransactions && userTransactions.length > 0) {
+      const openTransactions = userTransactions.filter(
+        (item) => item.status === "Open" || item.status === "Await"
+      );
+      setOpenTransactions(openTransactions);
+    }
+  }, [userTransactions]);
+
+  useEffect(() => {
+    if (userTransactions.length > 0) {
       const open = userTransactions.filter(
         (item) => item.status === "Open" || item.status === "Await"
       );

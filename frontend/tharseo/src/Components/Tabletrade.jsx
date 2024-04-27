@@ -7,6 +7,7 @@ export default function Tabletrade({
   getGridData,
   setGridConfig,
   addressServer,
+  user
 }) {
 
   return (
@@ -58,6 +59,7 @@ export default function Tabletrade({
               getGridData={getGridData}
               setGridConfig={setGridConfig}
               addressServer={addressServer}
+              user={user}
             />
           );
         })}

@@ -75,9 +75,9 @@ function Home({ user, addressServer, getUser }) {
       if (price === "") {
         alert("Digite o preço desejado");
       }
-      urlRequest = `${addressServer}/tharseo/neworderlimit?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
+      urlRequest = `${addressServer}/tharseo/neworderlimit?user=${user.id}&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
     } else if (typeOperation === "MARKET") {
-      urlRequest = `${addressServer}/tharseo/newordermarketmanual?user=1&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
+      urlRequest = `${addressServer}/tharseo/newordermarketmanual?user=${user.id}&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
     } else {
       alert("Escolha o lado da operação");
     }
@@ -228,7 +228,7 @@ function Home({ user, addressServer, getUser }) {
 
           <aside className="container-dashboard-right-top">
             <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">João</span>
+              <span className="text-header-welcome">{user && user.name ? user.name : "Unknown"}</span>
             </section>
             <section className="container-dashboard-right-top-right">
               <section className="container-balance-visible">
@@ -261,7 +261,7 @@ function Home({ user, addressServer, getUser }) {
                   notifications_unread
                 </span>
               </span>
-              <span className="text-name-user">Joao</span>
+              <span className="text-name-user">{user && user.name ? user.name : "Unknown"}</span>
               <span className="avatar-header-user">
                 <span
                   class="material-symbols-outlined"

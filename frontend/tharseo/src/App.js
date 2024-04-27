@@ -19,7 +19,7 @@ function App() {
   const getUser = async () => {
     try {
       const res = await fetch(
-        addressServerTharseo + "/tharseo/updatedatauser/1"
+        addressServerTharseo + "/tharseo/updatedatauser/" + user.id 
       );
       if (!res.ok) {
         throw new Error("Error when get user");
@@ -31,9 +31,15 @@ function App() {
       console.error("Error User Resquest", error);
     }
   };
+  const getUserByLogin = (data) => {
+    setUser(data);
+  };
 
   useEffect(() => {
-    getUser();
+    // getUser();
+    console.log("User Effects User");
+    console.log(user);
+    
   }, []);
 
   return (
@@ -84,8 +90,20 @@ function App() {
             }
           />
           <Route path="/chart" element={<Chart />} />
-          <Route  exact path="/" element={<Login addressServerTharseo={addressServerTharseo} />} />
-          <Route path="/register" element={<Register addressServerTharseo={addressServerTharseo} />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <Login
+                addressServerTharseo={addressServerTharseo}
+                getUserByLogin={getUserByLogin}
+              />
+            }
+          />
+          <Route
+            path="/register"
+            element={<Register addressServerTharseo={addressServerTharseo} />}
+          />
           {/* <Route path="/" element={""} /> */}
         </Routes>
       </div>

@@ -13,16 +13,13 @@ public class AuthenticateService {
 
     public Boolean checkUser(String userLogin) {
         boolean exists = false;
-        System.out.println("check user");
         if (Validator.validateEmail(userLogin)) {
-            System.out.println("checkou email");
             User user = userService.findByEmail(userLogin);
             if (user != null) {
                 exists = true;
             }
         }
         if (Validator.validatePhoneNumber(userLogin)) {
-            System.out.println("checkou phone");
             User user = userService.findByPhoneNumber(userLogin);
             if (user != null) {
                 exists = true;
@@ -31,31 +28,36 @@ public class AuthenticateService {
         if (userLogin.equals("admin")) {
             exists = true;
         }
-        System.out.println("Ignorou os ifs");
-        System.out.println("RESUKTADO: " + exists);
         return exists;
     }
 
-    public Boolean userAuthenticate(String userLogin, String userPassword) {
+    public User userAuthenticate(String userLogin, String userPassword) {
         boolean auth = false;
         if (Validator.validateEmail(userLogin)) {
             User user = userService.findByEmail(userLogin);
             if (user != null) {
                 auth = user.getPassword().equals(userPassword);
-                return auth;
+                if (auth) {
+                    return user;
+                }
             }
         }
         if (Validator.validatePhoneNumber(userLogin)) {
             User user = userService.findByPhoneNumber(userLogin);
             if (user != null) {
                 auth = user.getPassword().equals(userPassword);
-                return auth;
+                if (auth) {
+                    return user;
+                }
+
             }
         }
         if (userLogin.equals("admin")) {
-            return userPassword.equals("admin");
+            if (userPassword.equals("admin")) {
+                return userService.findByEmail("admin");
+            }
         }
-        return false;
+        return null;
     }
 
 

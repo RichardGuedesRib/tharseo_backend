@@ -73,13 +73,13 @@ function Register({ addressServerTharseo }) {
 
       if (!request.ok) {
         alert("Error Register");
+        alert(request.body);
       }
 
       setThirdContainerRegister("");
       setThirdSectionOk(true);
+      alert("Ok!");
       navigate("/");
-
-
     } catch (error) {
       console.error(error);
     }
@@ -389,7 +389,10 @@ function Register({ addressServerTharseo }) {
               <section className="register-description "></section>
 
               <section className="register-btn ">
-                <span className="login-btn-createacc btn-section-three" onClick={sendRegister}>
+                <span
+                  className="login-btn-createacc btn-section-three"
+                  onClick={sendRegister}
+                >
                   Pular essa etapa
                 </span>
                 <span className="register-btn-acess" onClick={sendRegister}>

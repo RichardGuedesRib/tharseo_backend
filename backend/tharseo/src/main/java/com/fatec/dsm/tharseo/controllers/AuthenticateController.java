@@ -1,5 +1,6 @@
 package com.fatec.dsm.tharseo.controllers;
 
+import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AuthenticateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,9 +36,9 @@ public class AuthenticateController {
         boolean auth = false;
         boolean checkUser = authenticateService.checkUser(userLogin);
         if(checkUser){
-            auth = authenticateService.userAuthenticate(userLogin, userPassword);
-            if(auth){
-                return ResponseEntity.status(HttpStatus.ACCEPTED).body("User authenticate");
+           User user = authenticateService.userAuthenticate(userLogin, userPassword);
+            if(user != null){
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login or Password is invalid");
 

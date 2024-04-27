@@ -168,7 +168,7 @@ public class TharseoAPIController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
         }
-        Asset asset = assetService.findByAcronym(acronym);
+        Asset asset = assetService.findByAcronymByUser(acronym, user);
         if (asset == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
         }

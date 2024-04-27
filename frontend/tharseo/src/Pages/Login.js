@@ -2,7 +2,7 @@ import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login({ addressServerTharseo }) {
+function Login({ addressServerTharseo, getUserByLogin }) {
   const [userLogin, setUserLogin] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [firstContainer, setFirstContainer] = useState("");
@@ -16,13 +16,10 @@ function Login({ addressServerTharseo }) {
       if (!request.ok) {
         alert("Login ou senha incorreto");
       } else {
-        alert("Login Ok");
         setFirstContainer("close");
         setSecondContainer("");
       }
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   };
   const backLogin = () => {
     setSecondContainer("close");
@@ -42,6 +39,9 @@ function Login({ addressServerTharseo }) {
       if (!request.ok) {
         alert("Usuário ou Senha Inválidos");
       } else {
+         const userData = await request.json(); 
+         getUserByLogin(userData);
+        // console.log(user);
         navigate("/home");
       }
     } catch (error) {
@@ -55,9 +55,11 @@ function Login({ addressServerTharseo }) {
       <section className="container-dashboard container-login">
         <section className="section-login-elements">
           <section className="login-title">THARSEO</section>
-
+        
           <section className={`section-login-elements-one ${firstContainer}`}>
+       
             <section className="login-description">E-mail ou Celular*</section>
+            
             <section className="login-user">
               <span className="login-user-icon">
                 <span class="material-symbols-outlined">person</span>
@@ -94,6 +96,7 @@ function Login({ addressServerTharseo }) {
                 </span>
               </span>
             </section>
+            
             <section className="login-btn">
               <a href="/register" className="login-btn-createacc">
                 Criar Conta
@@ -104,6 +107,7 @@ function Login({ addressServerTharseo }) {
               </span>
             </section>
           </section>
+         
 
           <section className={`section-login-elements-two ${secondContainer}`}>
             <section className="login-btn " onClick={backLogin}>
@@ -141,7 +145,9 @@ function Login({ addressServerTharseo }) {
             </section>
           </section>
         </section>
+    
       </section>
+      
     </main>
   );
 }

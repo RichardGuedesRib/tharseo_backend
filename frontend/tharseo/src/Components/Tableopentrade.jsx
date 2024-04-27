@@ -10,7 +10,6 @@ export default function Tableopentrade({
 }) {
   const [transactionsFilter, setTransactionsFilter] = useState([]);
 
-
   useEffect(() => {
     const filter = Array.isArray(transactions)
       ? transactions.slice(0, limit)
@@ -41,31 +40,36 @@ export default function Tableopentrade({
         <tbody className="body-table-actives-trades">
           {transactionsFilter &&
             transactionsFilter.length > 0 &&
-            transactionsFilter.map((item, index) => (
-              <Rowtableopentransaction
-                key={index}
-                symbol={
-                  item.acronym
-                    ? item.acronym.replace("USDT", "").toLowerCase()
-                    : ""
-                }
-                acronym={item.asset.acronym}
-                orderid={item.id}
-                date={new Date(item.openDate * 1000).toLocaleString()}
-                side={item.side}
-                quantity={item.executedQty}
-                price={item.price}
-                profit={item.profit ? item.profit : "0.00"}
-                typeTransaction={item.typeTransaction}
-                pairTransaction={item.orderPairTrade}
-                active={item.openTrade === false ? "Não" : "Sim"}
-                status={item.status}
-                user={user}
-                getUser={getUser}
-                addressServer={addressServer}
-                
-              />
-            ))}
+            transactionsFilter.map((item, index) => {
+              return(
+             
+             
+                <Rowtableopentransaction
+                  key={index}
+                  symbol={
+                    item.acronym
+                      ? item.acronym.replace("USDT", "").toLowerCase()
+                      : ""
+                  }
+                  acronym={item.asset.acronym}
+                  orderid={item.id}
+                  date={new Date(item.openDate * 1000).toLocaleString()}
+                  side={item.side}
+                  quantity={item.executedQty}
+                  price={item.price}
+                  profit={item.profit ? item.profit : "0.00"}
+                  typeTransaction={item.typeTransaction}
+                  pairTransaction={item.orderPairTrade}
+                  active={item.openTrade === false ? "Não" : "Sim"}
+                  status={item.status}
+                  user={user}
+                  getUser={getUser}
+                  addressServer={addressServer}
+                />
+                );
+
+              
+            })}
         </tbody>
       </table>
     </aside>

@@ -121,6 +121,9 @@ public class BinanceAPI {
 
     public StringBuilder newOrderMarket(String acronym, String side, String type, String timeInForce, String quantity) {
         StringBuilder sb = new StringBuilder();
+        System.out.println("NEW ORDER");
+        System.out.println(acronym + side + type + timeInForce + quantity);
+
         try {
             HashMap<String, String> parameters = new HashMap<String, String>();
             parameters.put("symbol", acronym);
@@ -129,6 +132,7 @@ public class BinanceAPI {
             parameters.put("quantity", quantity);
             BinanceRequests binanceRequests = new BinanceRequests(addressServer);
             sb = binanceRequests.sendSignedRequest(parameters, "/api/v3/order", "POST", apiKey, apiSecret);
+            System.out.println(sb.toString());
             return sb;
 
 
@@ -223,11 +227,12 @@ public class BinanceAPI {
             for (AssetPrice price : Stage.getListPrices()) {
                 if (el.getAcronym().equals(price.getSymbol())) {
                     el.setPrice(price.getPrice() * el.getQuantity());
+                    assetService.insertAsset(el);
                     break;
                 }
             }
         }
-
+        user.setWallet(assetsUser);
         userService.insertOne(user);
         return user;
     }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,7 +41,9 @@ public class EngineTradeSystemGrid {
 
         for (StrategyGridUser grid : activeGrids) {
             User user = grid.getUser();
-            Asset asset = assetService.findByAcronym(grid.getAcronym());
+            Asset asset = assetService.findByAcronymByUser(grid.getAcronym(), user);
+//            Optional<AssetsUser> asset = user.getWallet().stream().filter(item -> item.getAcronym().equals(grid.getAcronym())).findFirst();
+
             List<Transaction> transactions = user.getTransactions();
             List<Transaction> activeTransactions = transactions.stream()
                     .filter(item -> item.getStatus().equals("Open") && item.getSide().equals("BUY"))
@@ -108,6 +111,7 @@ public class EngineTradeSystemGrid {
                 }
             } else {
 //                System.out.println(">>>>>QUEUE EMPTY -> DIRECT ORDER<<<<");
+                System.out.println(asset);
                 operations = tharseoAPIService.initGrid(user, asset, quota, percentGrid, price);
                 return operations;
             }
@@ -129,14 +133,14 @@ public class EngineTradeSystemGrid {
         if(!openSellTransactions.isEmpty()){
             for(TransactionSpotGrid transaction: openSellTransactions){
                 if(price > transaction.getPrice()){
-//                    System.out.println("Transaction id: " + transaction.getId() + "is Closed");
+                    System.out.println("Transaction id: " + transaction.getId() + "is Closed");
                     transaction.setStatus("Closed");
                     TransactionSpotGrid transactionBuy = transactionSpotGridService.findTransactionSpotGridById(transaction.getOrderPairTrade());
                     operations.add(transaction);
                     if(transactionBuy != null){
                         transactionBuy.setStatus("Closed");
                         transactionSpotGridService.insertTransactionSpotGrid(transactionBuy);
-//                        System.out.println("Transaction Buy Id: " +transactionBuy.getId() + "is closed");
+                        System.out.println("Transaction Buy Id: " +transactionBuy.getId() + "is closed");
                         operations.add(transactionBuy);
                     }
                     transactionSpotGridService.insertTransactionSpotGrid(transaction);
@@ -144,13 +148,13 @@ public class EngineTradeSystemGrid {
             }
 
         }
-//        System.out.println(">>>>NO TARGET SELL ORDERS<<<<");
+        System.out.println(">>>>NO TARGET SELL ORDERS<<<<");
         return operations;
     }
 
     @Scheduled(fixedDelay = 5000)
     public void activeOperation(){
-//        System.out.println("New Check Wave");
+        System.out.println("New Check Wave");
         operatingGridMode();
         checkOrders();
     }

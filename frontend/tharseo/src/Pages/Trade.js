@@ -66,6 +66,7 @@ function Trade({ user, addressServer }) {
           setContainerInputGrid={setContainerInputGrid}
           gridData={gridData}
           addressServer={addressServer}
+          user={user}
         />
 
         <aside className="container-dashboard-trades">
@@ -128,6 +129,7 @@ function Trade({ user, addressServer }) {
                   setGridConfig={user.grids}
                   addressServer={addressServer}
                   className="show-more"
+                  user={user}
                 />
               </aside>
 

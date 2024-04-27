@@ -3,15 +3,14 @@ package com.fatec.dsm.tharseo.services;
 
 import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.AssetRepository;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AssetService {
@@ -42,6 +41,18 @@ public class AssetService {
         return asset.orElse(null);
     }
 
+    public Asset findByAcronymByUser(String acronym, User user) {
+        List<Asset> assets = findAll();
+        List<Asset> filtredAssets = assets.stream().filter(item -> item.getAcronym().equals(acronym)).collect(Collectors.toList());
+        Asset asset = null;
+        for (Asset item : filtredAssets) {
+            if (item.getUser().getId().equals(user.getId())) {
+                asset = item;
+            }
+        }
+        return asset;
+    }
+
     public Asset updateAsset(Long id, Asset asset) {
         Asset oldAsset = findById(id);
         if (oldAsset == null) {
@@ -67,7 +78,6 @@ public class AssetService {
         asset.setIsActive(0);
         updateAsset(asset.getId(), asset);
     }
-
 
 
 }

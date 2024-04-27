@@ -14,6 +14,7 @@ export default function Rowtabletrades({
   getGridData,
   setGridConfig,
   addressServer,
+  user
 }) {
   const [toggle, setToggle] = useState(isActive);
   const [toggleColor, setToggleColor] = useState("#EAECEF");
@@ -29,7 +30,7 @@ export default function Rowtabletrades({
 
     const isActive = { isActive: toggle ? 0 : 1 };
 
-    const urlRequest = `${addressServer}/strategygriduser/insertgrid?user=1&acronym=${name}`;
+    const urlRequest = `${addressServer}/strategygriduser/insertgrid?user=${user.id}&acronym=${name}`;
 
     fetch(urlRequest, {
       method: "POST",
