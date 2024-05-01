@@ -6,6 +6,8 @@ body {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    height: 100vh;
+
 }
 
 .container-chart {
@@ -179,12 +181,18 @@ body {
     align-items: center;
 }
 
+
+
+.app-dashboard {
+       height: 100%;
+}
+
+
+
 .container-dashboard {
     width: 79vw;
-    height: 100vh;
+    height: 100%;
     display: flex;
-    padding-top: 50px;
-    background: rgb(9, 27, 48);
     background: radial-gradient(circle, rgba(11, 42, 75, 1) 0%, rgba(8, 8, 8, 1) 100%);
 }
 
@@ -1618,6 +1626,8 @@ body {
     transition: .5s;
     color: #006BFA;
 }
+
+
 
 
 
