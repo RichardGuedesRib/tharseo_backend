@@ -17,12 +17,15 @@ export default function ChartConstructor({ data }) {
   ];
 
   return (
-    <ApexChart
-      options={options}
-      series={candles}
-      type="candlestick"
-      width={730}
-      height={330}
-    />
+  
+      <ApexChart
+        options={options}
+        series={candles}
+        type="candlestick"
+        height={'100%'}
+        id="apexchart"
+        className="teste"
+      />
+  
   );
 }

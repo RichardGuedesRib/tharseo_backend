@@ -20,6 +20,7 @@ function Home({ user, addressServer, getUser }) {
   const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);
   const [gridData, setGridData] = useState(null);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
+  const [menuhidden, setMenuhidden] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -96,10 +97,12 @@ function Home({ user, addressServer, getUser }) {
   };
 
   return (
-    
     <main className="app-dashboard">
+      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
+        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      </section>
       <section className="container-dashboard">
-        <Menubar />
+        <Menubar menuhidden={menuhidden}/>
 
         <aside className="container-dashboard-right">
           {/* Inicio Componente */}
@@ -228,7 +231,9 @@ function Home({ user, addressServer, getUser }) {
 
           <aside className="container-dashboard-right-top">
             <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">{user && user.name ? user.name : "Unknown"}</span>
+              <span className="text-header-welcome">
+                {user && user.name ? user.name : "Unknown"}
+              </span>
             </section>
             <section className="container-dashboard-right-top-right">
               <section className="container-balance-visible">
@@ -261,7 +266,9 @@ function Home({ user, addressServer, getUser }) {
                   notifications_unread
                 </span>
               </span>
-              <span className="text-name-user">{user && user.name ? user.name : "Unknown"}</span>
+              <span className="text-name-user">
+                {user && user.name ? user.name : "Unknown"}
+              </span>
               <span className="avatar-header-user">
                 <span
                   class="material-symbols-outlined"

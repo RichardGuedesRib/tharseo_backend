@@ -11,7 +11,7 @@ export default function Tabletrade({
 }) {
 
   return (
-    <table className="table-trades">
+    <table className="table-trades config-media-trade">
       <thead>
         <tr className="row-table-trades">
           <th className="label-column-active-trades "></th>
@@ -60,6 +60,7 @@ export default function Tabletrade({
               setGridConfig={setGridConfig}
               addressServer={addressServer}
               user={user}
+              className="row-trade"
             />
           );
         })}

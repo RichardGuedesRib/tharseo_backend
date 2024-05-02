@@ -9,6 +9,7 @@ function Trade({ user, addressServer }) {
   const [limitAsset, setLimitAsset] = useState(14);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
   const [gridData, setGridData] = useState(null);
+  const [menuhidden, setMenuhidden] = useState(false);
   const wallet = user.wallet;
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
@@ -59,8 +60,11 @@ function Trade({ user, addressServer }) {
 
   return (
     <main className="app-dashboard">
+       <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
+        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      </section>
       <section className="container-dashboard">
-        <Menubar />
+        <Menubar menuhidden={menuhidden}/>
         <Containergrid
           containerInputGrid={containerInputGrid}
           setContainerInputGrid={setContainerInputGrid}

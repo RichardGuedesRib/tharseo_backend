@@ -8,18 +8,19 @@ body {
     margin: 0;
     height: 100vh;
 
+
 }
 
 .container-chart {
     border-radius: 1rem;
-    width: 640px;
-    height: 280px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     color: black;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    width: 100%;
+    height: 90%;
 }
 
 .app-chart {
@@ -184,7 +185,7 @@ body {
 
 
 .app-dashboard {
-       height: 100%;
+    height: 100%;
 }
 
 
@@ -193,7 +194,8 @@ body {
     width: 79vw;
     height: 100%;
     display: flex;
-    background: radial-gradient(circle, rgba(11, 42, 75, 1) 0%, rgba(8, 8, 8, 1) 100%);
+    /* background: radial-gradient(circle, rgba(11, 42, 75, 1) 0%, rgba(8, 8, 8, 1) 100%); */
+    background: radial-gradient(circle, rgba(9, 27, 45, 1) 0%, rgba(8, 8, 8, 1) 100%);
 }
 
 .container-dashboard-left {
@@ -307,6 +309,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
+    padding-top: 10px;
 }
 
 .container-dashboard-right-middle {
@@ -440,6 +443,8 @@ body {
 
 .container-dashboard-right-top-left {
     display: flex;
+    justify-content: center;
+    align-items: center;
     color: #EAECEF;
     font-size: 1.5rem;
 }
@@ -448,7 +453,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 30%;
+    width: 35%;
     color: #EAECEF;
     font-size: 1.5rem;
     font-weight: 300;
@@ -1281,7 +1286,7 @@ body {
     letter-spacing: 1px;
     width: 100%;
     margin-bottom: 5px;
-    
+
 
 }
 
@@ -1455,24 +1460,24 @@ body {
     height: 100%;
 }
 
-.description-bottom{
+.description-bottom {
     margin-top: 10px;
 }
 
 
-.section-elements-two{
+.section-elements-two {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 }
 
-.btn-section-two{
+.btn-section-two {
     display: flex;
     justify-content: end;
 }
 
-.input-register{
+.input-register {
     display: flex;
     background-color: #374151;
     color: #9CA3AF;
@@ -1484,14 +1489,14 @@ body {
 
 }
 
-.input-register-icon{
+.input-register-icon {
     display: flex;
     align-items: center;
-    justify-content: center ;
+    justify-content: center;
     height: 100%;
 }
 
-.input-register-text{
+.input-register-text {
     height: 80%;
     width: 100%;
     background: transparent;
@@ -1500,7 +1505,7 @@ body {
     margin-left: 10px;
 }
 
-.form-register-two{
+.form-register-two {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -1508,39 +1513,40 @@ body {
     margin-top: 30px;
 }
 
-.section-elements-third{
+.section-elements-third {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
 }
 
-.text-acc-create{
+.text-acc-create {
     margin-top: 30px;
 }
-.description-title-register-third{
+
+.description-title-register-third {
     margin-top: 20px;
-       margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
-.section-login-elements-one{
+.section-login-elements-one {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
     align-items: center;
     justify-content: space-between;
-    
+
 }
 
-.section-login-elements-two{
+.section-login-elements-two {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
     align-items: center;
     justify-content: space-between;
-    
+
 }
 
 .login-password {
@@ -1572,60 +1578,506 @@ body {
     margin-left: 10px;
 }
 
-.description-password{
+.description-password {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 70px;
-   }
+}
 
-.description-title-password{
+.description-title-password {
     margin-bottom: 5px;
 }
 
-.login-btn-section-two{
+.login-btn-section-two {
     margin-bottom: 50px;
 }
 
-.text-welcome-login{
+.text-welcome-login {
     margin-bottom: 10px;
 }
 
-.btn-back-login{
-    cursor: pointer;
-   text-decoration: underline;
-   text-decoration-color: #9CA3AF;
-}
-
-.btn-back-login:hover{
-    text-decoration-color:#006BFA ;
-    transition: .5s;
-}
-
-.alert-log-register{
-    font-size: .8rem;
-    color: #E55764;
-}
-
-.close{
-    display: none;
-}
-
-.register-btn-acess-form-two{
-    border: none;
-}
-
-.btn-section-three{
+.btn-back-login {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-color: #9CA3AF;
 }
 
-.btn-section-three:hover{
-    text-decoration-color:#006BFA ;
+.btn-back-login:hover {
+    text-decoration-color: #006BFA;
+    transition: .5s;
+}
+
+.alert-log-register {
+    font-size: .8rem;
+    color: #E55764;
+}
+
+
+
+.register-btn-acess-form-two {
+    border: none;
+}
+
+.btn-section-three {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: #9CA3AF;
+}
+
+.btn-section-three:hover {
+    text-decoration-color: #006BFA;
     transition: .5s;
     color: #006BFA;
 }
+
+
+#apexchart {
+    width: 100%;
+}
+
+.menu-hidden {
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
+    margin-left: 10px;
+    position: fixed;
+    background-color: #2A2A2A;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    color: #EAECEF;
+    display: none;
+    cursor: pointer;
+    z-index: 999;
+
+
+}
+
+.menu-hidden:hover {
+    transition: .5s;
+    background-color: #006BFA;
+}
+
+
+@media only screen and (max-width:1480px) {
+    .container-dashboard {
+        width: 100vw;
+    }
+
+
+}
+
+@media only screen and (max-width:1300px) {
+    .text-button-menubar {
+        display: none;
+    }
+
+    .button-menubar {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container-menubar-buttons {
+        width: 70px;
+    }
+
+    .link-button-menubar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .icon-button-menubar {
+        width: 100%;
+        height: 100%;
+    }
+
+    .container-title-menubar {
+        display: none;
+    }
+
+    .container-dashboard-left {
+        width: 70px;
+        margin-left: 30px;
+    }
+
+    .menu-wallet {
+        width: 250px;
+
+    }
+
+    .item-asset-wallet {
+        width: 100%;
+        font-size: 0.75rem;
+        padding: 0;
+        margin-bottom: 5px;
+    }
+
+
+    .title-menu-wallet {
+        font-size: 1rem;
+    }
+
+    .item-asset-wallet-top-left {
+        width: 100%;
+
+    }
+
+
+}
+
+@media only screen and (max-width:1200px) {
+    .menu-wallet {
+        width: 200px;
+
+    }
+
+    .app-chart {
+        width: 630px;
+    }
+}
+
+@media only screen and (max-width:1100px) {
+    .menu-wallet {
+        width: 150px;
+    }
+
+    .item-asset-wallet-top-left {
+        justify-content: space-between;
+    }
+
+    .item-asset-wallet-top {
+        flex-direction: column;
+
+    }
+
+    .app-chart {
+        width: 650px;
+        margin-left: 20px;
+    }
+
+    .app-chart {
+        width: 500px;
+    }
+
+    .chart-icon-data {
+        width: 50px;
+        height: 50px;
+    }
+
+    .title-data {
+        font-size: .8rem;
+    }
+
+    .value-data {
+        font-size: 1rem;
+    }
+
+    .title-header-options {
+        font-size: 1rem;
+    }
+
+    .container-dashboard-right-top {
+        width: 80%;
+    }
+
+    .container-dashboard-right-top-right {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width:900px) {
+    .app-chart {
+        width: 400px;
+    }
+
+    .container-dashboard-right-bottom {
+        width: 90%;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .text-name-user {
+        display: none;
+    }
+
+    .container-balance-visible {
+        width: 100px;
+    }
+
+}
+
+@media only screen and (max-width:800px) {
+    .container-dashboard-right-middle {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-wallet {
+        width: 70%;
+        margin: 0;
+        margin-bottom: 50px;
+    }
+
+    .item-asset-wallet-top {
+        flex-direction: row;
+    }
+
+    .item-asset-wallet-top-left {
+        justify-content: start;
+    }
+
+    .item-asset-wallet {
+        font-size: 1.3rem;
+    }
+
+    .title-asset-item {
+        font-size: 1.3rem;
+    }
+
+    .quantity-asset-item {
+        font-size: 1.3rem;
+    }
+
+    .percent-asset-item {
+        font-size: 1.3rem;
+    }
+
+    .item-asset-wallet {
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container-title-menu-wallet {
+        margin-bottom: 10px;
+    }
+
+    .app-chart {
+        margin: 0;
+    }
+
+    .menu-wallet {
+        height: 600px;
+    }
+
+    .container-assets-wallet {
+        display: flex;
+    }
+
+    .container-dashboard-right-middle {
+        height: 1500px;
+    }
+
+    .container-dashboard {
+        height: 1650px;
+    }
+
+    .container-menubar-buttons {
+        justify-content: start;
+    }
+    .label-active-trades{
+        font-size: .7rem;
+            }
+    .container-login{
+        height: 100vh;
+    }
+   
+    .container-trades{
+        padding: 0;
+        height: auto;
+    }
+    .text-header-welcome{
+        font-size: 1.2rem;
+    }
+    .title-active-trades{
+        font-size: 1rem;
+    }
+  
+   
+}
+@media only screen and (max-width:600px) {
+    .container-dashboard-left {
+        margin: 0;
+    }
+
+    .container-menubar-buttons {
+        position: fixed;
+        top: 0;
+        margin-top: 80px;
+        background-color: #2A2A2A;
+
+    }
+
+    .container-dashboard-right-top {
+        margin-left: 50px;
+        position: fixed;
+        top: 0;
+        z-index: 99;
+    }
+
+    .container-dashboard-right-middle {
+        padding-top: 80px;
+    }
+
+    .text-header-welcome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-hidden {
+        display: flex;
+    }
+
+    .container-menubar-buttons {
+        margin-left: 5px;
+        display: none;
+        z-index: 999;
+    }
+
+    .container-dashboard-right {
+        margin: 0;
+    }
+
+    .container-trades{
+        margin-top: 80px;
+        padding: 0;
+    }
+    .table-trades{
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width:550px) {
+    .text-header-welcome {
+        font-size: 1rem;
+    }
+
+    .container-dashboard-right-top {
+        height: 3%;
+        margin-top: 10px;
+        width: 70%;
+        margin-left: 80px;
+    }
+    .title-active-trades{
+        font-size: .8rem;
+    }
+    .label-active-trades{
+        font-size: .5rem;
+    }
+    .btn-trades{
+        width: 70px;
+    }
+}
+
+@media only screen and (max-width:400px) {
+    .container-dashboard-right-top {
+        width: 280px;
+        justify-content: space-between;
+    }
+
+    .text-header-welcome {
+        font-size: .8rem;
+
+    }
+
+    .container-balance-visible {
+        width: 100px;
+    }
+
+    .container-dashboard-right-top-left {
+        width: 90px;
+    }
+
+    .container-dashboard-right-top-right {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .app-chart {
+        width: 350px;
+        height: 500px;
+        padding: 0;
+        margin: 0;
+
+    }
+
+    .title-header-options {
+        margin-top: 60px;
+    }
+
+    .title-data,
+    .value-data {
+        font-size: .6rem;
+    }
+
+    .chart-icon-data {
+        width: 30px;
+        height: 30px;
+    }
+
+    .title-asset-item,
+    .quantity-asset-item,
+    .percent-asset-item,
+    .value-asset-item {
+        font-size: 1rem;
+    }
+
+    .container-header-data {
+        width: 330px;
+    }
+
+    .title-active-trades {
+        font-size: .9rem;
+    }
+
+    .btn-showmore {
+        width: 130px;
+    }
+
+    .label-active-trades {
+        font-size: .7rem;
+    }
+
+    .btn-trades {
+        width: 50px;
+    }
+
+    .container-dashboard-right-bottom {
+        width: 85%;
+    }
+    .container-trades{
+        width: 300px;
+    }
+    .container-dashboard-left{
+       position: fixed;
+       z-index: 98;
+     
+    }
+    .container-table-assets-trade{
+        width: 330px;
+    }
+    .container-dashboard-trades{
+        padding: 0;
+    }
+}
+
+
+.close {
+    display: none;
+}
+
+.show {
+    display: flex;
+}
+
+
+
+
 
 
 

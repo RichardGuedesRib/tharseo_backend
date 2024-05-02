@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Menubar() {
+export default function Menubar({menuhidden}) {
   return (
     <aside className="container-dashboard-left">
       <section className="container-title-menubar">
         <span className="title-menubar">tharseo</span>
       </section>
 
-      <aside className="container-menubar-buttons">
+      <aside className={`container-menubar-buttons ${menuhidden === true ? "show" : ""}`}>
         <section className="container-menubar-buttons-top">
           <article className="button-menubar">
             <Link to="/home" className="link-button-menubar">

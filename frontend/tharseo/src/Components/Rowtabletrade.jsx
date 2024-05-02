@@ -98,24 +98,24 @@ export default function Rowtabletrades({
 
   return (
     <tr className="row-table-trades">
-      <td className="label-active-trades">
-        <span className="icon-active-trades">
+      <td className="label-active-trades row-media">
+        <span className="icon-active-trades ">
           {" "}
           <Icon name={symbol} size={25} />
         </span>
       </td>
 
-      <td className="label-active-trades label-row-name">{name}</td>
-      <td className="label-active-trades">$ {balance}</td>
-      <td className="label-active-trades">$ {profit}</td>
-      <td className="label-active-trades">{performance}%</td>
-      <td className="label-active-trades container-btn-active-trade">
+      <td className="label-active-trades label-row-name row-media">{name}</td>
+      <td className="label-active-trades row-media">$ {balance}</td>
+      <td className="label-active-trades row-media">$ {profit}</td>
+      <td className="label-active-trades row-media">{performance}%</td>
+      <td className="label-active-trades container-btn-active-trade row-media">
         <span className="btn-trades" onClick={openGrid}>
           {trade}
         </span>
       </td>
-      <td className="label-active-trades label-toogle-trade">
-        <span className="btn-toogle-trade" onClick={toggled}>
+      <td className="label-active-trades label-toogle-trade row-media">
+        <span className="btn-toogle-trade " onClick={toggled}>
           <span
             class="material-symbols-outlined"
             id="btn-toogle"
