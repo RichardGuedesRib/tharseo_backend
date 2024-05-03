@@ -47,12 +47,12 @@ export default function Rowtableopentransaction({
       <th className="label-cell-old-trades">{date}</th>
       <th className="label-cell-old-trades">{side}</th>
       <th className="label-cell-old-trades">{quantity}</th>
-      <th className="label-cell-old-trades">$ {price}</th>
-      <th className="label-cell-old-trades">$ {profit}</th>
-      <th className="label-cell-old-trades">{typeTransaction}</th>
-      <th className="label-cell-old-trades">{pairTransaction}</th>
-      <th className="label-cell-old-trades">{active}</th>
-      <th className="label-cell-old-trades">{status}</th>
+      <th className="label-cell-old-trades open-trade-media-response">$ {price}</th>
+      <th className="label-cell-old-trades open-trade-media-response">$ {profit}</th>
+      <th className="label-cell-old-trades open-trade-media-response">{typeTransaction}</th>
+      <th className="label-cell-old-trades open-trade-media-response">{pairTransaction}</th>
+      <th className="label-cell-old-trades open-trade-media-response">{active}</th>
+      <th className="label-cell-old-trades open-trade-media-response">{status}</th>
       <th className="label-cell-old-trades">
         <span className="btn-cancel-order" onClick={cancelOrder}>
           <span class="material-symbols-outlined">delete_forever</span>

@@ -22,12 +22,12 @@ export default function Tableoldtrade({ transactions, limit }) {
             <th className="label-column-old-trades">Data</th>
             <th className="label-column-old-trades">Side</th>
             <th className="label-column-old-trades">Quantidade</th>
-            <th className="label-column-old-trades">Preço</th>
-            <th className="label-column-old-trades">Profit</th>
-            <th className="label-column-old-trades">Tipo</th>
-            <th className="label-column-old-trades">Trans. Par</th>
-            <th className="label-column-old-trades">Op. Ativa?</th>
-            <th className="label-column-old-trades">Status</th>
+            <th className="label-column-old-trades open-trade-media-response">Preço</th>
+            <th className="label-column-old-trades open-trade-media-response">Profit</th>
+            <th className="label-column-old-trades open-trade-media-response">Tipo</th>
+            <th className="label-column-old-trades open-trade-media-response">Trans. Par</th>
+            <th className="label-column-old-trades open-trade-media-response">Op. Ativa?</th>
+            <th className="label-column-old-trades open-trade-media-response">Status</th>
           </tr>
         </thead>
         <tbody className="body-table-actives-trades">

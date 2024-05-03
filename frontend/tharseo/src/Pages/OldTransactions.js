@@ -7,6 +7,8 @@ function OldTransactions({ user, addressServer }) {
   const [limitAsset, setLimitAsset] = useState(14);
   const [oldTransactions, setOldTransactions] = useState([]);
   const [userTransactions, setUserTransactions] = useState(user.transactions);
+  const [menuhidden, setMenuhidden] = useState(false);
+
   const wallet = user.wallet;
 
   const btnIsVisible = document.getElementById("icon-visible");
@@ -49,8 +51,12 @@ function OldTransactions({ user, addressServer }) {
 
   return (
     <main className="app-dashboard">
+      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
+        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      </section>
       <section className="container-dashboard">
-        <Menubar />
+      <Menubar menuhidden={menuhidden}/>
+
 
         <aside className="container-dashboard-trades">
           <aside className="container-dashboard-right-top">
@@ -100,7 +106,7 @@ function OldTransactions({ user, addressServer }) {
               </span>
             </section>
 
-            <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
+            <section className="container-dashboard-right-bottom-middle container-table-assets-trade table-open-responsive">
               <Tableoldtrade
                 transactions={oldTransactions}
                 limit={limitAsset}

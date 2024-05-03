@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Menubar from "../Components/menubar.jsx";
 
 function Config({ user, addressServer, getUser }) {
+  const [menuhidden, setMenuhidden] = useState(false);
   const wallet = user.wallet;
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
@@ -46,8 +47,12 @@ function Config({ user, addressServer, getUser }) {
 
   return (
     <main className="app-dashboard">
+      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
+        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      </section>
       <section className="container-dashboard">
-        <Menubar />
+      <Menubar menuhidden={menuhidden}/>
+
 
         <aside className="container-dashboard-trades">
           <aside className="container-dashboard-right-top">
@@ -90,12 +95,12 @@ function Config({ user, addressServer, getUser }) {
             </section>
           </aside>
 
-          <aside className="container-trades">
+          <aside className="container-trades container-config">
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">Configurações</span>
             </section>
 
-            <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
+            <section className="container-dashboard-right-bottom-middle container-table-assets-trade container-item-config">
               <aside className="conteiner-line-config">
                 <span className="config-line">
                   Sincronizar ativos com corretora

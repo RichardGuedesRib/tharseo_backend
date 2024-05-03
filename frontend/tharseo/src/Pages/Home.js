@@ -98,11 +98,18 @@ function Home({ user, addressServer, getUser }) {
 
   return (
     <main className="app-dashboard">
-      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
-        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      <section
+        className="menu-hidden"
+        onClick={() => {
+          setMenuhidden(!menuhidden);
+        }}
+      >
+        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+          menu
+        </span>
       </section>
       <section className="container-dashboard">
-        <Menubar menuhidden={menuhidden}/>
+        <Menubar menuhidden={menuhidden} />
 
         <aside className="container-dashboard-right">
           {/* Inicio Componente */}
@@ -232,7 +239,8 @@ function Home({ user, addressServer, getUser }) {
           <aside className="container-dashboard-right-top">
             <section className="container-dashboard-right-top-left">
               <span className="text-header-welcome">
-                {user && user.name ? user.name : "Unknown"}
+                {" "}
+                Olá Bem Vindo, {user && user.name ? user.name : "Unknown"}
               </span>
             </section>
             <section className="container-dashboard-right-top-right">

@@ -7,6 +7,8 @@ function OpenTrades({ user, addressServer, getUser }) {
   const [limitAsset, setLimitAsset] = useState(14);
   const [openTransactions, setOpenTransactions] = useState([]);
   const [userTransactions, setUserTransactions] = useState(user.transactions);
+  const [menuhidden, setMenuhidden] = useState(false);
+
   const wallet = user.wallet;
 
   const btnIsVisible = document.getElementById("icon-visible");
@@ -61,8 +63,11 @@ function OpenTrades({ user, addressServer, getUser }) {
 
   return (
     <main className="app-dashboard">
+      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
+        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      </section>
       <section className="container-dashboard">
-        <Menubar />
+        <Menubar menuhidden={menuhidden}/>
 
         <aside className="container-dashboard-trades">
           <aside className="container-dashboard-right-top">
@@ -105,12 +110,12 @@ function OpenTrades({ user, addressServer, getUser }) {
             </section>
           </aside>
 
-          <aside className="container-trades">
+          <aside className="container-trades container-open-trades">
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">Trades Pendentes</span>
             </section>
 
-            <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
+            <section className="container-dashboard-right-bottom-middle container-table-assets-trade table-open-responsive">
               <Tableopentrade
                 transactions={openTransactions}
                 limit={limitAsset}
