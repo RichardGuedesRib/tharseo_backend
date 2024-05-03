@@ -5,11 +5,8 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
-    - cd backend/tharseo && mvn verify sonar:sonar -Dsonar.projectKey=dsmfatec_tharseo-automation-trader
+    - cd backend/tharseo && mvn verify sonar:sonar
   only:
     - merge_requests
     - main
     - develop
-
-
-   
