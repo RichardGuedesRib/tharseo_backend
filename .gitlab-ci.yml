@@ -1,6 +1,6 @@
 variables:
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  
-  GIT_DEPTH: "0" 
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+  GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
 sonarcloud-check:
   image: maven:3-openjdk-17
   cache:
@@ -8,7 +8,7 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
-    - cd backend/tharseo && mvn verify sonar:sonar
+    - mvn verify sonar:sonar -Dsonar.projectKey=dsmfatec_tharseo-automation-trader
   only:
     - merge_requests
     - main
