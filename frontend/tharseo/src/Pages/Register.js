@@ -20,29 +20,64 @@ function Register({ addressServerTharseo }) {
   const [secondContainerRegister, setSecondContainerRegister] =
     useState("close");
   const [thirdContainerRegister, setThirdContainerRegister] = useState("close");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\d{2}\s?\d{9}$/;
   const navigate = useNavigate();
-  const activeFormTwo = () => {
+
+  const activeFormTwo = async () => {
     if (userLogin === "") {
       setLogForm("Digite um usuário válido");
       return;
     }
+
     if (password === "") {
       setLogForm("Digite uma senha");
       return;
     }
+
     if (password !== confirmPassword) {
       setLogForm("Senhas não coincidem");
       return;
     }
 
-    setFirstContainerRegister("close");
-    setSecondContainerRegister("");
-    setFirstSectionOk(true);
-    setLogForm("");
+    if (emailRegex.test(userLogin) || phoneRegex.test(userLogin)) {
+      const urlRequest = `${addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
+
+      try {
+        const request = await fetch(urlRequest, { method: "GET" });
+        if (request.ok) {
+          setLogForm("Email ou Celular ja Cadastrado");
+          return;
+        } else {
+          if (emailRegex.test(userLogin)) {
+            setEmail(userLogin);
+          }
+          if (phoneRegex.test(userLogin)) {
+            setPhoneNumber(userLogin);
+          }
+          setFirstContainerRegister("close");
+          setSecondContainerRegister("");
+          setFirstSectionOk(true);
+          setLogForm("");
+        }
+      } catch (error) {}
+    } else {
+      setLogForm("Digite um email ou celular válido");
+      return;
+    }
   };
 
   const activeFormThree = (event) => {
     event.preventDefault();
+
+    if (!emailRegex.test(email)) {
+     setLogForm("Email Inválido");
+     return;
+    }
+    if (!phoneRegex.test(phoneNumber)) {
+      setLogForm("Celular Inválido");
+      return;
+    }
 
     setSecondContainerRegister("close");
     setThirdContainerRegister("");
@@ -298,6 +333,7 @@ function Register({ addressServerTharseo }) {
                       onChange={(e) => {
                         setPhoneNumber(e.target.value);
                       }}
+                      value={phoneNumber ? phoneNumber : ""}
                       required
                     />
                   </section>
@@ -315,6 +351,7 @@ function Register({ addressServerTharseo }) {
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
+                      value={email ? email : ""}
                       required
                     />
                   </section>
