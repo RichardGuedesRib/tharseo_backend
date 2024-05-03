@@ -15,7 +15,7 @@
 	<description>Tharseo is an application designed to automate trades in the cryptocurrency market, providing an efficient and strategic approach through the implementation of the grid strategy. The main objective is to offer users a powerful and resilient solution to optimize their trading operations, maximizing potential gains and managing risks intelligently.</description>
 	<properties>
 		<java.version>17</java.version>
-		<sonar.projectKey>dsmfatec_tharseo-automation-trader</sonar.projectKey>
+		<sonar.projectKey>tharseo-automation-trader</sonar.projectKey>
 		<sonar.organization>dsmfatec</sonar.organization>
 
 	</properties>
