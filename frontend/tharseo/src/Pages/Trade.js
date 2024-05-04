@@ -60,11 +60,21 @@ function Trade({ user, addressServer }) {
 
   return (
     <main className="app-dashboard">
-       <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
-        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      
+      <section
+        className="menu-hidden"
+        onClick={() => {
+          setMenuhidden(!menuhidden);
+        }}
+      >
+        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+          menu
+        </span>
       </section>
+      
       <section className="container-dashboard">
-        <Menubar menuhidden={menuhidden}/>
+        <Menubar menuhidden={menuhidden} />
+
         <Containergrid
           containerInputGrid={containerInputGrid}
           setContainerInputGrid={setContainerInputGrid}

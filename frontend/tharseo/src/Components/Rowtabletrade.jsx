@@ -14,7 +14,7 @@ export default function Rowtabletrades({
   getGridData,
   setGridConfig,
   addressServer,
-  user
+  user,
 }) {
   const [toggle, setToggle] = useState(isActive);
   const [toggleColor, setToggleColor] = useState("#EAECEF");
@@ -68,7 +68,9 @@ export default function Rowtabletrades({
       let nGrid = 0;
       let percentGrid = 0;
       let valueBase = 0;
-      if (asset.length > 0) {
+      console.log("ASSET>>>>>>>[0]", asset);
+      console.log("GETCONFIGASSET: " + asset[0].configStrategy)
+      if (asset && asset.length > 0) {
         const getConfigStrategy = JSON.parse(
           asset[0].configStrategy.replace(/\\/g, "")
         );

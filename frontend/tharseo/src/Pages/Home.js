@@ -5,6 +5,7 @@ import Chart from "../Components/Chart.jsx";
 import Menuwallet from "../Components/Menuwallet.jsx";
 import Tabletrade from "../Components/Tabletrade.jsx";
 import { Link } from "react-router-dom";
+import Containergrid from "../Components/Containergrid.jsx";
 
 function Home({ user, addressServer, getUser }) {
   const [chartInfo, setChartInfo] = useState([]);
@@ -53,11 +54,24 @@ function Home({ user, addressServer, getUser }) {
     }, 5000);
 
     if (wallet) {
-      const walletFilter = Array.isArray(wallet)
-        ? wallet.slice(0, limitActiveTrade)
+      const assetsOnTrade = wallet.filter((item) => (item.isActive === 1));
+
+      console.log("USER");
+      console.log(user);
+      
+      console.log("ASSETS ATIVOS");
+      console.log(assetsOnTrade);
+      
+
+      const walletFilter = Array.isArray(assetsOnTrade)
+        ? assetsOnTrade.slice(0, limitActiveTrade)
         : [];
+      
+        
 
       setAssetsActiveTrade(walletFilter);
+      console.log(">>>>>>> ASSETS do HOME");
+      console.log(assetsActiveTrade);
     }
 
     return () => clearInterval(intervalId);
@@ -110,6 +124,14 @@ function Home({ user, addressServer, getUser }) {
       </section>
       <section className="container-dashboard">
         <Menubar menuhidden={menuhidden} />
+
+        <Containergrid
+          containerInputGrid={containerInputGrid}
+          setContainerInputGrid={setContainerInputGrid}
+          gridData={gridData}
+          addressServer={addressServer}
+          user={user}
+        />
 
         <aside className="container-dashboard-right">
           {/* Inicio Componente */}
@@ -329,6 +351,7 @@ function Home({ user, addressServer, getUser }) {
                 setGridConfig={user.grids}
                 addressServer={addressServer}
                 className="show-more"
+                user={user}
               />
             </section>
           </aside>

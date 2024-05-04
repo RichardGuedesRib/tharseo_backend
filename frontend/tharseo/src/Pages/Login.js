@@ -39,8 +39,8 @@ function Login({ addressServerTharseo, getUserByLogin }) {
       if (!request.ok) {
         alert("Usuário ou Senha Inválidos");
       } else {
-         const userData = await request.json(); 
-         getUserByLogin(userData);
+        const userData = await request.json();
+        getUserByLogin(userData);
         // console.log(user);
         navigate("/home");
       }
@@ -55,11 +55,10 @@ function Login({ addressServerTharseo, getUserByLogin }) {
       <section className="container-dashboard container-login">
         <section className="section-login-elements">
           <section className="login-title">THARSEO</section>
-        
+
           <section className={`section-login-elements-one ${firstContainer}`}>
-       
             <section className="login-description">E-mail ou Celular*</section>
-            
+
             <section className="login-user">
               <span className="login-user-icon">
                 <span class="material-symbols-outlined">person</span>
@@ -67,7 +66,7 @@ function Login({ addressServerTharseo, getUserByLogin }) {
               <input
                 type="text"
                 placeholder="Digite aqui..."
-                className="login-user-text"
+                className="login-user-text no-border"
                 onChange={(e) => setUserLogin(e.target.value)}
               />
             </section>
@@ -96,7 +95,7 @@ function Login({ addressServerTharseo, getUserByLogin }) {
                 </span>
               </span>
             </section>
-            
+
             <section className="login-btn">
               <a href="/register" className="login-btn-createacc">
                 Criar Conta
@@ -107,7 +106,6 @@ function Login({ addressServerTharseo, getUserByLogin }) {
               </span>
             </section>
           </section>
-         
 
           <section className={`section-login-elements-two ${secondContainer}`}>
             <section className="login-btn " onClick={backLogin}>
@@ -128,7 +126,7 @@ function Login({ addressServerTharseo, getUserByLogin }) {
                 <input
                   type="password"
                   placeholder="Digite aqui sua senha..."
-                  className="login-user-text"
+                  className="login-user-text no-border"
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
               </section>
@@ -145,9 +143,7 @@ function Login({ addressServerTharseo, getUserByLogin }) {
             </section>
           </section>
         </section>
-    
       </section>
-      
     </main>
   );
 }

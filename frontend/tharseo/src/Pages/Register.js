@@ -67,6 +67,13 @@ function Register({ addressServerTharseo }) {
     }
   };
 
+  const backToFormOne = () => {
+    setFirstContainerRegister("");
+    setSecondContainerRegister("close");
+    setFirstSectionOk(false);
+    setLogForm("");
+  };
+
   const activeFormThree = (event) => {
     event.preventDefault();
 
@@ -222,7 +229,7 @@ function Register({ addressServerTharseo }) {
                 <input
                   type="text"
                   placeholder="Digite aqui..."
-                  className="register-user-text"
+                  className="register-user-text no-border"
                   onChange={(e) => {
                     setUserLogin(e.target.value);
                   }}
@@ -239,7 +246,7 @@ function Register({ addressServerTharseo }) {
                 <input
                   type="password"
                   placeholder="Digite aqui..."
-                  className="register-user-text"
+                  className="register-user-text no-border"
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
@@ -256,7 +263,7 @@ function Register({ addressServerTharseo }) {
                 <input
                   type="password"
                   placeholder="Digite aqui..."
-                  className="register-user-text"
+                  className="register-user-text no-border"
                   onChange={(e) => {
                     setConfirmPassword(e.target.value);
                   }}
@@ -365,7 +372,10 @@ function Register({ addressServerTharseo }) {
                 </section>
                 <p className="alert-log-register">{logform}</p>
 
-                <section className="register-btn btn-section-two">
+                <section className="register-btn btn-section-two" onClick={backToFormOne}>
+                <a href="" className="login-btn-createacc">
+                  Voltar
+                </a>
                   <button
                     className="register-btn-acess register-btn-acess-form-two"
                     type="submit"

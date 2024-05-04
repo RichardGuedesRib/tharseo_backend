@@ -1167,6 +1167,11 @@ body {
     color: rgba(255, 255, 255, .5);
 }
 
+.no-border:focus{
+    border: none;
+    outline: none;
+}
+
 .login-user-icon {
     display: flex;
     align-items: center;
@@ -1474,7 +1479,7 @@ body {
 
 .btn-section-two {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 }
 
 .input-register {
