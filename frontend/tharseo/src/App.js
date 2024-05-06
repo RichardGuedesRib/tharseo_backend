@@ -10,6 +10,9 @@ import Config from "./Pages/Config";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 function App() {
   const [user, setUser] = useState([]);
   const [addressServerTharseo, setAddressServerTharseo] = useState(
@@ -19,7 +22,7 @@ function App() {
   const getUser = async () => {
     try {
       const res = await fetch(
-        addressServerTharseo + "/tharseo/updatedatauser/" + user.id 
+        addressServerTharseo + "/tharseo/updatedatauser/" + user.id
       );
       if (!res.ok) {
         throw new Error("Error when get user");
@@ -34,12 +37,22 @@ function App() {
   const getUserByLogin = (data) => {
     setUser(data);
   };
+  const firebaseConfig = {
+    apiKey: "AIzaSyDWgCy5TuKHRgrAV6X0O8K4izz-DMJ4wmw",
+    authDomain: "tharseofrontend.firebaseapp.com",
+    projectId: "tharseofrontend",
+    storageBucket: "tharseofrontend.appspot.com",
+    messagingSenderId: "187000717412",
+    appId: "1:187000717412:web:14590f489380e9eb561f71",
+    measurementId: "G-ZXMP13TVF9",
+  };
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
   useEffect(() => {
     // getUser();
     console.log("User Effects User");
     console.log(user);
-    
   }, []);
 
   return (
