@@ -64,7 +64,7 @@ Continuous Innovation: With future strategy implementations, Tharseo will remain
 
 **4. Backend Development ☑:**
 
-- Implementation of RESTful APIs in Java.
+- Implementation of RESTful APIs in Java..
 - Development of business logic.
 - Integration with the database.
 - Security implementation.
