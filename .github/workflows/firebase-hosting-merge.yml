@@ -18,3 +18,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THARSEOFRONTEND }}
           channelId: live
           projectId: tharseofrontend
+          entryPoint: frontend/tharseo
