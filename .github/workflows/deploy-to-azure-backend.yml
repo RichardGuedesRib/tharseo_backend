@@ -1,4 +1,4 @@
-name: Deploy Java App to Azure VM
+name: Deploy Java App to Azure VMM
 
 on:
   push:
