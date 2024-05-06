@@ -1,4 +1,4 @@
-name: Deploy Java App to Azure VMM
+name: Deploy Java App to Azure VM
 
 on:
   push:
@@ -28,5 +28,6 @@ jobs:
         port: 22
         script: |
           cd backend/tharseo
-          docker pull richardguedesrib/tharseo:latest
-          docker run -d -p 8080:8080 richardguedesrib/tharseo:latest
+          mvn clean package
+          scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /home/richardguedes/.ssh/tharseo.pem target/tharseo-0.0.1-SNAPSHOT.jar richardguedes@74.235.240.231:/home/richardguedes/tharseo
+          ssh richardguedes@74.235.240.231 "java -jar /home/richardguedes/tharseo/tharseo-0.0.1-SNAPSHOT.jar &"
