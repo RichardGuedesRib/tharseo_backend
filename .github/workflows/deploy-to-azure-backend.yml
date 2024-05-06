@@ -23,7 +23,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: 74.235.240.231
-        username: richardguedesrib
+        username: richardguedes
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
