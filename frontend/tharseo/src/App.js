@@ -16,8 +16,8 @@ import { getAnalytics } from "firebase/analytics";
 function App() {
   const [user, setUser] = useState([]);
   const [addressServerTharseo, setAddressServerTharseo] = useState(
-    "http://localhost:8080"
-    // "http://52.147.195.35:8080"
+    // "http://localhost:8080"
+    "http://74.235.240.231:8080"
   );
   const getUser = async () => {
     try {
