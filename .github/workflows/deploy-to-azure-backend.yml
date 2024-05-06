@@ -1,4 +1,4 @@
-name: Deploy Java App to Azure VM
+name: Deploy Docker Image to Azure
 
 on:
   push:
@@ -13,27 +13,31 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker image
+      run:  cd backend/tharseo && docker build -t richardguedes/tharseo:latest .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker push richardguedes/tharseo:latest
+
+    - name: SSH into Azure VM and pull Docker image
+      uses: appleboy/ssh-action@master
       with:
-        java-version: '17' 
-        distribution: 'temurin'
+        host: 74.235.240.231
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker pull richardguedes/tharseo:latest
 
-    - name: Add SSH known hosts
-      run: |
-        mkdir -p ~/.ssh
-        echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts
-        echo "github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=" >> ~/.ssh/known_hosts
-        echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=" >> ~/.ssh/known_hosts
-      shell: bash
-      env:
-        JAVA_HOME: ${{ steps.java-setup.outputs.java-home }}
-
-    - name: Build 
-      run: |
-        cd backend/tharseo && mvn clean package
-            
-    - name: Deploy
-      run: |
-       rsync -avz -e "ssh -o StrictHostKeyChecking=no -i C:/cert/tharseo.pem" target/tharseo-0.0.1-SNAPSHOT.jar richardguedes@74.235.240.231:/home/richardguedes/tharseo
-       ssh richardguedes@74.235.240.231 "java -jar /home/richardguedes/tharseo/tharseo-0.0.1-SNAPSHOT.jar &"
+    - name: SSH into Azure VM and start Docker container
+      uses: appleboy/ssh-action@master
+      with:
+        host: 74.235.240.231
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker run -d -p 8080:8080 richardguedes/tharseo:latest
