@@ -37,15 +37,17 @@ function App() {
   const getUserByLogin = (data) => {
     setUser(data);
   };
+
   const firebaseConfig = {
-    apiKey: "AIzaSyDWgCy5TuKHRgrAV6X0O8K4izz-DMJ4wmw",
-    authDomain: "tharseofrontend.firebaseapp.com",
-    projectId: "tharseofrontend",
-    storageBucket: "tharseofrontend.appspot.com",
-    messagingSenderId: "187000717412",
-    appId: "1:187000717412:web:14590f489380e9eb561f71",
-    measurementId: "G-ZXMP13TVF9",
+    apiKey: "AIzaSyDudc8MmV-mpCKuMSrKYsCYt71SwRElHKQ",
+    authDomain: "tharseoautomator.firebaseapp.com",
+    projectId: "tharseoautomator",
+    storageBucket: "tharseoautomator.appspot.com",
+    messagingSenderId: "85357636130",
+    appId: "1:85357636130:web:edd58dd9da252bba0df87b",
+    measurementId: "G-D0TEV1WCPC",
   };
+
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 
@@ -125,61 +127,3 @@ function App() {
 }
 
 export default App;
-
-//WebSocket Comentado para evitar reinicios consecutivos e bloqueio
-// const { lastJsonMessage } = useWebSocket(
-//   `wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@kline_${interval}`,
-//   {
-//     onOpen: () => console.log("Conected to Binance Stream"),
-//     onError: (err) => console.log(err),
-//     shouldReconnect: () => true,
-//     reconnectInterval: 3000,
-//     onMessage: () => {
-//       if (lastJsonMessage) {
-//         const newCandle = {
-//           x: new Date(lastJsonMessage.k.t),
-//           y: [
-//             parseFloat(lastJsonMessage.k.o),
-//             parseFloat(lastJsonMessage.k.h),
-//             parseFloat(lastJsonMessage.k.l),
-//             parseFloat(lastJsonMessage.k.c),
-//           ],
-//           z: lastJsonMessage.k.x,
-//         };
-
-//         setData((prevData) => {
-//           const newData = [...prevData];
-//           if (lastJsonMessage.k.x === false) {
-//             newData[newData.length - 1] = newCandle;
-//           } else {
-//             if (newData.length < 60) {
-//               newData.push(newCandle);
-//             } else {
-//               newData.shift();
-//               newData.push(newCandle);
-//             }
-//           }
-//           return newData;
-//         });
-//       }
-//     },
-//   }
-// );
-
-// const { lastJsonMessage } = useWebSocket(
-//   "ws://localhost:8080/websocket",
-//   {
-//     onOpen: () => console.log("Conectado ao servidor WebSocket"),
-//     onError: (err) => console.log(err),
-//     shouldReconnect: () => true,
-//     reconnectInterval: 3000,
-//     onMessage: (msg) => {
-//       console.log(msg);
-//     },
-//   }
-// );
-
-// const updatePrice = async () => {
-
-//   // setInterval(updatePrice, 5000);
-// };

@@ -17,5 +17,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THARSEOFRONTEND }}
-          projectId: tharseofrontend
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THARSEOAUTOMATOR }}
+          projectId: tharseoautomator

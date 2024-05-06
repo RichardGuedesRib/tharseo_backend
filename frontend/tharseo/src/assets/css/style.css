@@ -1167,7 +1167,7 @@ body {
     color: rgba(255, 255, 255, .5);
 }
 
-.no-border:focus{
+.no-border:focus {
     border: none;
     outline: none;
 }
@@ -1816,7 +1816,8 @@ body {
     .section-sections-register {
         margin-right: 0;
     }
-    .container-dashboard-right-top-left{
+
+    .container-dashboard-right-top-left {
         font-size: 1.2rem;
     }
 
@@ -1913,15 +1914,17 @@ body {
     .title-active-trades {
         font-size: 1rem;
     }
-    .container-register-elements{
+
+    .container-register-elements {
         justify-content: start;
         margin-left: 10px;
     }
-    .btn-showmore-trade{
+
+    .btn-showmore-trade {
         width: 180px;
         height: 35px;
         font-size: 1rem;
-       
+
     }
 
 
@@ -1931,7 +1934,8 @@ body {
     .section-sections-register {
         width: 250px;
     }
-    .open-trade-media-response{
+
+    .open-trade-media-response {
         display: none;
     }
 }
@@ -1944,17 +1948,19 @@ body {
 }
 
 @media only screen and (max-width:650px) {
-    .section-register-elements{
+    .section-register-elements {
         width: 200px;
     }
-   .container-register-elements{
-    margin-left: 10px;
-    width: 80%;
-   }
-   .register-title{
-    font-size: 1rem;
-    letter-spacing: 25px;
-   }
+
+    .container-register-elements {
+        margin-left: 10px;
+        width: 80%;
+    }
+
+    .register-title {
+        font-size: 1rem;
+        letter-spacing: 25px;
+    }
 }
 
 @media only screen and (max-width:600px) {
@@ -2027,21 +2033,25 @@ body {
     .percent-asset-item {
         font-size: 1.1rem;
     }
-    .conteiner-line-config{
+
+    .conteiner-line-config {
         padding: 0;
     }
-    .config-line{
+
+    .config-line {
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: .8rem;
     }
-    .btn-config{
+
+    .btn-config {
         width: 150px;
         font-size: .8rem;
-       
+
     }
-    .container-dashboard-trades{
+
+    .container-dashboard-trades {
         margin-left: 0;
     }
 }
@@ -2069,30 +2079,34 @@ body {
     .btn-trades {
         width: 70px;
     }
-    .register-title{
+
+    .register-title {
         font-size: 1rem;
         letter-spacing: 20px;
-       }
+    }
 }
 
 @media only screen and (max-width:450px) {
-    .container-config{
+    .container-config {
         width: 430px;
         justify-content: space-between;
         margin-left: 15px;
-        }
-        .container-dashboard-trades{
-            padding: 0;
-        }
-        .container-dashboard-right-top{
-            width: 350px;
-        }
-        .btn-showmore-trade{
-            width: 150px;
-            height: 30px;
-            font-size: .8rem;
-           
-        }
+    }
+
+    .container-dashboard-trades {
+        padding: 0;
+    }
+
+    .container-dashboard-right-top {
+        width: 350px;
+    }
+
+    .btn-showmore-trade {
+        width: 150px;
+        height: 30px;
+        font-size: .8rem;
+
+    }
 
 }
 
@@ -2202,41 +2216,51 @@ body {
     .container-table-trade-assets {
         width: 400px;
     }
-       .section-sections-register{
+
+    .section-sections-register {
         display: none;
     }
-    .section-register-elements{
+
+    .section-register-elements {
         width: 80%;
     }
-    .container-register-elements{
+
+    .container-register-elements {
         justify-content: center;
         width: 100%;
     }
+
     .register-title {
-       font-size: 1.1rem;
-       letter-spacing: 30px;
+        font-size: 1.1rem;
+        letter-spacing: 30px;
     }
-    .container-open-trades{
-           width: 100%;
+
+    .container-open-trades {
+        width: 100%;
     }
-    .table-open-responsive{
+
+    .table-open-responsive {
         width: 400px;
     }
-    .label-column-old-trades{
+
+    .label-column-old-trades {
         font-size: .7rem;
     }
-    .label-cell-old-trades{
+
+    .label-cell-old-trades {
         font-size: .7rem;
     }
-    .container-config{
+
+    .container-config {
         width: 390px;
         justify-content: space-between;
 
     }
-    .container-item-config{
+
+    .container-item-config {
         width: 100%;
         padding: 10px;
-    
+
     }
 }
 
@@ -2249,9 +2273,6 @@ body {
     display: flex;
 }
 
-.login-title{
-    color: red;
-}
 
 
 
