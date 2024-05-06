@@ -47,12 +47,18 @@ function Config({ user, addressServer, getUser }) {
 
   return (
     <main className="app-dashboard">
-      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
-        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      <section
+        className="menu-hidden"
+        onClick={() => {
+          setMenuhidden(!menuhidden);
+        }}
+      >
+        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+          menu
+        </span>
       </section>
       <section className="container-dashboard">
-      <Menubar menuhidden={menuhidden}/>
-
+        <Menubar menuhidden={menuhidden} />
 
         <aside className="container-dashboard-trades">
           <aside className="container-dashboard-right-top">
@@ -83,7 +89,7 @@ function Config({ user, addressServer, getUser }) {
                   notifications_unread
                 </span>
               </span>
-              <span className="text-name-user">Joao</span>
+              <span className="text-name-user">Joao.</span>
               <span className="avatar-header-user">
                 <span
                   class="material-symbols-outlined"
