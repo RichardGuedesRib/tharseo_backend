@@ -32,5 +32,5 @@ jobs:
     - name: Build and Deploy
       run: |
         cd backend/tharseo && mvn clean package
-        scp -o StrictHostKeyChecking=no ${{ secrets.SSH_PRIVATE_KEY }} target/tharseo-0.0.1-SNAPSHOT.jar richardguedes@74.235.240.231:/home/richardguedes/tharseo
+        scp -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} target/tharseo-0.0.1-SNAPSHOT.jar richardguedes@74.235.240.231:/home/richardguedes/tharseo
         ssh richardguedes@74.235.240.231 "java -jar /home/richardguedes/tharseo/tharseo-0.0.1-SNAPSHOT.jar &"
