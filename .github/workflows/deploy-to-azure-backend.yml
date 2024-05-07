@@ -25,7 +25,7 @@ jobs:
     - name: Build Tharseo 
       run:  cd backend/tharseo && mvn clean package
 
-    - name: Build Docker image
+    - name: Build Docker imagee
       run:  cd backend/tharseo && docker build -t richardguedesrib/tharseo-app:latest .
 
     - name: Docker Tag Image
