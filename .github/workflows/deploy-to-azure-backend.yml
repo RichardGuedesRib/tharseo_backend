@@ -44,7 +44,7 @@ jobs:
         username: richardguedes
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker login && docker pull richardguedes/tharseo:latest
+          docker login && docker pull richardguedesrib/tharseo:latest
 
     - name: SSH into Azure VM and start Docker container
       uses: appleboy/ssh-action@master
