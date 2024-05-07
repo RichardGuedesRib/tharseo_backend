@@ -45,6 +45,16 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           docker login && docker pull richardguedesrib/tharseo-app:latest
+    
+    - name: SSH into Azure VM and stop existing Docker container
+      uses: appleboy/ssh-action@master
+      with:
+          host: 104.45.141.47
+          username: richardguedes
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+              docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-app) || true
+              docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-app) || true
 
     - name: SSH into Azure VM and start Docker container
       uses: appleboy/ssh-action@master
