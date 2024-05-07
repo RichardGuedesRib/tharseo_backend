@@ -2264,6 +2264,10 @@ body {
     }
 }
 
+.login-title {
+    color: red;
+}
+
 
 .close {
     display: none;
