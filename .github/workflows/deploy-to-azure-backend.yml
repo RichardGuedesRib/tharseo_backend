@@ -22,7 +22,7 @@ jobs:
         java-version: '17' 
         distribution: 'temurin'
 
-    - name: Build Tharseo 
+    - name: Build Tharseoo 
       run:  cd backend/tharseo && mvn clean package
 
     - name: Build Docker imagee
