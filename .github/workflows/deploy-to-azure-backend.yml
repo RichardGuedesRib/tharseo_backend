@@ -16,13 +16,20 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
+    - name: Build Tharseo 
+      run:  cd backend/tharseo && mvn clean package
+
     - name: Build Docker image
       run:  cd backend/tharseo && docker build -t richardguedes/tharseo:latest .
 
+    - name: Docker Tag Image
+      run: |
+            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            cd backend/tharseo && docker build -t richardguedes/tharseo:latest .
+
     - name: Push Docker image to Docker Hub
       run: |
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push richardguedes/tharseo:latest
+            docker push richardguedes/tharseo:latest
 
     - name: SSH into Azure VM and pull Docker image
       uses: appleboy/ssh-action@master
@@ -31,7 +38,7 @@ jobs:
         username: richardguedes
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker pull richardguedes/tharseo:latest
+          docker login && docker pull richardguedes/tharseo:latest
 
     - name: SSH into Azure VM and start Docker container
       uses: appleboy/ssh-action@master
