@@ -77,7 +77,7 @@ jobs:
         
     - name: Build Tharseo Frontend
       run: |
-           docker build -t tharseo-front .
+           cd frontend/tharseo && docker build -t tharseo-front .
            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
            docker tag tharseo-front richardguedesrib/tharseo-front:latest
            docker push richardguedesrib/tharseo-front:latest
