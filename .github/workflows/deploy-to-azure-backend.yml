@@ -90,9 +90,9 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           if docker ps -q --filter ancestor=richardguedesrib/tharseo-front; then
-          docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-front)
-          docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-front)
-                
+            docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-front)
+            docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-front)
+          fi      
         
     - name: SSH into Azure VM and pull Docker image
       uses: appleboy/ssh-action@master
