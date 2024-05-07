@@ -17,7 +17,7 @@ function App() {
   const [user, setUser] = useState([]);
   const [addressServerTharseo, setAddressServerTharseo] = useState(
     // "https://localhost:8080"
-    "https://104.45.141.47:8080"
+    "http://104.45.141.47:8080"
   );
   const getUser = async () => {
     try {
