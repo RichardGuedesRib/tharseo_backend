@@ -60,7 +60,7 @@ jobs:
         username: richardguedes
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker run -d -p 8080:8080 -v /home/tharseo/data:/data richardguedesrib/tharseo-app:latest
+          docker run -d -p 8080:8080 -v /home/richardguedes/tharseo/data:/data richardguedesrib/tharseo-app:latest
 
   deploy-frontend:
     runs-on: ubuntu-latest
