@@ -10,13 +10,10 @@ import Config from "./Pages/Config";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 function App() {
   const [user, setUser] = useState([]);
   const [addressServerTharseo, setAddressServerTharseo] = useState(
-    // "https://localhost:8080"
+    // "http://localhost:8080"
     "http://104.45.141.47:8080"
   );
   const getUser = async () => {
@@ -37,19 +34,6 @@ function App() {
   const getUserByLogin = (data) => {
     setUser(data);
   };
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDudc8MmV-mpCKuMSrKYsCYt71SwRElHKQ",
-    authDomain: "tharseoautomator.firebaseapp.com",
-    projectId: "tharseoautomator",
-    storageBucket: "tharseoautomator.appspot.com",
-    messagingSenderId: "85357636130",
-    appId: "1:85357636130:web:edd58dd9da252bba0df87b",
-    measurementId: "G-D0TEV1WCPC",
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
 
   useEffect(() => {
     // getUser();

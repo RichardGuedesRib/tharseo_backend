@@ -65,6 +65,20 @@ function Register({ addressServerTharseo }) {
       setLogForm("Digite um email ou celular válido");
       return;
     }
+
+    const urlRequest = `${addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
+
+    if (emailRegex.test(email) || phoneRegex.test(phoneNumber)) {
+      try {
+        const request = await fetch(urlRequest, { method: "GET" });
+        if (request.ok) {
+          setLogForm("Email ou Celular ja Cadastrado");
+          return;
+        }
+      } catch (error) {}
+    }
+
+    
   };
 
   const backToFormOne = () => {
@@ -74,18 +88,47 @@ function Register({ addressServerTharseo }) {
     setLogForm("");
   };
 
-  const activeFormThree = (event) => {
+  const activeFormThree = async (event) => {
     event.preventDefault();
 
     if (!emailRegex.test(email)) {
-     setLogForm("Email Inválido");
-     return;
+      setLogForm("Email Inválido");
+      return;
     }
     if (!phoneRegex.test(phoneNumber)) {
       setLogForm("Celular Inválido");
       return;
     }
+    if (name === "") {
+      setLogForm("Digite um Nome");
+      return;
+    }
+    if (lastName === "") {
+      setLogForm("Digite um Sobrenome");
+      return;
+    }
 
+   if (emailRegex.test(email)) {
+      const urlCheckEmail = `${addressServerTharseo}/authenticate/checkuser?login=${email}`;
+      try {
+        const request = await fetch(urlCheckEmail, { method: "GET" });
+        if (request.ok) {
+          setLogForm("Email ja Cadastrado");
+          return;
+        }
+      } catch (error) {}
+    }
+
+    if (phoneRegex.test(phoneNumber)) {
+      const urlCheckPhone = `${addressServerTharseo}/authenticate/checkuser?login=${phoneNumber}`;
+      try {
+        const request = await fetch(urlCheckPhone, { method: "GET" });
+        if (request.ok) {
+          setLogForm("Celular ja Cadastrado");
+          return;
+        }
+      } catch (error) {}
+    }
     setSecondContainerRegister("close");
     setThirdContainerRegister("");
     setSecondSectionOk(true);
@@ -372,13 +415,18 @@ function Register({ addressServerTharseo }) {
                 </section>
                 <p className="alert-log-register">{logform}</p>
 
-                <section className="register-btn btn-section-two" onClick={backToFormOne}>
-                <a href="" className="login-btn-createacc">
-                  Voltar
-                </a>
+                <section className="register-btn btn-section-two">
+                  <a
+                    href=""
+                    className="login-btn-createacc"
+                    onClick={backToFormOne}
+                  >
+                    Voltar
+                  </a>
                   <button
                     className="register-btn-acess register-btn-acess-form-two"
                     type="submit"
+                    onClick={activeFormThree}
                   >
                     <span>Próximo</span>{" "}
                   </button>
