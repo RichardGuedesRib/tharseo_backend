@@ -1,6 +1,7 @@
 package com.fatec.dsm.tharseo.controllers;
 
 
+import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
@@ -15,12 +16,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/assets")
+@CrossOrigin(origins = "*")
 public class AssetController {
 
     @Autowired
     AssetService assetService;
     @Autowired
     UserService userService;
+
+
 
     @GetMapping
     public ResponseEntity<?> findAll() {
@@ -37,24 +41,13 @@ public class AssetController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(asset);
     }
 
-    @PostMapping(value = "/{idUser}")
-    public ResponseEntity<?> insertAsset(@RequestBody Asset asset, @PathVariable Long idUser) {
-        User user = userService.findById(idUser);
-        asset.setUser(user);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User informed in parameter not exists. Id: " + idUser);
-        }
-        if (asset == null) {
-            return ResponseEntity.status((HttpStatus.BAD_REQUEST)).body("Asset is null! Check the asset passed as a parameter");
-        } else {
 
-            if (!Validator.validateString(asset.getAcronym())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acronym asset is invalid");
-            }
-            assetService.insertAsset(asset);
-            return ResponseEntity.status(HttpStatus.CREATED).body(asset);
-        }
+    @PostMapping(value = "/generateassets")
+    public ResponseEntity<?> generateAssets(){
+        List<Asset> allAsset = assetService.generateAssets();
+        return ResponseEntity.status(HttpStatus.OK).body(allAsset);
     }
+
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateAsset(@RequestBody Asset asset, @PathVariable Long id) {

@@ -2,6 +2,7 @@ package com.fatec.dsm.tharseo.services;
 
 import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
 import com.fatec.dsm.tharseo.models.User;
 import com.google.gson.JsonArray;
@@ -25,10 +26,10 @@ public class TharseoAPIService {
     BinanceAPI binanceAPI;
 
 
-    public TransactionSpotGrid newOrderMarket(User user, Asset asset, String side, String timeInForce, String quantity) {
+    public TransactionSpotGrid newOrderMarket(User user, AssetsUser assetsUser, String side, String timeInForce, String quantity) {
         StringBuilder sb = new StringBuilder();
         String type = "MARKET";
-        sb = binanceAPI.newOrderMarket(asset.getAcronym(), side, type, timeInForce, quantity);
+        sb = binanceAPI.newOrderMarket(assetsUser.getAcronym(), side, type, timeInForce, quantity);
         JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
         TransactionSpotGrid transactionSpotGrid = new TransactionSpotGrid();
         transactionSpotGrid.setOrderId(Long.parseLong(jsonOrder.get("orderId").toString()));
@@ -37,7 +38,7 @@ public class TharseoAPIService {
         transactionSpotGrid.setSide(jsonOrder.get("side").toString().replace("\"", ""));
         transactionSpotGrid.setUser(user);
         transactionSpotGrid.setTypeTransaction(jsonOrder.get("type").toString().replace("\"", ""));
-        transactionSpotGrid.setAsset(asset);
+        transactionSpotGrid.setAsset(assetsUser);
         JsonArray fills = jsonOrder.getAsJsonArray("fills");
         JsonObject firstFill = fills.get(0).getAsJsonObject();
         String price = firstFill.get("price").getAsString();
@@ -50,10 +51,10 @@ public class TharseoAPIService {
         return transactionSpotGrid;
     }
 
-    public TransactionSpotGrid newOrderMarketManual(User user, Asset asset, String side, String timeInForce, String quantity) {
+    public TransactionSpotGrid newOrderMarketManual(User user, AssetsUser assetsUser, String side, String timeInForce, String quantity) {
         StringBuilder sb = new StringBuilder();
         String type = "MARKET";
-        sb = binanceAPI.newOrderMarket(asset.getAcronym(), side, type, timeInForce, quantity);
+        sb = binanceAPI.newOrderMarket(assetsUser.getAcronym(), side, type, timeInForce, quantity);
         JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
         TransactionSpotGrid transactionSpotGrid = new TransactionSpotGrid();
         transactionSpotGrid.setOrderId(Long.parseLong(jsonOrder.get("orderId").toString()));
@@ -62,7 +63,7 @@ public class TharseoAPIService {
         transactionSpotGrid.setSide(jsonOrder.get("side").toString().replace("\"", ""));
         transactionSpotGrid.setUser(user);
         transactionSpotGrid.setTypeTransaction(jsonOrder.get("type").toString().replace("\"", ""));
-        transactionSpotGrid.setAsset(asset);
+        transactionSpotGrid.setAsset(assetsUser);
         JsonArray fills = jsonOrder.getAsJsonArray("fills");
         JsonObject firstFill = fills.get(0).getAsJsonObject();
         String price = firstFill.get("price").getAsString();
@@ -76,25 +77,26 @@ public class TharseoAPIService {
         System.out.println(transactionSpotGrid.getStatus());
         return transactionSpotGrid;
     }
-    public TransactionSpotGrid newOrderLimit(User user, Asset asset, String side, String quantity, String price) {
+
+    public TransactionSpotGrid newOrderLimit(User user, AssetsUser assetsUser, String side, String quantity, String price) {
         StringBuilder sb = new StringBuilder();
         String type = "LIMIT";
         String timeInForce = "GTC";
-        sb = binanceAPI.newOrderLimit(asset.getAcronym(), side, type, timeInForce, quantity, price);
+        sb = binanceAPI.newOrderLimit(assetsUser.getAcronym(), side, type, timeInForce, quantity, price);
         System.out.println(">>>>>>>>RETURN DO NEWORDERLIMIT<<<<<<<<<<<<");
         System.out.println(sb.toString());
-        TransactionSpotGrid transactionSpotGrid = convertSBtoTransaction(sb, user, asset);
+        TransactionSpotGrid transactionSpotGrid = convertSBtoTransaction(sb, user, assetsUser);
         transactionSpotGridService.insertTransactionSpotGrid(transactionSpotGrid);
         return transactionSpotGrid;
     }
 
 
-    public List<TransactionSpotGrid> newOrderLimitGrid(User user, Asset asset, String side, String quantity, Double price, Double priceTarget) {
+    public List<TransactionSpotGrid> newOrderLimitGrid(User user, AssetsUser assetUser, String side, String quantity, Double price, Double priceTarget) {
         List<TransactionSpotGrid> operation = new ArrayList<>();
 
         TransactionSpotGrid buyTransaction = new TransactionSpotGrid();
         buyTransaction.setUser(user);
-        buyTransaction.setAsset(asset);
+        buyTransaction.setAsset(assetUser);
         buyTransaction.setOrigQty(quantity);
         buyTransaction.setPrice(price);
         buyTransaction.setPriceTarget(priceTarget);
@@ -114,7 +116,7 @@ public class TharseoAPIService {
         sellTransaction.setSide("SELL");
         sellTransaction.setTypeTransaction("LIMIT");
         sellTransaction.setPriceTarget(priceTarget);
-        sellTransaction.setAsset(asset);
+        sellTransaction.setAsset(assetUser);
         sellTransaction.setUser(user);
 
 
@@ -165,7 +167,7 @@ public class TharseoAPIService {
 //        return operations;
 //    }
 
-    public TransactionSpotGrid awaitOrder(User user, Asset asset, String side, String quantity, Double price, Double priceTarget){
+    public TransactionSpotGrid awaitOrder(User user, AssetsUser asset, String side, String quantity, Double price, Double priceTarget){
         TransactionSpotGrid sellTransaction = new TransactionSpotGrid();
         sellTransaction.setPrice(price);
         sellTransaction.setIsActive(1);
@@ -180,16 +182,16 @@ public class TharseoAPIService {
 
         return sellTransaction;
     }
-    public List<TransactionSpotGrid> initGrid(User user, Asset asset, Double quota, Double percentGrid, Double price){
+    public List<TransactionSpotGrid> initGrid(User user, AssetsUser assetsUser, Double quota, Double percentGrid, Double price){
 //        TransactionSpotGrid newOrderBuy = newOrderMarket(user, asset, "BUY", "GTC", quota.toString());
         String formatPrice = String.format(Locale.US,"%.2f", (price * percentGrid) + price);
         Double targetPrice = Double.parseDouble(formatPrice);
-        TransactionSpotGrid newOrderBuy = awaitOrder(user, asset, "BUY", quota.toString(), price, targetPrice);
+        TransactionSpotGrid newOrderBuy = awaitOrder(user, assetsUser, "BUY", quota.toString(), price, targetPrice);
         newOrderBuy.setPriceTarget(targetPrice);
         newOrderBuy.setStatus("Open");
         transactionSpotGridService.insertTransactionSpotGrid(newOrderBuy);
 
-        TransactionSpotGrid newOrderSell = awaitOrder(user, asset, "SELL", quota.toString(), targetPrice, Double.parseDouble(String.format(Locale.US,"%.2f", targetPrice)));
+        TransactionSpotGrid newOrderSell = awaitOrder(user, assetsUser, "SELL", quota.toString(), targetPrice, Double.parseDouble(String.format(Locale.US,"%.2f", targetPrice)));
         newOrderSell.setStatus("Open");
         newOrderSell.setOrderPairTrade(newOrderBuy.getId());
         transactionSpotGridService.insertTransactionSpotGrid(newOrderSell);
@@ -209,7 +211,7 @@ public class TharseoAPIService {
     }
 
 
-    public TransactionSpotGrid convertSBtoTransaction(StringBuilder sb, User user, Asset asset) {
+    public TransactionSpotGrid convertSBtoTransaction(StringBuilder sb, User user, AssetsUser assetsUser) {
         TransactionSpotGrid transactionSpotGrid = new TransactionSpotGrid();
         JsonObject jsonOrder = JsonParser.parseString(sb.toString()).getAsJsonObject();
         if (jsonOrder.get("orderId") != null) {
@@ -223,7 +225,7 @@ public class TharseoAPIService {
         transactionSpotGrid.setSide(jsonOrder.get("side").toString().replace("\"", ""));
         transactionSpotGrid.setUser(user);
         transactionSpotGrid.setTypeTransaction(jsonOrder.get("type").toString().replace("\"", ""));
-        transactionSpotGrid.setAsset(asset);
+        transactionSpotGrid.setAsset(assetsUser);
         transactionSpotGrid.setPrice(Double.parseDouble(jsonOrder.get("price").toString().replace("\"", "")));
         transactionSpotGrid.setOpenDate(Long.parseLong(jsonOrder.get("transactTime").toString()));
         transactionSpotGrid.setOpenTrade(true);

@@ -6,6 +6,8 @@ import Menuwallet from "../Components/Menuwallet.jsx";
 import Tabletrade from "../Components/Tabletrade.jsx";
 import { Link } from "react-router-dom";
 import Containergrid from "../Components/Containergrid.jsx";
+import { getAllAssetsServer } from "../Controller/AssetsController.js";
+import SelectAsset from "../Components/Wallet/SelectAsset.jsx";
 
 function Home({ user, addressServer, getUser }) {
   const [chartInfo, setChartInfo] = useState([]);
@@ -15,13 +17,15 @@ function Home({ user, addressServer, getUser }) {
   const [amount, setAmount] = useState("");
   const [sideOperation, setSideOperation] = useState("BUY");
   const [typeOperation, setTypeOperation] = useState("");
-  const wallet = user.wallet;
   const [limitAsset, setLimitAsset] = useState(5);
   const [limitActiveTrade, setLimiteActiveTrade] = useState(3);
   const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);
   const [gridData, setGridData] = useState(null);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
   const [menuhidden, setMenuhidden] = useState(false);
+  const [assets, setAssets] = useState([]);
+  const [selectAssets, setSelectAssets] = useState(false);
+  const wallet = user.wallet;
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -54,25 +58,18 @@ function Home({ user, addressServer, getUser }) {
     }, 5000);
 
     if (wallet) {
-      const assetsOnTrade = wallet.filter((item) => (item.isActive === 1));
-
-      console.log("USER");
-      console.log(user);
-      
-      console.log("ASSETS ATIVOS");
-      console.log(assetsOnTrade);
-      
+      const assetsOnTrade = wallet.filter((item) => item.isActive === 1);
 
       const walletFilter = Array.isArray(assetsOnTrade)
         ? assetsOnTrade.slice(0, limitActiveTrade)
         : [];
-      
-        
 
       setAssetsActiveTrade(walletFilter);
-      console.log(">>>>>>> ASSETS do HOME");
-      console.log(assetsActiveTrade);
     }
+
+    getAllAssetsServer().then((asset) => {
+      setAssets(asset);
+    });
 
     return () => clearInterval(intervalId);
   }, []);
@@ -314,6 +311,12 @@ function Home({ user, addressServer, getUser }) {
             <aside className="menu-wallet">
               <section className="container-title-menu-wallet">
                 <span className="title-menu-wallet">Ativos em Carteira</span>
+                <span
+                  className="btn-add-asset"
+                  onClick={() => setSelectAssets(true)}
+                >
+                  <span class="material-symbols-outlined">add_circle</span>
+                </span>
               </section>
               <Menuwallet wallet={wallet} limit={limitAsset} />
 
@@ -329,6 +332,7 @@ function Home({ user, addressServer, getUser }) {
                 </span>
               </section>
             </aside>
+
             <Chart
               data={chartInfo}
               wallet={wallet}
@@ -357,6 +361,12 @@ function Home({ user, addressServer, getUser }) {
           </aside>
         </aside>
       </section>
+      <SelectAsset
+        listAssets={assets}
+        selectAssets={selectAssets}
+        setSelectAssets={setSelectAssets}
+        user={user}
+      />
     </main>
   );
 

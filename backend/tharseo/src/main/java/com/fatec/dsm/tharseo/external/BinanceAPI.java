@@ -6,6 +6,7 @@ import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.Transaction;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
+import com.fatec.dsm.tharseo.services.AssetUserService;
 import com.fatec.dsm.tharseo.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -28,6 +29,8 @@ public class BinanceAPI {
 
     @Autowired
     AssetService assetService;
+    @Autowired
+    AssetUserService assetUserService;
 
     @Autowired
     UserService userService;
@@ -47,6 +50,20 @@ public class BinanceAPI {
             return sb;
         }
 
+    }
+
+    public StringBuilder generateAssets(){
+        StringBuilder sb = new StringBuilder();
+        try{
+            BinanceRequests binanceRequests = new BinanceRequests(addressServer);
+            HashMap<String, String> parameters = new HashMap<>();
+            sb = binanceRequests.sendPublicRequest(parameters, "/api/v3/ticker/price", null, null);
+
+            return sb;
+        } catch (Exception e){
+         sb.append(e);
+         return sb;
+        }
     }
 
     public StringBuilder getChartInfo(String acronym, String timeChart, String limit) {
@@ -218,7 +235,7 @@ public class BinanceAPI {
                 }
             }
             if (!exists) {
-                assetService.insertAsset(el);
+                assetUserService.insertAssetUser(el);
                 user.addAsset(el);
             }
         }
@@ -227,7 +244,7 @@ public class BinanceAPI {
             for (AssetPrice price : Stage.getListPrices()) {
                 if (el.getAcronym().equals(price.getSymbol())) {
                     el.setPrice(price.getPrice() * el.getQuantity());
-                    assetService.insertAsset(el);
+                    assetUserService.insertAssetUser(el);
                     break;
                 }
             }

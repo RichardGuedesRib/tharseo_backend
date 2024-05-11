@@ -135,7 +135,7 @@ function Trade({ user, addressServer }) {
             </section>
 
             <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
-              <aside className="container-table-trade-assets">
+             
                 <Tabletrade
                   table={walletFilter}
                   setContainerInputGrid={setContainerInputGrid}
@@ -145,7 +145,7 @@ function Trade({ user, addressServer }) {
                   className="show-more"
                   user={user}
                 />
-              </aside>
+            
 
               <aside className="container-btn-showmore-trade">
                 <span

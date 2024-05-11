@@ -18,24 +18,16 @@ public class Asset implements Serializable {
     private Long id;
     private String name;
     private String acronym;
-    private Double quantity;
-
-    private Integer isActive;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "iduser")
-    private User user;
+       private Integer isActive;
 
 
     public Asset() {
     }
 
-    public Asset(Long id, String name, String acronym, Double quantity, Integer isActive) {
+    public Asset(Long id, String name, String acronym, Integer isActive) {
         this.id = id;
         this.name = name;
         this.acronym = acronym;
-        this.quantity = quantity;
         this.isActive = isActive;
     }
 
@@ -63,40 +55,12 @@ public class Asset implements Serializable {
         this.acronym = acronym;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
     public Integer getIsActive() {
         return isActive;
     }
 
     public void setIsActive(Integer isActive) {
         this.isActive = isActive;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Asset{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", acronym='" + acronym + '\'' +
-                ", quantity=" + quantity +
-                ", isActive=" + isActive +
-                ", user=" + user +
-                '}';
     }
 }
 

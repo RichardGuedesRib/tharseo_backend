@@ -21,6 +21,8 @@ public class StrategyGridUserService {
     @Autowired
     AssetService assetService;
     @Autowired
+    AssetUserService assetUserService;
+    @Autowired
     TharseoAPIService tharseoAPIService;
 
 
@@ -60,10 +62,10 @@ public class StrategyGridUserService {
             return null;
         }
 
-        Asset asset = assetService.findByAcronym(acronym);
-        List<Transaction> transactions = user.getTransactions().stream().filter(item -> item.getAsset() == asset && item.getStatus().equals("Open")).toList();
+        AssetsUser assetsUser = assetUserService.findByAcronym(acronym);
+        List<Transaction> transactions = user.getTransactions().stream().filter(item -> item.getAsset() == assetsUser && item.getStatus().equals("Open")).toList();
 
-        Optional<Transaction> checkOrdersOpen = transactions.stream().filter(item -> item.getAsset() == asset).findFirst();
+        Optional<Transaction> checkOrdersOpen = transactions.stream().filter(item -> item.getAsset() == assetsUser).findFirst();
         if (checkOrdersOpen.isPresent()) {
             System.out.println("ERROR: Existing Open orders for asset informed, Delete them first");
             return null;
@@ -86,7 +88,7 @@ public class StrategyGridUserService {
 
         for (int i = 0; i < nGrids; i++) {
 //            sb.append("Asset: " + acronym + " | Order: " + grid + " | Quota: " + quota + " | ValueBase: " + valueBase + " | Target Order: " + targetOrder + "\n");
-            List<TransactionSpotGrid> operations = tharseoAPIService.newOrderLimitGrid(user, asset, "BUY", quota.toString(), valueBase, targetOrder);
+            List<TransactionSpotGrid> operations = tharseoAPIService.newOrderLimitGrid(user, assetsUser, "BUY", quota.toString(), valueBase, targetOrder);
             listOperations.add(operations);
             grid++;
             valueBase = valueBase - (valueBase * percentGrid);

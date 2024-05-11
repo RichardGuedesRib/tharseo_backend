@@ -24,7 +24,7 @@ public class Transaction implements Serializable {
     @ManyToOne
     private User user;
     @ManyToOne
-    private Asset asset;
+    private AssetsUser assetsUser;
     private Double price;
     private Double stopPrice;
     private Long openDate;
@@ -38,10 +38,10 @@ public class Transaction implements Serializable {
 
     }
 
-    public Transaction(Long id, User user, Asset asset, Double price, String typeTransaction, Integer isActive) {
+    public Transaction(Long id, User user, AssetsUser assetsUser, Double price, String typeTransaction, Integer isActive) {
         this.id = id;
         this.user = user;
-        this.asset = asset;
+        this.assetsUser = assetsUser;
         this.price = price;
         this.typeTransaction = typeTransaction;
         this.isActive = isActive;
@@ -63,12 +63,12 @@ public class Transaction implements Serializable {
         this.user = user;
     }
 
-    public Asset getAsset() {
-        return asset;
+    public AssetsUser getAsset() {
+        return assetsUser;
     }
 
-    public void setAsset(Asset asset) {
-        this.asset = asset;
+    public void setAsset(AssetsUser assetsUser) {
+        this.assetsUser = assetsUser;
     }
 
     public Double getPrice() {
@@ -176,7 +176,7 @@ public class Transaction implements Serializable {
                 ", executedQty='" + executedQty + '\'' +
                 ", side='" + side + '\'' +
                 ", user=" + user +
-                ", asset=" + asset +
+                ", assetsUser=" + assetsUser +
                 ", price=" + price +
                 ", stopPrice=" + stopPrice +
                 ", openDate=" + openDate +

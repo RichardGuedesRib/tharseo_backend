@@ -2,9 +2,11 @@ package com.fatec.dsm.tharseo.controllers;
 
 
 import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.Transaction;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
+import com.fatec.dsm.tharseo.services.AssetUserService;
 import com.fatec.dsm.tharseo.services.TransactionService;
 import com.fatec.dsm.tharseo.services.UserService;
 import com.fatec.dsm.tharseo.util.Validator;
@@ -23,6 +25,8 @@ public class TransactionController {
     TransactionService transactionService;
     @Autowired
     AssetService assetService;
+    @Autowired
+    AssetUserService assetUserService;
     @Autowired
     UserService userService;
 
@@ -46,15 +50,15 @@ public class TransactionController {
     public ResponseEntity<?> insertTransaction(@RequestBody Transaction transaction,
                                                @RequestParam(value = "asset", required = true) String acronymAsset,
                                                @RequestParam(value = "user", required = true) Long idUser) {
-        Asset asset = assetService.findByAcronym(acronymAsset);
+        AssetsUser assetsUser = assetUserService.findByAcronym(acronymAsset);
         User user = userService.findById(idUser);
-        if (asset == null) {
+        if (assetsUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset informed in parameter does exist: " + acronymAsset);
         }
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User informed in parameter does exist: " + idUser);
         }
-        transaction.setAsset(asset);
+        transaction.setAsset(assetsUser);
         transaction.setUser(user);
         if (!Validator.validateValue(transaction.getPrice().toString())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Value is invalid");

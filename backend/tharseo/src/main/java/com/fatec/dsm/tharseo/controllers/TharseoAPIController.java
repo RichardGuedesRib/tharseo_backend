@@ -1,10 +1,7 @@
 package com.fatec.dsm.tharseo.controllers;
 
 import com.fatec.dsm.tharseo.external.BinanceAPI;
-import com.fatec.dsm.tharseo.models.Asset;
-import com.fatec.dsm.tharseo.models.Transaction;
-import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
-import com.fatec.dsm.tharseo.models.User;
+import com.fatec.dsm.tharseo.models.*;
 import com.fatec.dsm.tharseo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +25,8 @@ public class TharseoAPIController {
     UserService userService;
     @Autowired
     AssetService assetService;
+    @Autowired
+    AssetUserService assetUserService;
     @Autowired
     TransactionService transactionService;
     @Autowired
@@ -147,11 +146,11 @@ public class TharseoAPIController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
         }
-        Asset asset = assetService.findByAcronym(acronym);
-        if (asset == null) {
+        AssetsUser assetsUser = assetUserService.findByAcronym(acronym);
+        if (assetsUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
         }
-        TransactionSpotGrid transaction = tharseoAPIService.newOrderMarket(user, asset, side, timeInForce, quantity);
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderMarket(user, assetsUser, side, timeInForce, quantity);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
 
     }
@@ -168,11 +167,11 @@ public class TharseoAPIController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
         }
-        Asset asset = assetService.findByAcronymByUser(acronym, user);
-        if (asset == null) {
+        AssetsUser assetsUser = assetUserService.findByAcronymByUser(acronym, user);
+        if (assetsUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
         }
-        TransactionSpotGrid transaction = tharseoAPIService.newOrderMarketManual(user, asset, side, timeInForce, quantity);
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderMarketManual(user, assetsUser, side, timeInForce, quantity);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
 
     }
@@ -189,14 +188,29 @@ public class TharseoAPIController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
         }
-        Asset asset = assetService.findByAcronym(acronym);
-        if (asset == null) {
+        AssetsUser assetsUser = assetUserService.findByAcronym(acronym);
+        if (assetsUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
         }
-        TransactionSpotGrid transaction = tharseoAPIService.newOrderLimit(user, asset, side, quantity, price);
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderLimit(user, assetsUser, side, quantity, price);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
 
     }
+
+
+
+    @PostMapping(value = "/operatinggrid")
+    public ResponseEntity<?> operatingGrid(@RequestParam(name = "price", required = true) Double price) {
+        List<TransactionSpotGrid> operations = engineTradeSystemGrid.operatingGridMode();
+        return ResponseEntity.ok().body(operations);
+    }
+
+    @PostMapping(value = "/checkorders")
+    public ResponseEntity<?> checkOrders(@RequestParam(name = "price", required = true) Double price) {
+       List<TransactionSpotGrid> order = engineTradeSystemGrid.checkOrders();
+        return ResponseEntity.ok().body(order);
+    }
+
 
     @DeleteMapping(value = "/cancelopenorder")
     public ResponseEntity<?> cancelOpenOrder(@RequestParam(name = "user", required = true) Long idUser,
@@ -212,18 +226,6 @@ public class TharseoAPIController {
         StringBuilder sb = new StringBuilder();
         sb = tharseoAPIService.cancelOpenOrder(user, transactionSpotGrid);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(sb);
-    }
-
-    @PostMapping(value = "/operatinggrid")
-    public ResponseEntity<?> operatingGrid(@RequestParam(name = "price", required = true) Double price) {
-        List<TransactionSpotGrid> operations = engineTradeSystemGrid.operatingGridMode();
-        return ResponseEntity.ok().body(operations);
-    }
-
-    @PostMapping(value = "/checkorders")
-    public ResponseEntity<?> checkOrders(@RequestParam(name = "price", required = true) Double price) {
-       List<TransactionSpotGrid> order = engineTradeSystemGrid.checkOrders();
-        return ResponseEntity.ok().body(order);
     }
 
 

@@ -2,9 +2,11 @@ package com.fatec.dsm.tharseo.controllers;
 
 
 import com.fatec.dsm.tharseo.models.Asset;
+import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.TransactionSpotGrid;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.services.AssetService;
+import com.fatec.dsm.tharseo.services.AssetUserService;
 import com.fatec.dsm.tharseo.services.TransactionSpotGridService;
 import com.fatec.dsm.tharseo.services.UserService;
 import com.fatec.dsm.tharseo.util.Validator;
@@ -23,6 +25,8 @@ public class TransactionSpotGridController {
     TransactionSpotGridService transactionSpotGridService;
     @Autowired
     AssetService assetService;
+    @Autowired
+    AssetUserService assetUserService;
     @Autowired
     UserService userService;
 
@@ -46,15 +50,15 @@ public class TransactionSpotGridController {
     public ResponseEntity<?> insertTransaction(@RequestBody TransactionSpotGrid transactionSpotGrid,
                                                @RequestParam(value = "asset", required = true) Long idAsset,
                                                @RequestParam(value = "user", required = true) Long idUser) {
-        Asset asset = assetService.findById(idAsset);
+        AssetsUser assetsUser = assetUserService.findById(idAsset);
         User user = userService.findById(idUser);
-        if (asset == null) {
+        if (assetsUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset informed in parameter does exist");
         }
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User informed in parameter does exist");
         }
-        transactionSpotGrid.setAsset(asset);
+        transactionSpotGrid.setAsset(assetsUser);
         transactionSpotGrid.setUser(user);
         if (!Validator.validateValue(transactionSpotGrid.getPrice().toString())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Value is invalid");

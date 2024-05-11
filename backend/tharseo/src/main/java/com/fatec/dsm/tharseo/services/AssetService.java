@@ -5,9 +5,13 @@ import com.fatec.dsm.tharseo.external.BinanceAPI;
 import com.fatec.dsm.tharseo.models.Asset;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.AssetRepository;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,18 +45,6 @@ public class AssetService {
         return asset.orElse(null);
     }
 
-    public Asset findByAcronymByUser(String acronym, User user) {
-        List<Asset> assets = findAll();
-        List<Asset> filtredAssets = assets.stream().filter(item -> item.getAcronym().equals(acronym)).collect(Collectors.toList());
-        Asset asset = null;
-        for (Asset item : filtredAssets) {
-            if (item.getUser().getId().equals(user.getId())) {
-                asset = item;
-            }
-        }
-        return asset;
-    }
-
     public Asset updateAsset(Long id, Asset asset) {
         Asset oldAsset = findById(id);
         if (oldAsset == null) {
@@ -64,10 +56,7 @@ public class AssetService {
         if (asset.getAcronym() != null) {
             oldAsset.setAcronym(asset.getAcronym());
         }
-        if (asset.getQuantity() != null) {
-            oldAsset.setQuantity(asset.getQuantity());
-        }
-        if (asset.getIsActive() != null) {
+                if (asset.getIsActive() != null) {
             oldAsset.setIsActive(asset.getIsActive());
         }
         return assetRepository.save(oldAsset);
@@ -77,6 +66,43 @@ public class AssetService {
         Asset asset = findById(id);
         asset.setIsActive(0);
         updateAsset(asset.getId(), asset);
+    }
+
+    public List<Asset> generateAssets() {
+        List<Asset> listAsset = new ArrayList<>();
+        StringBuilder sb = binanceAPI.generateAssets();
+        JsonArray jsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            Asset asset = new Asset();
+            asset.setName(jsonObject.get("symbol").toString().replace("\"", ""));
+            asset.setAcronym(jsonObject.get("symbol").toString().replace("\"", ""));
+            listAsset.add(asset);
+        }
+
+        List<Asset> listAssetUsdt = listAsset.stream()
+                .filter(asset -> asset.getName().endsWith("USDT"))
+                .toList();
+
+        List<Asset> allAssets = assetRepository.findAll();
+        List<Asset> newList = new ArrayList<>();
+
+        for (Asset item : listAssetUsdt) {
+            boolean exists = false;
+            for (Asset subItem : allAssets) {
+                if (item.getName().equals(subItem.getName())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                newList.add(item);
+                assetRepository.save(item);
+            }
+        }
+
+        return newList;
     }
 
 
