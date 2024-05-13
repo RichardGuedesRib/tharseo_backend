@@ -1,21 +1,25 @@
 import "../assets/css/style.css";
-import React, { useState, useEffect } from "react";
-import Menubar from "../Components/menubar.jsx";
-import Tableopentrade from "../Components/Tableopentrade.jsx";
+import React, { useState, useEffect, useContext } from "react";
+import Menubar from "../Components/Nav/menubar.jsx";
+import Tableopentrade from "../Components/OpenTransactions/Tableopentrade.jsx";
+import serverConfig from "../Services/ServerConfig.js";
+import { UserContext } from "../Services/UserDataProvider.js";
+import Header from "../Components/Nav/Header.jsx";
 
-function OpenTrades({ user, addressServer, getUser }) {
+function OpenTrades({  }) {
+  const { userProfile,  transactions, updateUserData, setIDUser } =
+  useContext(UserContext);
   const [limitAsset, setLimitAsset] = useState(14);
   const [openTransactions, setOpenTransactions] = useState([]);
-  const [userTransactions, setUserTransactions] = useState(user.transactions);
+  const [userTransactions, setUserTransactions] = useState(userProfile.transactions);
   const [menuhidden, setMenuhidden] = useState(false);
+ 
+    const [wallet, setWallet] = useState(userProfile.wallet);
 
-  const wallet = user.wallet;
+ 
 
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
-  
-
-  
 
   useEffect(() => {
     if (userTransactions && userTransactions.length > 0) {
@@ -63,52 +67,22 @@ function OpenTrades({ user, addressServer, getUser }) {
 
   return (
     <main className="app-dashboard">
-      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
-        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      <section
+        className="menu-hidden"
+        onClick={() => {
+          setMenuhidden(!menuhidden);
+        }}
+      >
+        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+          menu
+        </span>
       </section>
       <section className="container-dashboard">
-        <Menubar menuhidden={menuhidden}/>
+        <Menubar menuhidden={menuhidden} />
 
         <aside className="container-dashboard-trades">
-          <aside className="container-dashboard-right-top">
-            <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">Bem Vindo, João</span>
-            </section>
-            <section className="container-dashboard-right-top-right">
-              <section className="container-balance-visible">
-                <span className="icon-visible-balance">
-                  <span
-                    class="material-symbols-outlined"
-                    id="icon-visible"
-                    style={{ fontSize: 20 }}
-                  >
-                    visibility_off
-                  </span>
-                </span>
-                <span className="text-balance" id="balance-text">
-                  $ -----
-                </span>
-              </section>
 
-              <span className="icon-notification-header">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
-                >
-                  notifications_unread
-                </span>
-              </span>
-              <span className="text-name-user">Joao</span>
-              <span className="avatar-header-user">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 50 }}
-                >
-                  face
-                </span>
-              </span>
-            </section>
-          </aside>
+          <Header />
 
           <aside className="container-trades container-open-trades">
             <section className="container-dashboard-right-bottom-top">
@@ -119,9 +93,9 @@ function OpenTrades({ user, addressServer, getUser }) {
               <Tableopentrade
                 transactions={openTransactions}
                 limit={limitAsset}
-                getUser={getUser}
-                user={user}
-                addressServer={addressServer}
+                getUser={updateUserData}
+                user={userProfile}
+                addressServer={serverConfig.addressServerTharseo}
               />
 
               <aside className="container-btn-showmore-trade">

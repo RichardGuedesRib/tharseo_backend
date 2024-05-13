@@ -26,7 +26,7 @@ export default function Tabletrade({
         </tr>
       </thead>
       <tbody className="body-table-trades">
-        {table.map((item, index) => {
+        {table && table.map((item, index) => {
           const itemTrade = setGridConfig
             ? setGridConfig.find(
                 (configItem) => configItem.acronym === item.acronym

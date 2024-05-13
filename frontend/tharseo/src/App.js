@@ -1,7 +1,7 @@
 import "./assets/css/App.css";
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Chart from "./Components/Chart";
+import Chart from "./Components/Chart/Chart";
 import Home from "./Pages/Home";
 import Trade from "./Pages/Trade";
 import OldTransactions from "./Pages/OldTransactions";
@@ -9,6 +9,11 @@ import OpenTrades from "./Pages/OpenTrades";
 import Config from "./Pages/Config";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import {
+  UserContext,
+  UserDataProvider,
+  useUserData,
+} from "./Services/UserDataProvider";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -35,6 +40,8 @@ function App() {
     setUser(data);
   };
 
+  const { userProfile, wallet, transactions, updateUserData, setIDUser } = useContext(UserContext);
+
   useEffect(() => {
     // getUser();
     console.log("User Effects User");
@@ -42,6 +49,7 @@ function App() {
   }, []);
 
   return (
+    <UserDataProvider>
     <Router>
       <div className="App">
         <Routes>
@@ -107,6 +115,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </UserDataProvider>
   );
 }
 

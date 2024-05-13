@@ -1,15 +1,19 @@
 import "../assets/css/style.css";
-import React, { useState, useEffect } from "react";
-import Menubar from "../Components/menubar.jsx";
-import Tableoldtrade from "../Components/Tableoldtrade.jsx";
+import React, { useState, useEffect, useContext } from "react";
+import Menubar from "../Components/Nav/menubar.jsx";
+import Tableoldtrade from "../Components/OldTransactions/Tableoldtrade.jsx";
+import { UserContext } from "../Services/UserDataProvider.js";
+import Header from "../Components/Nav/Header.jsx";
 
 function OldTransactions({ user, addressServer }) {
+  const { userProfile,  transactions, updateUserData, setIDUser } =
+  useContext(UserContext);
   const [limitAsset, setLimitAsset] = useState(14);
   const [oldTransactions, setOldTransactions] = useState([]);
-  const [userTransactions, setUserTransactions] = useState(user.transactions);
+  const [userTransactions, setUserTransactions] = useState(userProfile.transactions);
   const [menuhidden, setMenuhidden] = useState(false);
+  const [wallet, setWallet] = useState(userProfile.wallet);
 
-  const wallet = user.wallet;
 
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
@@ -51,53 +55,22 @@ function OldTransactions({ user, addressServer }) {
 
   return (
     <main className="app-dashboard">
-      <section className="menu-hidden" onClick={() => {setMenuhidden(!menuhidden)}}>
-        <span class="material-symbols-outlined" style={{fontSize:30}}>menu</span>
+      <section
+        className="menu-hidden"
+        onClick={() => {
+          setMenuhidden(!menuhidden);
+        }}
+      >
+        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+          menu
+        </span>
       </section>
       <section className="container-dashboard">
-      <Menubar menuhidden={menuhidden}/>
-
+        <Menubar menuhidden={menuhidden} />
 
         <aside className="container-dashboard-trades">
-          <aside className="container-dashboard-right-top">
-            <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">Bem Vindo, João</span>
-            </section>
-            <section className="container-dashboard-right-top-right">
-              <section className="container-balance-visible">
-                <span className="icon-visible-balance">
-                  <span
-                    class="material-symbols-outlined"
-                    id="icon-visible"
-                    style={{ fontSize: 20 }}
-                  >
-                    visibility_off
-                  </span>
-                </span>
-                <span className="text-balance" id="balance-text">
-                  $ -----
-                </span>
-              </section>
-
-              <span className="icon-notification-header">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
-                >
-                  notifications_unread
-                </span>
-              </span>
-              <span className="text-name-user">Joao</span>
-              <span className="avatar-header-user">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 50 }}
-                >
-                  face
-                </span>
-              </span>
-            </section>
-          </aside>
+          
+         <Header/>
 
           <aside className="container-trades">
             <section className="container-dashboard-right-bottom-top">

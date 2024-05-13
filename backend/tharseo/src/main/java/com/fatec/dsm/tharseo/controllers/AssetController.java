@@ -41,7 +41,11 @@ public class AssetController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(asset);
     }
 
-
+    @PostMapping
+    public ResponseEntity<?> insertAsset(@RequestBody Asset asset){
+        assetService.insertAsset(asset);
+        return ResponseEntity.status(HttpStatus.OK).body(asset);
+    }
     @PostMapping(value = "/generateassets")
     public ResponseEntity<?> generateAssets(){
         List<Asset> allAsset = assetService.generateAssets();

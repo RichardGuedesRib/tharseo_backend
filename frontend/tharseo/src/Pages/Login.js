@@ -1,6 +1,13 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserDataProvider } from "../Services/UserDataProvider";
+import {
+  checkUserLogin,
+  authenticateLogin,
+} from "../Services/AuthenticateService";
+import { UserContext } from "../Services/UserDataProvider";
+import { useContext } from "react";
 
 function Login({ addressServerTharseo, getUserByLogin }) {
   const [userLogin, setUserLogin] = useState("");
@@ -8,46 +15,24 @@ function Login({ addressServerTharseo, getUserByLogin }) {
   const [firstContainer, setFirstContainer] = useState("");
   const [secondContainer, setSecondContainer] = useState("close");
   const navigate = useNavigate();
+  const { userProfile, wallet, transactions, updateUserData, setUser } = useContext(UserContext);
 
   const checkUser = async () => {
-    const urlRequest = `${addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
-    try {
-      const request = await fetch(urlRequest, { method: "GET" });
-      if (!request.ok) {
-        alert("Login ou senha incorreto");
-      } else {
-        setFirstContainer("close");
-        setSecondContainer("");
-      }
-    } catch (error) {}
+    const existsLogin = await checkUserLogin(
+      userLogin,
+      setFirstContainer,
+      setSecondContainer
+    );
   };
   const backLogin = () => {
     setSecondContainer("close");
     setFirstContainer("");
   };
+
   const authenticate = async () => {
-    const urlRequest = `${addressServerTharseo}/authenticate/checkpassword`;
-    try {
-      const request = await fetch(urlRequest, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          login: userLogin,
-          password: userPassword,
-        }),
-      });
-      if (!request.ok) {
-        alert("Usuário ou Senha Inválidos");
-      } else {
-        const userData = await request.json();
-        getUserByLogin(userData);
-        // console.log(user);
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    const checkLogin = await authenticateLogin(userLogin, userPassword, navigate, setUser);
+      };
+
   useEffect(() => {}, []);
 
   return (

@@ -1,6 +1,7 @@
 package com.fatec.dsm.tharseo.services;
 
 
+import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,12 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+               return user.orElse(null);
     }
 
     public User findByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
+
         return user.orElse(null);
     }
 

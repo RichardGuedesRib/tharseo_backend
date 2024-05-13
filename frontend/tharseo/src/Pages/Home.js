@@ -1,18 +1,20 @@
 import "../assets/css/style.css";
-import React, { useState, useEffect } from "react";
-import Menubar from "../Components/menubar.jsx";
-import Chart from "../Components/Chart.jsx";
-import Menuwallet from "../Components/Menuwallet.jsx";
-import Tabletrade from "../Components/Tabletrade.jsx";
+import React, { useState, useEffect, useContext } from "react";
+import Menubar from "../Components/Nav/menubar.jsx";
+import Chart from "../Components/Chart/Chart.jsx";
+import Menuwallet from "../Components/Wallet/Menuwallet.jsx";
+import Tabletrade from "../Components/Trade/Tabletrade.jsx";
 import { Link } from "react-router-dom";
-import Containergrid from "../Components/Containergrid.jsx";
-import { getAllAssetsServer } from "../Controller/AssetsController.js";
+import Containergrid from "../Components/Trade/Containergrid.jsx";
+import { getAllAssetsServer } from "../Services/AssetsService.js";
 import SelectAsset from "../Components/Wallet/SelectAsset.jsx";
+import { UserContext } from "../Services/UserDataProvider";
+import Header from "../Components/Nav/Header.jsx";
+import serverConfig from "../Services/ServerConfig.js";
 
-function Home({ user, addressServer, getUser }) {
+function Home() {
   const [chartInfo, setChartInfo] = useState([]);
   const [containerOrder, setContainerOrder] = useState(false);
-  const [visibleBalance, setVisibleBalance] = useState(false);
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
   const [sideOperation, setSideOperation] = useState("BUY");
@@ -25,12 +27,16 @@ function Home({ user, addressServer, getUser }) {
   const [menuhidden, setMenuhidden] = useState(false);
   const [assets, setAssets] = useState([]);
   const [selectAssets, setSelectAssets] = useState(false);
-  const wallet = user.wallet;
+  const { userProfile, wallet, transactions, updateUserData, setIDUser } =
+    useContext(UserContext);
+  const [walletFilter, setWalletFilter] = useState([]);
+  
 
   useEffect(() => {
+    getAllAssets();
     const intervalId = setInterval(async () => {
       try {
-        const res = await fetch(addressServer + "/chart");
+        const res = await fetch(serverConfig.addressServerTharseo + "/chart");
 
         if (!res.ok) {
           throw new Error("Error when get chart info");
@@ -58,21 +64,17 @@ function Home({ user, addressServer, getUser }) {
     }, 5000);
 
     if (wallet) {
-      const assetsOnTrade = wallet.filter((item) => item.isActive === 1);
-
-      const walletFilter = Array.isArray(assetsOnTrade)
-        ? assetsOnTrade.slice(0, limitActiveTrade)
-        : [];
-
-      setAssetsActiveTrade(walletFilter);
+      const walletFilter = Array.isArray(wallet) ? wallet.slice(0, 3) : [];
+      setWalletFilter(walletFilter);
     }
-
-    getAllAssetsServer().then((asset) => {
-      setAssets(asset);
-    });
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const getAllAssets = async () => {
+    const getAssets = await getAllAssetsServer();
+    setAssets(getAssets);
+  };
 
   const getGridData = (data) => {
     setGridData(data);
@@ -87,9 +89,9 @@ function Home({ user, addressServer, getUser }) {
       if (price === "") {
         alert("Digite o preço desejado");
       }
-      urlRequest = `${addressServer}/tharseo/neworderlimit?user=${user.id}&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
+      urlRequest = `${serverConfig.addressServerTharseo}/tharseo/neworderlimit?user=${userProfile.id}&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}&price=${price}`;
     } else if (typeOperation === "MARKET") {
-      urlRequest = `${addressServer}/tharseo/newordermarketmanual?user=${user.id}&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
+      urlRequest = `${serverConfig.addressServerTharseo}/tharseo/newordermarketmanual?user=${userProfile.id}&acronym=BNBUSDT&side=${sideOperation}&timeinforce=GTC&quantity=${amount}`;
     } else {
       alert("Escolha o lado da operação");
     }
@@ -99,7 +101,7 @@ function Home({ user, addressServer, getUser }) {
       if (!request.ok) {
         throw new Error("Error when post order");
       }
-      await getUser();
+      // await getUser();
       alert("OK!");
       setContainerOrder(false);
     } catch (error) {
@@ -107,267 +109,227 @@ function Home({ user, addressServer, getUser }) {
     }
   };
 
+
   return (
-    <main className="app-dashboard">
-      <section
-        className="menu-hidden"
-        onClick={() => {
-          setMenuhidden(!menuhidden);
-        }}
-      >
-        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
-          menu
-        </span>
-      </section>
-      <section className="container-dashboard">
-        <Menubar menuhidden={menuhidden} />
+    <>
+      <main className="app-dashboard">
+        <section
+          className="menu-hidden"
+          onClick={() => {
+            setMenuhidden(!menuhidden);
+          }}
+        >
+          <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+            menu
+          </span>
+        </section>
+        <section className="container-dashboard">
+          <Menubar menuhidden={menuhidden} />
 
-        <Containergrid
-          containerInputGrid={containerInputGrid}
-          setContainerInputGrid={setContainerInputGrid}
-          gridData={gridData}
-          addressServer={addressServer}
-          user={user}
-        />
+          <Containergrid
+            containerInputGrid={containerInputGrid}
+            setContainerInputGrid={setContainerInputGrid}
+            gridData={gridData}
+            addressServer={serverConfig.addressServerTharseo}
+            user={userProfile}
+          />
 
-        <aside className="container-dashboard-right">
-          {/* Inicio Componente */}
+          <aside className="container-dashboard-right">
+            {/* Inicio Componente */}
 
-          <section
-            className={`container-order ${
-              containerOrder ? "active" : "hidden"
-            }`}
-            id="container_order"
-          >
-            <span className="title-container-order">Ordem Manual</span>
+            <section
+              className={`container-order ${
+                containerOrder ? "active" : "hidden"
+              }`}
+              id="container_order"
+            >
+              <span className="title-container-order">Ordem Manual</span>
 
-            <span className="asset-container-order">BNBUSDT</span>
+              <span className="asset-container-order">BNBUSDT</span>
 
-            <aside className="container-side-order">
-              <span
-                className="container-side-buy"
-                onClick={() => setSideOperation("BUY")}
-              >
-                <span class="material-symbols-outlined">shopping_cart</span>
-                <span className="btn-order-buy">BUY</span>
-              </span>
-              <span
-                className="container-side-sell"
-                onClick={() => setSideOperation("SELL")}
-              >
-                <span class="material-symbols-outlined">paid</span>
-                <span className="btn-order-sell">SELL</span>
-              </span>
-            </aside>
-
-            <aside className="container-type-order">
-              <span
-                className="type-order"
-                style={{
-                  backgroundColor:
-                    typeOperation === "LIMIT" ? "#006BFA" : "#2A2A2A",
-                }}
-                onClick={() => setTypeOperation("LIMIT")}
-              >
-                LIMIT
-              </span>
-
-              <span
-                className="type-order"
-                style={{
-                  backgroundColor:
-                    typeOperation === "MARKET" ? "#006BFA" : "#2A2A2A",
-                }}
-                onClick={() => setTypeOperation("MARKET")}
-              >
-                MARKET
-              </span>
-            </aside>
-
-            <div className="container-inputs-order">
-              <label
-                className="label-input"
-                style={{
-                  backgroundColor: typeOperation === "MARKET" ? "#2A2A2A" : "",
-                }}
-              >
-                Price:{" "}
-                <input
-                  required
-                  type="number"
-                  name="price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="input-order"
-                  disabled={typeOperation === "MARKET"}
-                />
-              </label>
-            </div>
-            <div className="container-inputs-order">
-              <label className="label-input">
-                Amount:{" "}
-                <input
-                  required
-                  type="number"
-                  name="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="input-order"
-                />
-              </label>
-            </div>
-
-            <section className="container-buttons-order">
-              <section
-                className="btn-type-order"
-                onClick={openOrder}
-                style={{
-                  backgroundColor:
-                    sideOperation === "SELL" ? "#E55764" : "#56BC7C",
-                }}
-              >
+              <aside className="container-side-order">
                 <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
+                  className="container-side-buy"
+                  onClick={() => {
+                    setSideOperation("BUY");
+                    alert("Escolheu BUY");
+                  }}
                 >
-                  {sideOperation === "SELL" ? "paid" : "shopping_cart"}
+                  <span class="material-symbols-outlined">shopping_cart</span>
+                  <span className="btn-order-buy">BUY</span>
                 </span>
-                <span className="text-btn-cancel-order">
-                  {sideOperation === "SELL" ? "SELL" : "BUY"}
-                </span>
-              </section>
-
-              <aside
-                className="btn-order-cancel"
-                onClick={() => setContainerOrder(false)}
-              >
                 <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
+                  className="container-side-sell"
+                  onClick={() => {
+                    setSideOperation("SELL");
+                    alert("Escolheu SELL");
+                  }}
                 >
-                  close
+                  <span class="material-symbols-outlined">paid</span>
+                  <span className="btn-order-sell">SELL</span>
                 </span>
-                <span className="text-btn-cancel-order">CANCELAR</span>
               </aside>
-            </section>
-          </section>
-          <section className="effect-disable"></section>
 
-          {/* Final Componente */}
-
-          <aside className="container-dashboard-right-top">
-            <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">
-                {" "}
-                Olá Bem Vindo, {user && user.name ? user.name : "Unknown"}
-              </span>
-            </section>
-            <section className="container-dashboard-right-top-right">
-              <section className="container-balance-visible">
+              <aside className="container-type-order">
                 <span
-                  className="icon-visible-balance"
-                  onClick={() => setVisibleBalance(!visibleBalance)}
+                  className="type-order"
+                  style={{
+                    backgroundColor:
+                      typeOperation === "LIMIT" ? "#006BFA" : "#2A2A2A",
+                  }}
+                  onClick={() => setTypeOperation("LIMIT")}
+                >
+                  LIMIT
+                </span>
+
+                <span
+                  className="type-order"
+                  style={{
+                    backgroundColor:
+                      typeOperation === "MARKET" ? "#006BFA" : "#2A2A2A",
+                  }}
+                  onClick={() => setTypeOperation("MARKET")}
+                >
+                  MARKET
+                </span>
+              </aside>
+
+              <div className="container-inputs-order">
+                <label
+                  className="label-input"
+                  style={{
+                    backgroundColor:
+                      typeOperation === "MARKET" ? "#2A2A2A" : "",
+                  }}
+                >
+                  Price:{" "}
+                  <input
+                    required
+                    type="number"
+                    name="price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    className="input-order"
+                    disabled={typeOperation === "MARKET"}
+                  />
+                </label>
+              </div>
+              <div className="container-inputs-order">
+                <label className="label-input">
+                  Amount:{" "}
+                  <input
+                    required
+                    type="number"
+                    name="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="input-order"
+                  />
+                </label>
+              </div>
+
+              <section className="container-buttons-order">
+                <section
+                  className="btn-type-order"
+                  onClick={openOrder}
+                  style={{
+                    backgroundColor:
+                      sideOperation === "SELL" ? "#E55764" : "#56BC7C",
+                  }}
                 >
                   <span
                     class="material-symbols-outlined"
-                    id="icon-visible"
-                    style={{ fontSize: 20 }}
+                    style={{ fontSize: 30 }}
                   >
-                    {visibleBalance ? "visibility" : "visibility_off"}
+                    {sideOperation === "SELL" ? "paid" : "shopping_cart"}
                   </span>
-                </span>
-                <span className="text-balance" id="balance-text">
-                  {visibleBalance
-                    ? `$ ${wallet
-                        .find((item) => item.acronym === "USDTUSDT")
-                        .quantity.toFixed(0)}`
-                    : "$ -----"}
-                </span>
-              </section>
+                  <span className="text-btn-cancel-order">
+                    {sideOperation === "SELL" ? "SELL" : "BUY"}
+                  </span>
+                </section>
 
-              <span className="icon-notification-header">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
+                <aside
+                  className="btn-order-cancel"
+                  onClick={() => setContainerOrder(false)}
                 >
-                  notifications_unread
-                </span>
-              </span>
-              <span className="text-name-user">
-                {user && user.name ? user.name : "Unknown"}
-              </span>
-              <span className="avatar-header-user">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 50 }}
-                >
-                  face
-                </span>
-              </span>
+                  <span
+                    class="material-symbols-outlined"
+                    style={{ fontSize: 30 }}
+                  >
+                    close
+                  </span>
+                  <span className="text-btn-cancel-order">CANCELAR</span>
+                </aside>
+              </section>
             </section>
-          </aside>
+            <section className="effect-disable"></section>
 
-          <aside className="container-dashboard-right-middle">
-            <aside className="menu-wallet">
-              <section className="container-title-menu-wallet">
-                <span className="title-menu-wallet">Ativos em Carteira</span>
-                <span
-                  className="btn-add-asset"
-                  onClick={() => setSelectAssets(true)}
-                >
-                  <span class="material-symbols-outlined">add_circle</span>
-                </span>
-              </section>
-              <Menuwallet wallet={wallet} limit={limitAsset} />
+            {/* Final Componente */}
 
-              <section className="container-button">
-                <span
-                  className="btn-view-all"
-                  id="btnviewall"
-                  onClick={showMoreAssets}
-                >
-                  <span className="text-btn-view-all" id="btn-view-all">
-                    Ver Mais
+            <Header />
+
+            <aside className="container-dashboard-right-middle">
+              <aside className="menu-wallet">
+                <section className="container-title-menu-wallet">
+                  <span className="title-menu-wallet">Ativos em Carteira</span>
+                  <span
+                    className="btn-add-asset"
+                    onClick={() => setSelectAssets(true)}
+                  >
+                    <span class="material-symbols-outlined">add_circle</span>
                   </span>
-                </span>
-              </section>
+                </section>
+                <Menuwallet wallet={wallet} limit={limitAsset} />
+
+                <section className="container-button">
+                  <span
+                    className="btn-view-all"
+                    id="btnviewall"
+                    onClick={showMoreAssets}
+                  >
+                    <span className="text-btn-view-all" id="btn-view-all">
+                      Ver Mais
+                    </span>
+                  </span>
+                </section>
+              </aside>
+
+              <Chart
+                data={chartInfo}
+                wallet={wallet}
+                setContainerOrder={setContainerOrder}
+              />
             </aside>
 
-            <Chart
-              data={chartInfo}
-              wallet={wallet}
-              setContainerOrder={setContainerOrder}
-            />
+            <aside className="container-dashboard-right-bottom">
+              <section className="container-dashboard-right-bottom-top">
+                <span className="title-active-trades">Ativar Trade</span>
+                <Link to="/trade" className="btn-showmore">
+                  <span>Ver Todos</span>
+                </Link>
+              </section>
+              <section className="container-dashboard-right-bottom-middle footer-home">
+                <Tabletrade
+                  table={walletFilter}
+                  setContainerInputGrid={setContainerInputGrid}
+                  getGridData={getGridData}
+                  setGridConfig={userProfile.grids}
+                  addressServer={serverConfig.addressServerTharseo}
+                  className="show-more"
+                  user={userProfile}
+                />
+              </section>
+            </aside>
           </aside>
-
-          <aside className="container-dashboard-right-bottom">
-            <section className="container-dashboard-right-bottom-top">
-              <span className="title-active-trades">Ativar Trade</span>
-              <Link to="/trade" className="btn-showmore">
-                <span>Ver Todos</span>
-              </Link>
-            </section>
-            <section className="container-dashboard-right-bottom-middle footer-home">
-              <Tabletrade
-                table={assetsActiveTrade}
-                setContainerInputGrid={setContainerInputGrid}
-                getGridData={getGridData}
-                setGridConfig={user.grids}
-                addressServer={addressServer}
-                className="show-more"
-                user={user}
-              />
-            </section>
-          </aside>
-        </aside>
-      </section>
-      <SelectAsset
-        listAssets={assets}
-        selectAssets={selectAssets}
-        setSelectAssets={setSelectAssets}
-        user={user}
-      />
-    </main>
+        </section>
+        <SelectAsset
+          listAssets={assets}
+          selectAssets={selectAssets}
+          setSelectAssets={setSelectAssets}
+          user={userProfile}
+        />
+      </main>
+    </>
   );
 
   function showMoreAssets() {

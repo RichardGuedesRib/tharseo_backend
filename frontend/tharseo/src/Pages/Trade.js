@@ -1,8 +1,10 @@
 import "../assets/css/style.css";
-import React, { useState, useEffect } from "react";
-import Menubar from "../Components/menubar.jsx";
-import Tabletrade from "../Components/Tabletrade.jsx";
-import Containergrid from "../Components/Containergrid.jsx";
+import React, { useState, useEffect, useContext } from "react";
+import Menubar from "../Components/Nav/menubar.jsx";
+import Tabletrade from "../Components/Trade/Tabletrade.jsx";
+import Containergrid from "../Components/Trade/Containergrid.jsx";
+import { UserContext } from "../Services/UserDataProvider";
+import serverConfig from "../Services/ServerConfig.js";
 
 function Trade({ user, addressServer }) {
   const [walletFilter, setWalletFilter] = useState([]);
@@ -10,8 +12,11 @@ function Trade({ user, addressServer }) {
   const [containerInputGrid, setContainerInputGrid] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [menuhidden, setMenuhidden] = useState(false);
-  const wallet = user.wallet;
-  const btnIsVisible = document.getElementById("icon-visible");
+   const btnIsVisible = document.getElementById("icon-visible");
+  const { userProfile, wallet, transactions, updateUserData, setIDUser } =
+  useContext(UserContext);
+  
+
   let visibleBalance = false;
 
   useEffect(() => {
@@ -60,7 +65,6 @@ function Trade({ user, addressServer }) {
 
   return (
     <main className="app-dashboard">
-      
       <section
         className="menu-hidden"
         onClick={() => {
@@ -71,7 +75,7 @@ function Trade({ user, addressServer }) {
           menu
         </span>
       </section>
-      
+
       <section className="container-dashboard">
         <Menubar menuhidden={menuhidden} />
 
@@ -79,8 +83,8 @@ function Trade({ user, addressServer }) {
           containerInputGrid={containerInputGrid}
           setContainerInputGrid={setContainerInputGrid}
           gridData={gridData}
-          addressServer={addressServer}
-          user={user}
+          addressServer={serverConfig.addressServerTharseo}
+          user={userProfile}
         />
 
         <aside className="container-dashboard-trades">
@@ -135,17 +139,15 @@ function Trade({ user, addressServer }) {
             </section>
 
             <section className="container-dashboard-right-bottom-middle container-table-assets-trade">
-             
-                <Tabletrade
-                  table={walletFilter}
-                  setContainerInputGrid={setContainerInputGrid}
-                  getGridData={getGridData}
-                  setGridConfig={user.grids}
-                  addressServer={addressServer}
-                  className="show-more"
-                  user={user}
-                />
-            
+              <Tabletrade
+                table={walletFilter}
+                setContainerInputGrid={setContainerInputGrid}
+                getGridData={getGridData}
+                setGridConfig={userProfile.grids}
+                addressServer={serverConfig.addressServerTharseo}
+                className="show-more"
+                user={userProfile}
+              />
 
               <aside className="container-btn-showmore-trade">
                 <span

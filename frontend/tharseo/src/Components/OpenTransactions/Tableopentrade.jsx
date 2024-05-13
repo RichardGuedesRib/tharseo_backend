@@ -28,12 +28,24 @@ export default function Tableopentrade({
             <th className="label-column-old-trades">Data</th>
             <th className="label-column-old-trades">Side</th>
             <th className="label-column-old-trades">Quantidade</th>
-            <th className="label-column-old-trades open-trade-media-response">Preço</th>
-            <th className="label-column-old-trades open-trade-media-response">Profit</th>
-            <th className="label-column-old-trades open-trade-media-response">Tipo</th>
-            <th className="label-column-old-trades open-trade-media-response">Trans. Par</th>
-            <th className="label-column-old-trades open-trade-media-response">Op. Ativa?</th>
-            <th className="label-column-old-trades open-trade-media-response">Status</th>
+            <th className="label-column-old-trades open-trade-media-response">
+              Preço
+            </th>
+            <th className="label-column-old-trades open-trade-media-response">
+              Profit
+            </th>
+            <th className="label-column-old-trades open-trade-media-response">
+              Tipo
+            </th>
+            <th className="label-column-old-trades open-trade-media-response">
+              Trans. Par
+            </th>
+            <th className="label-column-old-trades open-trade-media-response">
+              Op. Ativa?
+            </th>
+            <th className="label-column-old-trades open-trade-media-response">
+              Status
+            </th>
             <th className="label-column-old-trades">Cancel</th>
           </tr>
         </thead>
@@ -41,9 +53,7 @@ export default function Tableopentrade({
           {transactionsFilter &&
             transactionsFilter.length > 0 &&
             transactionsFilter.map((item, index) => {
-              return(
-             
-             
+              return (
                 <Rowtableopentransaction
                   key={index}
                   symbol={
@@ -66,9 +76,7 @@ export default function Tableopentrade({
                   getUser={getUser}
                   addressServer={addressServer}
                 />
-                );
-
-              
+              );
             })}
         </tbody>
       </table>

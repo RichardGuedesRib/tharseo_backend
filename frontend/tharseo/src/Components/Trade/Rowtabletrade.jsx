@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Icon from "react-crypto-icons";
+import serverConfig from "../../Services/ServerConfig";
+import { UserContext } from "../../Services/UserDataProvider";
 
-export default function Rowtabletrades({
+function Rowtabletrades({
   id,
   symbol,
   name,
@@ -13,13 +15,12 @@ export default function Rowtabletrades({
   setContainerInputGrid,
   getGridData,
   setGridConfig,
-  addressServer,
-  user,
 }) {
   const [toggle, setToggle] = useState(isActive);
   const [toggleColor, setToggleColor] = useState("#EAECEF");
   const [performanceColor, setPerformanceColor] = useState("#EAECEF");
   const [asset, setAsset] = useState(null);
+  const { userProfile } = useContext(UserContext);
 
   useEffect(() => {
     setAsset(isActive);
@@ -30,7 +31,7 @@ export default function Rowtabletrades({
 
     const isActive = { isActive: toggle ? 0 : 1 };
 
-    const urlRequest = `${addressServer}/strategygriduser/insertgrid?user=${user.id}&acronym=${name}`;
+    const urlRequest = `${serverConfig.addressServerTharseo}/strategygriduser/insertgrid?user=${userProfile.id}&acronym=${name}`;
 
     fetch(urlRequest, {
       method: "POST",
@@ -69,8 +70,8 @@ export default function Rowtabletrades({
       let percentGrid = 0;
       let valueBase = 0;
       console.log("ASSET>>>>>>>[0]", asset);
-      console.log("GETCONFIGASSET: " + asset[0].configStrategy)
-      if (asset && asset.length > 0) {
+      console.log("GETCONFIGASSET: " + asset[0].configStrategy);
+      if (asset[0].configStrategy) {
         const getConfigStrategy = JSON.parse(
           asset[0].configStrategy.replace(/\\/g, "")
         );
@@ -130,3 +131,5 @@ export default function Rowtabletrades({
     </tr>
   );
 }
+
+export default Rowtabletrades;

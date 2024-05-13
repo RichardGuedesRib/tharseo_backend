@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -188,11 +189,13 @@ public class TharseoAPIController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User id: " + idUser + " Not Found!");
         }
-        AssetsUser assetsUser = assetUserService.findByAcronym(acronym);
-        if (assetsUser == null) {
+        Optional<AssetsUser> assetsUser = user.getWallet().stream()
+                .filter(asset -> asset.getAcronym().equals(acronym))
+                .findFirst();
+        if (assetsUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Asset acronym: " + acronym + " Not Found!");
         }
-        TransactionSpotGrid transaction = tharseoAPIService.newOrderLimit(user, assetsUser, side, quantity, price);
+        TransactionSpotGrid transaction = tharseoAPIService.newOrderLimit(user, assetsUser.get(), side, quantity, price);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
 
     }

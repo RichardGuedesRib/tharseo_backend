@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Icon from "react-crypto-icons";
 import {
   toggleAssetUser,
   getAllAssetsByUser,
-} from "../../Controller/AssetsController";
+} from "../../Services/AssetsService";
+import { UserContext } from "../../Services/UserDataProvider";
 
-export default function SelectAsset({
+function SelectAsset({
   listAssets,
   selectAssets,
   setSelectAssets,
   user,
 }) {
+  const { userProfile, wallet, transactions, updateUserData, setUser } = useContext(UserContext);
   const [assets, setAssets] = useState([]);
   const [limit, setLimit] = useState(10);
-  const [wallet, setWallet] = useState([]);
-
+  const [newWallet, setNewWallet] = useState(wallet);
+  
   const updateAssetsUser = async () => {
     const assetsFilter = Array.isArray(listAssets)
       ? listAssets.slice(0, limit)
       : [];
     setAssets(assetsFilter);
 
-    const assetsUser = await getAllAssetsByUser(user.id);
-    setWallet(Array.isArray(assetsFilter) ? assetsUser : []);
+    const assetsUser = await getAllAssetsByUser(userProfile.id);
+    setNewWallet(Array.isArray(assetsFilter) ? assetsUser : []);
   };
 
   const handleToggleAsset = async (item) => {
-    await toggleAssetUser(wallet, user.id, item);
+    await toggleAssetUser(newWallet, userProfile.id, item);
     updateAssetsUser();
   };
 
@@ -64,8 +66,8 @@ export default function SelectAsset({
             <tbody>
               {assets.map((item) => {
                 const isAssetInWallet =
-                  Array.isArray(wallet) &&
-                  wallet.some(
+                  Array.isArray(newWallet) &&
+                  newWallet.some(
                     (walletItem) => walletItem.acronym === item.acronym
                   );
                 return (
@@ -121,3 +123,5 @@ export default function SelectAsset({
     </>
   );
 }
+
+export default SelectAsset;

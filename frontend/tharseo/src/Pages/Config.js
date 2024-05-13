@@ -1,6 +1,6 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
-import Menubar from "../Components/menubar.jsx";
+import Menubar from "../Components/Nav/menubar.jsx";
 
 function Config({ user, addressServer, getUser }) {
   const [menuhidden, setMenuhidden] = useState(false);
