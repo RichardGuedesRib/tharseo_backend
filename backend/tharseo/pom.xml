@@ -19,10 +19,12 @@
     </description>
     <properties>
         <java.version>17</java.version>
-        <sonar.organization>dsmfatec</sonar.organization>
+        <!--        <sonar.organization>dsmfatec</sonar.organization>-->
+        <sonar.organization>richardguedesrib</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
-      <dependencies>
+    <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -71,24 +73,24 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
             <version>3.2.1</version>
         </dependency>
-          <dependency>
-              <groupId>org.apache.logging.log4j</groupId>
-              <artifactId>log4j-core</artifactId>
-              <version>2.14.1</version>
-          </dependency>
-          <dependency>
-              <groupId>org.apache.logging.log4j</groupId>
-              <artifactId>log4j-slf4j-impl</artifactId>
-              <version>2.14.1</version>
-          </dependency>
-          <dependency>
-              <groupId>junit</groupId>
-              <artifactId>junit</artifactId>
-              <scope>test</scope>
-          </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
 
 
-      </dependencies>
+    </dependencies>
 
     <build>
         <plugins>
