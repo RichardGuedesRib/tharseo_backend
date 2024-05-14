@@ -2,9 +2,8 @@ import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import Menubar from "../Components/Nav/menubar.jsx";
 
-function Config({ user, addressServer, getUser }) {
+function Config() {
   const [menuhidden, setMenuhidden] = useState(false);
-  const wallet = user.wallet;
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
 

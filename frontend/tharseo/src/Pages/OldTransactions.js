@@ -5,7 +5,7 @@ import Tableoldtrade from "../Components/OldTransactions/Tableoldtrade.jsx";
 import { UserContext } from "../Services/UserDataProvider.js";
 import Header from "../Components/Nav/Header.jsx";
 
-function OldTransactions({ user, addressServer }) {
+function OldTransactions() {
   const { userProfile,  transactions, updateUserData, setIDUser } =
   useContext(UserContext);
   const [limitAsset, setLimitAsset] = useState(14);

@@ -6,7 +6,7 @@ import serverConfig from "../Services/ServerConfig.js";
 import { UserContext } from "../Services/UserDataProvider.js";
 import Header from "../Components/Nav/Header.jsx";
 
-function OpenTrades({  }) {
+function OpenTrades() {
   const { userProfile,  transactions, updateUserData, setIDUser } =
   useContext(UserContext);
   const [limitAsset, setLimitAsset] = useState(14);

@@ -16,105 +16,75 @@ import {
 } from "./Services/UserDataProvider";
 
 function App() {
-  const [user, setUser] = useState([]);
-  const [addressServerTharseo, setAddressServerTharseo] = useState(
-    // "http://localhost:8080"
-    "http://104.45.141.47:8080"
-  );
-  const getUser = async () => {
-    try {
-      const res = await fetch(
-        addressServerTharseo + "/tharseo/updatedatauser/" + user.id
-      );
-      if (!res.ok) {
-        throw new Error("Error when get user");
-      }
-      const userData = await res.json();
-      setUser(userData);
-      console.log("Return by Variable: ", userData);
-    } catch (error) {
-      console.error("Error User Resquest", error);
-    }
-  };
-  const getUserByLogin = (data) => {
-    setUser(data);
-  };
+ 
+ 
 
-  const { userProfile, wallet, transactions, updateUserData, setIDUser } = useContext(UserContext);
+ 
 
   useEffect(() => {
-    // getUser();
-    console.log("User Effects User");
-    console.log(user);
+  
   }, []);
 
   return (
     <UserDataProvider>
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route
-            path="/home"
-            element={
-              <Home
-                user={user}
-                addressServer={addressServerTharseo}
-                getUser={getUser}
-              />
-            }
-          />
-          <Route
-            path="/trade"
-            element={<Trade user={user} addressServer={addressServerTharseo} />}
-          />
-          <Route
-            path="/oldtransactions"
-            element={
-              <OldTransactions
-                user={user}
-                addressServer={addressServerTharseo}
-              />
-            }
-          />
-          <Route
-            path="/opentrades"
-            element={
-              <OpenTrades
-                user={user}
-                addressServer={addressServerTharseo}
-                getUser={getUser}
-              />
-            }
-          />
-          <Route
-            path="/config"
-            element={
-              <Config
-                user={user}
-                addressServer={addressServerTharseo}
-                getUser={getUser}
-              />
-            }
-          />
-          <Route path="/chart" element={<Chart />} />
-          <Route
-            exact
-            path="/"
-            element={
-              <Login
-                addressServerTharseo={addressServerTharseo}
-                getUserByLogin={getUserByLogin}
-              />
-            }
-          />
-          <Route
-            path="/register"
-            element={<Register addressServerTharseo={addressServerTharseo} />}
-          />
-          {/* <Route path="/" element={""} /> */}
-        </Routes>
-      </div>
-    </Router>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route
+              path="/home"
+              element={
+                <Home
+                     />
+              }
+            />
+            <Route
+              path="/trade"
+              element={
+                <Trade  />
+              }
+            />
+            <Route
+              path="/oldtransactions"
+              element={
+                <OldTransactions
+                 
+                />
+              }
+            />
+            <Route
+              path="/opentrades"
+              element={
+                <OpenTrades
+                
+                />
+              }
+            />
+            <Route
+              path="/config"
+              element={
+                <Config
+               
+                />
+              }
+            />
+            <Route path="/chart" element={<Chart />} />
+            <Route
+              exact
+              path="/"
+              element={
+                <Login
+                 
+                />
+              }
+            />
+            <Route
+              path="/register"
+              element={<Register />}
+            />
+            {/* <Route path="/" element={""} /> */}
+          </Routes>
+        </div>
+      </Router>
     </UserDataProvider>
   );
 }

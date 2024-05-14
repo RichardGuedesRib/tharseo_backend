@@ -3,6 +3,8 @@ package com.fatec.dsm.tharseo.services;
 import com.fatec.dsm.tharseo.models.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,10 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Component
 public class EngineTradeSystemGrid {
@@ -35,12 +34,11 @@ public class EngineTradeSystemGrid {
 
     private static final Logger logger = LogManager.getLogger(EngineTradeSystemGrid.class);
 
-    public List<TransactionSpotGrid> operatingGridMode() {
+    public void operatingGridMode() {
         logger.info("OperatingGrid Escope");
         List<Kline> chart = chartService.findAll();
         Kline lastCandlestick = chart.get(chart.size() - 1);
         Double price = Double.parseDouble(lastCandlestick.getClosePrice());
-//        System.out.println("PRICE: " + price);
         List<StrategyGridUser> strategyGridUsers = strategyGridUserService.findAll();
         List<StrategyGridUser> activeGrids = strategyGridUsers.stream().filter(item -> item.getIsActive() == 1).toList();
         List<TransactionSpotGrid> operations = new ArrayList<>();
@@ -48,7 +46,7 @@ public class EngineTradeSystemGrid {
         for (StrategyGridUser grid : activeGrids) {
             User user = grid.getUser();
             AssetsUser assetsUser = assetUserService.findByAcronymByUser(grid.getAcronym(), user);
-//            Optional<AssetsUser> asset = user.getWallet().stream().filter(item -> item.getAcronym().equals(grid.getAcronym())).findFirst();
+
 
             List<Transaction> transactions = user.getTransactions();
             List<Transaction> activeTransactions = transactions.stream()
@@ -63,29 +61,21 @@ public class EngineTradeSystemGrid {
             Double valueBase = Double.parseDouble(gridJson.get("valueBase").toString().replace("\"", ""));
 
             if (!activeTransactions.isEmpty()) {
-
                 if (activeTransactions.size() <= nGrids) {
-
                     Transaction checkFirstGrid = activeTransactions.get(0);
-
                     if (price < (checkFirstGrid.getPrice() - (checkFirstGrid.getPrice() * percentGrid))) {
                         operations = tharseoAPIService.initGrid(user, assetsUser, quota, percentGrid, price);
 
-                        return operations;
                     }
                     Transaction checkLastGrid = activeTransactions.get(activeTransactions.size() - 1);
-                    logger.info("CHECKLASTGRID>>  " + checkLastGrid.getPrice());
                     if (price > (checkLastGrid.getPrice() + (checkLastGrid.getPrice() * percentGrid))) {
                         operations = tharseoAPIService.initGrid(user, assetsUser, quota, percentGrid, price);
-
-                        return operations;
                     }
 
 
                     Double previousTransactionPrice = null;
                     Double nextTransactionPrice = null;
                     for (Transaction item : activeTransactions) {
-
                         if (item.getPrice() >= price && (nextTransactionPrice == null || item.getPrice() < nextTransactionPrice)) {
                             nextTransactionPrice = item.getPrice();
                         }
@@ -97,35 +87,24 @@ public class EngineTradeSystemGrid {
                     if (previousTransactionPrice != null && nextTransactionPrice != null) {
                         Double previousMargin = previousTransactionPrice + (previousTransactionPrice * percentGrid);
                         Double nextMargin = nextTransactionPrice - (nextTransactionPrice * percentGrid);
-
                         if (price > previousMargin && price < nextMargin) {
                             operations = tharseoAPIService.initGrid(user, assetsUser, quota, percentGrid, price);
-
-                            return operations;
                         }
                     }
-
-
-
-                    return operations;
 
                 } else {
                     break;
                 }
             } else {
-
-
                 operations = tharseoAPIService.initGrid(user, assetsUser, quota, percentGrid, price);
-                return operations;
             }
         }
-        return operations;
+
     }
 
-    public List<TransactionSpotGrid> checkOrders() {
+    public void checkOrders() {
         logger.info("CHECKING ORDERS");
         List<TransactionSpotGrid> operations = new ArrayList<>();
-
         List<Kline> chart = chartService.findAll();
         Kline lastCandlestick = chart.get(chart.size() - 1);
         Double price = Double.parseDouble(lastCandlestick.getClosePrice());
@@ -134,30 +113,28 @@ public class EngineTradeSystemGrid {
                 .sorted(Comparator.comparingDouble(Transaction::getPrice))
                 .collect(Collectors.toList());
 
-        if(!openSellTransactions.isEmpty()){
-            for(TransactionSpotGrid transaction: openSellTransactions){
-                if(price > transaction.getPrice()){
+        if (!openSellTransactions.isEmpty()) {
+            for (TransactionSpotGrid transaction : openSellTransactions) {
+                if (price > transaction.getPrice()) {
 
                     transaction.setStatus("Closed");
                     TransactionSpotGrid transactionBuy = transactionSpotGridService.findTransactionSpotGridById(transaction.getOrderPairTrade());
                     operations.add(transaction);
-                    if(transactionBuy != null){
+                    if (transactionBuy != null) {
                         transactionBuy.setStatus("Closed");
                         transactionSpotGridService.insertTransactionSpotGrid(transactionBuy);
-//
                         operations.add(transactionBuy);
                     }
                     transactionSpotGridService.insertTransactionSpotGrid(transaction);
                 }
             }
-
         }
         logger.info("No Target Sell Orders");
-        return operations;
+
     }
 
     @Scheduled(fixedDelay = 5000)
-    public void activeOperation(){
+    public void activeOperation() {
         logger.info("New Check Wave");
         operatingGridMode();
         checkOrders();

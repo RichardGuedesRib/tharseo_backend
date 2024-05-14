@@ -202,17 +202,17 @@ public class TharseoAPIController {
 
 
 
-    @PostMapping(value = "/operatinggrid")
-    public ResponseEntity<?> operatingGrid(@RequestParam(name = "price", required = true) Double price) {
-        List<TransactionSpotGrid> operations = engineTradeSystemGrid.operatingGridMode();
-        return ResponseEntity.ok().body(operations);
-    }
+//    @PostMapping(value = "/operatinggrid")
+//    public ResponseEntity<?> operatingGrid(@RequestParam(name = "price", required = true) Double price) {
+//        List<TransactionSpotGrid> operations = engineTradeSystemGrid.operatingGridMode();
+//        return ResponseEntity.ok().body(operations);
+//    }
 
-    @PostMapping(value = "/checkorders")
-    public ResponseEntity<?> checkOrders(@RequestParam(name = "price", required = true) Double price) {
-       List<TransactionSpotGrid> order = engineTradeSystemGrid.checkOrders();
-        return ResponseEntity.ok().body(order);
-    }
+//    @PostMapping(value = "/checkorders")
+//    public ResponseEntity<?> checkOrders(@RequestParam(name = "price", required = true) Double price) {
+//       List<TransactionSpotGrid> order = engineTradeSystemGrid.checkOrders();
+//        return ResponseEntity.ok().body(order);
+//    }
 
 
     @DeleteMapping(value = "/cancelopenorder")

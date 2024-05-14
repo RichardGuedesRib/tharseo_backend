@@ -1,8 +1,9 @@
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import serverConfig from "../Services/ServerConfig";
 
-function Register({ addressServerTharseo }) {
+function Register() {
   const [logform, setLogForm] = useState("");
   const [userLogin, setUserLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -66,7 +67,7 @@ function Register({ addressServerTharseo }) {
       return;
     }
 
-    const urlRequest = `${addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
+    const urlRequest = `${serverConfig.addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
 
     if (emailRegex.test(email) || phoneRegex.test(phoneNumber)) {
       try {
@@ -77,8 +78,6 @@ function Register({ addressServerTharseo }) {
         }
       } catch (error) {}
     }
-
-    
   };
 
   const backToFormOne = () => {
@@ -108,8 +107,8 @@ function Register({ addressServerTharseo }) {
       return;
     }
 
-   if (emailRegex.test(email)) {
-      const urlCheckEmail = `${addressServerTharseo}/authenticate/checkuser?login=${email}`;
+    if (emailRegex.test(email)) {
+      const urlCheckEmail = `${serverConfig.addressServerTharseo}/authenticate/checkuser?login=${email}`;
       try {
         const request = await fetch(urlCheckEmail, { method: "GET" });
         if (request.ok) {
@@ -120,7 +119,7 @@ function Register({ addressServerTharseo }) {
     }
 
     if (phoneRegex.test(phoneNumber)) {
-      const urlCheckPhone = `${addressServerTharseo}/authenticate/checkuser?login=${phoneNumber}`;
+      const urlCheckPhone = `${serverConfig.addressServerTharseo}/authenticate/checkuser?login=${phoneNumber}`;
       try {
         const request = await fetch(urlCheckPhone, { method: "GET" });
         if (request.ok) {
@@ -146,7 +145,7 @@ function Register({ addressServerTharseo }) {
   };
 
   const sendRegister = async () => {
-    const urlRequest = `${addressServerTharseo}/users`;
+    const urlRequest = `${serverConfig.addressServerTharseo}/users`;
 
     console.log(getData);
     try {

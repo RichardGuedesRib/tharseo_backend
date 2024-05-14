@@ -6,7 +6,7 @@ import Containergrid from "../Components/Trade/Containergrid.jsx";
 import { UserContext } from "../Services/UserDataProvider";
 import serverConfig from "../Services/ServerConfig.js";
 
-function Trade({ user, addressServer }) {
+function Trade() {
   const [walletFilter, setWalletFilter] = useState([]);
   const [limitAsset, setLimitAsset] = useState(14);
   const [containerInputGrid, setContainerInputGrid] = useState(false);

@@ -9,7 +9,7 @@ import {
 import { UserContext } from "../Services/UserDataProvider";
 import { useContext } from "react";
 
-function Login({ addressServerTharseo, getUserByLogin }) {
+function Login() {
   const [userLogin, setUserLogin] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [firstContainer, setFirstContainer] = useState("");
