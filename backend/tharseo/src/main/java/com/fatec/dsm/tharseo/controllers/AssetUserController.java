@@ -77,6 +77,7 @@ public class AssetUserController {
 
     }
 
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateAsset(@RequestBody AssetsUser assetsUser, @PathVariable Long id) {
         AssetsUser oldAsset = assetUserService.findById(id);

@@ -1,7 +1,8 @@
+import serverConfig from "../Services/ServerConfig";
 import "../assets/css/style.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import serverConfig from "../Services/ServerConfig";
+
 
 function Register() {
   const [logform, setLogForm] = useState("");
@@ -26,6 +27,7 @@ function Register() {
   const navigate = useNavigate();
 
   const activeFormTwo = async () => {
+    console.log("ADDRESS FORM TWO", serverConfig.addressServerTharseo);
     if (userLogin === "") {
       setLogForm("Digite um usuário válido");
       return;
@@ -42,7 +44,7 @@ function Register() {
     }
 
     if (emailRegex.test(userLogin) || phoneRegex.test(userLogin)) {
-      const urlRequest = `${addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
+      const urlRequest = `${serverConfig.addressServerTharseo}/authenticate/checkuser?login=${userLogin}`;
 
       try {
         const request = await fetch(urlRequest, { method: "GET" });
@@ -169,7 +171,9 @@ function Register() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("ADDRESS", serverConfig.addressServerTharseo);
+  }, []);
 
   return (
     <main className="app-dashboard">

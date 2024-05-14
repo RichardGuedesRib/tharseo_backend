@@ -152,7 +152,7 @@ function Home() {
                   className="container-side-buy"
                   onClick={() => {
                     setSideOperation("BUY");
-                    alert("Escolheu BUY");
+                  
                   }}
                 >
                   <span class="material-symbols-outlined">shopping_cart</span>
@@ -162,7 +162,7 @@ function Home() {
                   className="container-side-sell"
                   onClick={() => {
                     setSideOperation("SELL");
-                    alert("Escolheu SELL");
+                    
                   }}
                 >
                   <span class="material-symbols-outlined">paid</span>

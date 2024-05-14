@@ -5,6 +5,7 @@ import Tabletrade from "../Components/Trade/Tabletrade.jsx";
 import Containergrid from "../Components/Trade/Containergrid.jsx";
 import { UserContext } from "../Services/UserDataProvider";
 import serverConfig from "../Services/ServerConfig.js";
+import Header from "../Components/Nav/Header.jsx";
 
 function Trade() {
   const [walletFilter, setWalletFilter] = useState([]);
@@ -88,45 +89,8 @@ function Trade() {
         />
 
         <aside className="container-dashboard-trades">
-          <aside className="container-dashboard-right-top">
-            <section className="container-dashboard-right-top-left">
-              <span className="text-header-welcome">Bem Vindo, João</span>
-            </section>
-            <section className="container-dashboard-right-top-right">
-              <section className="container-balance-visible">
-                <span className="icon-visible-balance">
-                  <span
-                    class="material-symbols-outlined"
-                    id="icon-visible"
-                    style={{ fontSize: 20 }}
-                  >
-                    visibility_off
-                  </span>
-                </span>
-                <span className="text-balance" id="balance-text">
-                  $ -----
-                </span>
-              </section>
 
-              <span className="icon-notification-header">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 30 }}
-                >
-                  notifications_unread
-                </span>
-              </span>
-              <span className="text-name-user">Joao</span>
-              <span className="avatar-header-user">
-                <span
-                  class="material-symbols-outlined"
-                  style={{ fontSize: 50 }}
-                >
-                  face
-                </span>
-              </span>
-            </section>
-          </aside>
+        <Header />
 
           <aside className="container-trades">
             <section className="container-dashboard-right-bottom-top">

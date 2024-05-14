@@ -1,8 +1,10 @@
 package com.fatec.dsm.tharseo.services;
 
 
+import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.UserRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,18 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    Temporary temporary;
+
 
     public void insertOne(User user) {
         if (user != null) {
             user.setIsactive(1);
             userRepository.save(user);
+
+            //temporary for test
+            User newUser = findByEmail(user.getEmail());
+            temporary.insertDollar(newUser);
         }
     }
 

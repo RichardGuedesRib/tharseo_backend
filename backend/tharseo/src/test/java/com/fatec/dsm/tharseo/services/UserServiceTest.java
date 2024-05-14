@@ -8,11 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,15 +23,23 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private Temporary temporary;
+
     @InjectMocks
     private UserService userService;
 
     @Test
     @DisplayName("Should insert new user in Database")
     void insertOneUserCase1() {
-        User user = new User();
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
         userService.insertOne(user);
         verify(userRepository, times(1)).save(user);
+
+        //temporary
+        User newUser = userService.findByEmail(user.getEmail());
+        temporary.insertDollar(newUser);
+        verify(temporary, times(2)).insertDollar(newUser);
     }
 
     @Test
@@ -106,7 +116,6 @@ class UserServiceTest {
         User foundUser = userService.findByPhoneNumber("123456789");
         assertNull(foundUser);
     }
-
 
 
     @Test
