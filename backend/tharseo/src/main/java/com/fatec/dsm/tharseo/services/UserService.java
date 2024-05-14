@@ -1,7 +1,6 @@
 package com.fatec.dsm.tharseo.services;
 
 
-import com.fatec.dsm.tharseo.models.AssetsUser;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-               return user.orElse(null);
+        return user.orElse(null);
     }
 
     public User findByEmail(String email) {
@@ -49,40 +48,43 @@ public class UserService {
         if (oldUser == null) {
             return null;
         }
-        if (user.getName() != null) {
-            oldUser.setName(user.getName());
+        if (user != null) {
+            if (user.getName() != null) {
+                oldUser.setName(user.getName());
+            }
+            if (user.getLastname() != null) {
+                oldUser.setLastname(user.getLastname());
+            }
+            if (user.getEmail() != null) {
+                oldUser.setEmail(user.getEmail());
+            }
+            if (user.getIsactive() != null) {
+                oldUser.setIsactive(user.getIsactive());
+            }
+            if (user.getWallet() != null) {
+                oldUser.setWallet(user.getWallet());
+            }
+            if (user.getPhoneNumber() != null) {
+                oldUser.setPhoneNumber(user.getPhoneNumber());
+            }
+            if (user.getApiKey() != null) {
+                oldUser.setApiKey(user.getApiKey());
+            }
+            if (user.getSecretKey() != null) {
+                oldUser.setSecretKey(user.getSecretKey());
+            }
         }
-        if (user.getLastname() != null) {
-            oldUser.setLastname(user.getLastname());
-        }
-        if (user.getEmail() != null) {
-            oldUser.setEmail(user.getEmail());
-        }
-        if (user.getIsactive() != null) {
-            oldUser.setIsactive(user.getIsactive());
-        }
-        if (user.getWallet() != null) {
-            oldUser.setWallet((user.getWallet()));
-        }
-        if (user.getPhoneNumber() != null) {
-            oldUser.setPhoneNumber(user.getPhoneNumber());
-        }
-        if(user.getApiKey() != null) {
-            oldUser.setApiKey(user.getApiKey());
-        }
-        if(user.getSecretKey() != null) {
-            oldUser.setSecretKey(user.getSecretKey());
-        }
-
         return userRepository.save(oldUser);
     }
 
+
     public void DeleteUserById(Long id) {
         User user = findById(id);
-        user.setIsactive(0);
-        updateUser(user.getId(), user);
+        if (user != null) {
+            user.setIsactive(0);
+            updateUser(user.getId(), user);
+        }
     }
-
 
 
 }

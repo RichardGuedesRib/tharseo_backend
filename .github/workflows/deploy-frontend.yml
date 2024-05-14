@@ -1,0 +1,55 @@
+name: Deploy FrontEnd to Container in AzureVM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  
+  deploy-frontend:
+    runs-on: ubuntu-latest
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+        
+    - name: Build Tharseo Frontend
+      run: |
+           cd frontend/tharseo && docker build -t tharseo-front .
+           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
+           docker tag tharseo-front richardguedesrib/tharseo-front:latest
+           docker push richardguedesrib/tharseo-front:latest
+        
+    - name: SSH into Azure VM and stop and remove existing Docker container
+      uses: appleboy/ssh-action@master
+      with:
+        host: 104.45.141.47
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          if docker ps -q --filter ancestor=richardguedesrib/tharseo-front; then
+            docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-front)
+            docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-front)
+          fi      
+        
+    - name: SSH into Azure VM and pull Docker image
+      uses: appleboy/ssh-action@master
+      with:
+        host: 104.45.141.47
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker pull richardguedesrib/tharseo-front:latest
+       
+    - name: SSH into Azure VM and start Docker container
+      uses: appleboy/ssh-action@master
+      with:
+        host: 104.45.141.47
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker run -d -p 80:80 richardguedesrib/tharseo-front:latest
