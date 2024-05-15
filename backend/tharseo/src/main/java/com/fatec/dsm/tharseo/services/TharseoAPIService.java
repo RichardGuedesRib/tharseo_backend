@@ -174,6 +174,7 @@ public class TharseoAPIService {
         sellTransaction.setStatus("Await");
         sellTransaction.setOpenTrade(true);
         sellTransaction.setOrigQty(quantity);
+        sellTransaction.setExecutedQty(quantity);
         sellTransaction.setSide(side);
         sellTransaction.setTypeTransaction("MARKET");
         sellTransaction.setPriceTarget(priceTarget);
@@ -189,6 +190,9 @@ public class TharseoAPIService {
         TransactionSpotGrid newOrderBuy = awaitOrder(user, assetsUser, "BUY", quota.toString(), price, targetPrice);
         newOrderBuy.setPriceTarget(targetPrice);
         newOrderBuy.setStatus("Open");
+
+
+
         transactionSpotGridService.insertTransactionSpotGrid(newOrderBuy);
 
         TransactionSpotGrid newOrderSell = awaitOrder(user, assetsUser, "SELL", quota.toString(), targetPrice, Double.parseDouble(String.format(Locale.US,"%.2f", targetPrice)));

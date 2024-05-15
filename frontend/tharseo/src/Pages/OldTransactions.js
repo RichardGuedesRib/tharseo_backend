@@ -15,8 +15,7 @@ function OldTransactions() {
   const [wallet, setWallet] = useState(userProfile.wallet);
 
 
-  const btnIsVisible = document.getElementById("icon-visible");
-  let visibleBalance = false;
+
 
   useEffect(() => {
     if (userTransactions && userTransactions.length > 0) {
@@ -25,27 +24,10 @@ function OldTransactions() {
       );
       setOldTransactions(closedTransactions);
     }
-  }, [userTransactions]);
+    }, [userTransactions]);
 
-  const showBalance = () => {
-    const balance = document.getElementById("balance-text");
-    const iconEye = document.getElementById("icon-visible");
-    const usdt = wallet.find((item) => item.acronym === "USDTUSDT");
-    const balanceUsdt = usdt.quantity.toFixed(0);
-    if (visibleBalance === true) {
-      balance.innerText = "$ -----";
-      iconEye.innerText = "visibility_off";
-      visibleBalance = false;
-    } else {
-      balance.innerText = `$ ${balanceUsdt}`;
-      visibleBalance = true;
-      iconEye.innerText = "visibility";
-    }
-  };
-  if (btnIsVisible) {
-    btnIsVisible.addEventListener("click", showBalance);
-  }
 
+ 
   function showMoreAssets() {
     setLimitAsset((prevLimit) => prevLimit + 5);
     document

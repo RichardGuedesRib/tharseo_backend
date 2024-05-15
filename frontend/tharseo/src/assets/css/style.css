@@ -2456,6 +2456,14 @@ body {
     color: red;
 } */
 
+.profit-green{
+    color: #56BC7C;    
+}
+
+.profit-red{
+    color: #E55764;
+}
+
 
 .close {
     display: none;

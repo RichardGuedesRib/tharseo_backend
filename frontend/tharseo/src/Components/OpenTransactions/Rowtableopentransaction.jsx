@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Icon from "react-crypto-icons";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Services/UserDataProvider.js";
+import serverConfig from "../../Services/ServerConfig.js";
 
 export default function Rowtableopentransaction({
   symbol,
@@ -15,22 +17,19 @@ export default function Rowtableopentransaction({
   pairTransaction,
   active,
   status,
-  user,
-  getUser,
-  addressServer,
 }) {
+  const { userProfile, updateUserData } = useContext(UserContext);
   const navigate = useNavigate();
   const cancelOrder = async () => {
-    const urlRequest = `${addressServer}/tharseo/cancelopenorder?user=1&orderid=${orderid}`;
+    const urlRequest = `${serverConfig.addressServerTharseo}/tharseo/cancelopenorder?user=${userProfile.id}&orderid=${orderid}`;
 
     try {
       const request = await fetch(urlRequest, { method: "DELETE" });
       if (!request.ok) {
         throw new Error("Error when cancel order");
       }
-      await getUser();
-      alert("OK!");
-      navigate("/");
+      await updateUserData();
+      navigate("/opentrades");
     } catch (error) {
       console.error(`Error Requesting Order:`, error);
     }
@@ -47,12 +46,24 @@ export default function Rowtableopentransaction({
       <th className="label-cell-old-trades">{date}</th>
       <th className="label-cell-old-trades">{side}</th>
       <th className="label-cell-old-trades">{quantity}</th>
-      <th className="label-cell-old-trades open-trade-media-response">$ {price}</th>
-      <th className="label-cell-old-trades open-trade-media-response">$ {profit}</th>
-      <th className="label-cell-old-trades open-trade-media-response">{typeTransaction}</th>
-      <th className="label-cell-old-trades open-trade-media-response">{pairTransaction}</th>
-      <th className="label-cell-old-trades open-trade-media-response">{active}</th>
-      <th className="label-cell-old-trades open-trade-media-response">{status}</th>
+      <th className="label-cell-old-trades open-trade-media-response">
+        $ {price}
+      </th>
+      <th className="label-cell-old-trades open-trade-media-response">
+        $ {profit}
+      </th>
+      <th className="label-cell-old-trades open-trade-media-response">
+        {typeTransaction}
+      </th>
+      <th className="label-cell-old-trades open-trade-media-response">
+        {pairTransaction}
+      </th>
+      <th className="label-cell-old-trades open-trade-media-response">
+        {active}
+      </th>
+      <th className="label-cell-old-trades open-trade-media-response">
+        {status}
+      </th>
       <th className="label-cell-old-trades">
         <span className="btn-cancel-order" onClick={cancelOrder}>
           <span class="material-symbols-outlined">delete_forever</span>

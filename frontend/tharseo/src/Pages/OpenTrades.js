@@ -7,19 +7,15 @@ import { UserContext } from "../Services/UserDataProvider.js";
 import Header from "../Components/Nav/Header.jsx";
 
 function OpenTrades() {
-  const { userProfile,  transactions, updateUserData, setIDUser } =
-  useContext(UserContext);
+  const { userProfile, transactions, updateUserData, setIDUser } =
+    useContext(UserContext);
   const [limitAsset, setLimitAsset] = useState(14);
   const [openTransactions, setOpenTransactions] = useState([]);
-  const [userTransactions, setUserTransactions] = useState(userProfile.transactions);
+  const [userTransactions, setUserTransactions] = useState(
+    userProfile.transactions
+  );
   const [menuhidden, setMenuhidden] = useState(false);
- 
-    const [wallet, setWallet] = useState(userProfile.wallet);
-
- 
-
-  const btnIsVisible = document.getElementById("icon-visible");
-  let visibleBalance = false;
+  const [wallet, setWallet] = useState(userProfile.wallet);
 
   useEffect(() => {
     if (userTransactions && userTransactions.length > 0) {
@@ -38,25 +34,6 @@ function OpenTrades() {
       setOpenTransactions(open);
     }
   }, [userTransactions]);
-
-  const showBalance = () => {
-    const balance = document.getElementById("balance-text");
-    const iconEye = document.getElementById("icon-visible");
-    const usdt = wallet.find((item) => item.acronym === "USDTUSDT");
-    const balanceUsdt = usdt.quantity.toFixed(0);
-    if (visibleBalance === true) {
-      balance.innerText = "$ -----";
-      iconEye.innerText = "visibility_off";
-      visibleBalance = false;
-    } else {
-      balance.innerText = `$ ${balanceUsdt}`;
-      visibleBalance = true;
-      iconEye.innerText = "visibility";
-    }
-  };
-  if (btnIsVisible) {
-    btnIsVisible.addEventListener("click", showBalance);
-  }
 
   function showMoreAssets() {
     setLimitAsset((prevLimit) => prevLimit + 5);
@@ -81,7 +58,6 @@ function OpenTrades() {
         <Menubar menuhidden={menuhidden} />
 
         <aside className="container-dashboard-trades">
-
           <Header />
 
           <aside className="container-trades container-open-trades">

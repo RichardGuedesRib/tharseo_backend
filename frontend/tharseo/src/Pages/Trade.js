@@ -18,8 +18,7 @@ function Trade() {
   useContext(UserContext);
   
 
-  let visibleBalance = false;
-
+ 
   useEffect(() => {
     if (wallet) {
       const walletFilter = Array.isArray(wallet)
@@ -33,24 +32,7 @@ function Trade() {
     setGridData(data);
   };
 
-  const showBalance = () => {
-    const balance = document.getElementById("balance-text");
-    const iconEye = document.getElementById("icon-visible");
-    const usdt = wallet.find((item) => item.acronym === "USDTUSDT");
-    const balanceUsdt = usdt.quantity.toFixed(0);
-    if (visibleBalance === true) {
-      balance.innerText = "$ -----";
-      iconEye.innerText = "visibility_off";
-      visibleBalance = false;
-    } else {
-      balance.innerText = `$ ${balanceUsdt}`;
-      visibleBalance = true;
-      iconEye.innerText = "visibility";
-    }
-  };
-  if (btnIsVisible) {
-    btnIsVisible.addEventListener("click", showBalance);
-  }
+
   function showMoreAssets() {
     setLimitAsset((prevLimit) => prevLimit + 5);
     document

@@ -27,7 +27,7 @@ export default function Rowtableoldtransaction({
       <th className="label-cell-old-trades">{side}</th>
       <th className="label-cell-old-trades">{quantity}</th>
       <th className="label-cell-old-trades open-trade-media-response">$ {price}</th>
-      <th className="label-cell-old-trades open-trade-media-response">$ {profit}</th>
+      <th className={`label-cell-old-trades open-trade-media-response ${profit > 0 ? "profit-green" : ""} ${profit < 0 ? "profit-red" : ""}`}>$ {profit}</th>
       <th className="label-cell-old-trades open-trade-media-response">{typeTransaction}</th>
       <th className="label-cell-old-trades open-trade-media-response">{pairTransaction}</th>
       <th className="label-cell-old-trades open-trade-media-response">{active}</th>

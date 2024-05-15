@@ -9,6 +9,11 @@ export default function Tableoldtrade({ transactions, limit }) {
       ? transactions.slice(0, limit)
       : [];
     setTransactionsFilter(filter);
+
+    if (transactionsFilter && transactionsFilter.length > 0) {
+      console.log("Transactions FIlter", transactionsFilter);
+    }
+    console.log("Transactions", transactions);
   }, [transactions, limit]);
 
   return (
@@ -59,7 +64,7 @@ export default function Tableoldtrade({ transactions, limit }) {
                 side={item.side}
                 quantity={item.executedQty}
                 price={item.price}
-                profit={item.profit ? item.profit : "0.00"}
+                profit={item.profit ? item.profit.toFixed(2) : "0.00"}
                 typeTransaction={item.typeTransaction}
                 pairTransaction={item.pairTransaction}
                 active={item.openTrade === false ? "Não" : "Sim"}

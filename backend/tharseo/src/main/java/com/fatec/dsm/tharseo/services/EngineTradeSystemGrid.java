@@ -116,12 +116,18 @@ public class EngineTradeSystemGrid {
         if (!openSellTransactions.isEmpty()) {
             for (TransactionSpotGrid transaction : openSellTransactions) {
                 if (price > transaction.getPrice()) {
-
                     transaction.setStatus("Closed");
                     TransactionSpotGrid transactionBuy = transactionSpotGridService.findTransactionSpotGridById(transaction.getOrderPairTrade());
+
+                    Double purchasedValue = transactionBuy.getPrice() * Double.parseDouble(transactionBuy.getExecutedQty());
+                    Double soldValue = transaction.getPrice() * Double.parseDouble(transaction.getExecutedQty());
+                    Double profit = soldValue - purchasedValue;
+                    transaction.setProfit(profit);
+
                     operations.add(transaction);
                     if (transactionBuy != null) {
                         transactionBuy.setStatus("Closed");
+                        transactionBuy.setProfit(profit);
                         transactionSpotGridService.insertTransactionSpotGrid(transactionBuy);
                         operations.add(transactionBuy);
                     }

@@ -52,25 +52,22 @@ function Rowtabletrades({
   }
 
   function openGrid() {
-    console.log("SETCONFIG", setGridConfig);
-
     const asset = setGridConfig.filter((item) => {
       return item.acronym === name;
     });
     if (asset.length > 0) {
       setAsset(asset);
-      console.log("ASSET", asset);
+
       const dataArray = [];
       const getPerformance = asset[0].performance;
       const getProfit = asset[0].profit;
       const getIsActive = asset[0].isActive;
-      console.log("SETANDOACTIVE", getIsActive);
+
       let quota = 0;
       let nGrid = 0;
       let percentGrid = 0;
       let valueBase = 0;
-      console.log("ASSET>>>>>>>[0]", asset);
-      console.log("GETCONFIGASSET: " + asset[0].configStrategy);
+
       if (asset[0].configStrategy) {
         const getConfigStrategy = JSON.parse(
           asset[0].configStrategy.replace(/\\/g, "")
