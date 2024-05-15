@@ -10,7 +10,7 @@ export default function Tabletrade({
   setGridConfig,
   addressServer,
   user,
-  limitAsset
+  limitActiveTrade
 }) {
 
   const { userProfile, wallet, updateUserData } =
@@ -20,20 +20,17 @@ export default function Tabletrade({
   useEffect(() => {
     
     if (wallet) {
-      console.log("WALLET", wallet);
-
+    
       const activesAssets = wallet.filter((item) => (item.isActive ===1));
 
-      console.log("activesAssets", activesAssets);
-
+    
       const itensWallet = Array.isArray(activesAssets)
-        ? activesAssets.slice(0, limitAsset)
+        ? activesAssets.slice(0, limitActiveTrade)
         : [];
 
       setWalletFilter(itensWallet);
 
-      console.log("WALLET FILTER", walletFilter);
-    }
+        }
  
     return () => {
      

@@ -9,7 +9,7 @@ import Header from "../Components/Nav/Header.jsx";
 
 function Trade() {
   const [walletFilter, setWalletFilter] = useState([]);
-  const [limitAsset, setLimitAsset] = useState(14);
+  const [limitActiveTrade, setLimiteActiveTrade] = useState(14);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [menuhidden, setMenuhidden] = useState(false);
@@ -23,7 +23,7 @@ function Trade() {
 
     updateUserData();
   
-  }, [limitAsset, gridData]);
+  }, [limitActiveTrade, gridData]);
 
   const getGridData = (data) => {
     setGridData(data);
@@ -31,7 +31,7 @@ function Trade() {
 
 
   function showMoreAssets() {
-    setLimitAsset((prevLimit) => prevLimit + 5);
+    setLimiteActiveTrade((prevLimit) => prevLimit + 5);
     document
       .getElementsByClassName("table-trades")[0]
       ?.classList.add("show-more");
@@ -86,7 +86,7 @@ function Trade() {
                 addressServer={serverConfig.addressServerTharseo}
                 className="show-more"
                 user={userProfile}
-                limitAsset={limitAsset}
+                limitActiveTrade={limitActiveTrade}
               />
 
               <aside className="container-btn-showmore-trade">

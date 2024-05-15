@@ -30,6 +30,7 @@ function Home() {
   const { userProfile, wallet, transactions, updateUserData, setIDUser } =
     useContext(UserContext);
   const [walletFilter, setWalletFilter] = useState([]);
+ 
 
   useEffect(() => {
     getAllAssets();
@@ -313,6 +314,7 @@ function Home() {
                   addressServer={serverConfig.addressServerTharseo}
                   className="show-more"
                   user={userProfile}
+                  limitActiveTrade={limitActiveTrade}
                 />
               </section>
             </aside>
