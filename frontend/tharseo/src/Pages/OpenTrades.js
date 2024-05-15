@@ -24,6 +24,7 @@ function OpenTrades() {
       );
       setOpenTransactions(openTransactions);
     }
+    updateUserData();
   }, [userTransactions]);
 
   useEffect(() => {

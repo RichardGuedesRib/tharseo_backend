@@ -25,7 +25,7 @@ export const UserDataProvider = (props) => {
       setUserProfile(profileData);
       setWallet(profileData.wallet);
       setTransactions(profileData.transactions);
-
+      console.log("CHAMOU O UPDATE DATA");
       console.log("USERPROFILE", userProfile);
     } catch (error) {
       console.error("Error request data user", error);

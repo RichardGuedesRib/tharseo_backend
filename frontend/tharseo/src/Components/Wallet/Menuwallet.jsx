@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import React from "react";
 import Itemasset from "./Itemasset";
+import { UserContext } from "../../Services/UserDataProvider";
 
-function Menuwallet({ wallet, limit }) {
+function Menuwallet({limit}) {
   const [walletFilter, setWalletFilter] = useState([]);
   const [sumWallet, setSumWallet] = useState(0);
+  const {userProfile, wallet, updateUserData} = useContext(UserContext);
 
   useEffect(() => {
     if (wallet) {
@@ -21,18 +23,15 @@ function Menuwallet({ wallet, limit }) {
 
       setWalletFilter(updatedWallet);
 
-
-
       const walletFilter = Array.isArray(updatedWallet)
         ? updatedWallet.slice(0, limit)
         : [];
         
       setWalletFilter(walletFilter);
-
-
-
     }
-  }, [wallet, limit]);
+
+   
+  }, [wallet, limit, userProfile]);
 
   return (
     <section className="container-assets-wallet">

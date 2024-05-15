@@ -30,7 +30,6 @@ function Home() {
   const { userProfile, wallet, transactions, updateUserData, setIDUser } =
     useContext(UserContext);
   const [walletFilter, setWalletFilter] = useState([]);
-  
 
   useEffect(() => {
     getAllAssets();
@@ -101,14 +100,13 @@ function Home() {
       if (!request.ok) {
         throw new Error("Error when post order");
       }
-      // await getUser();
       alert("OK!");
+      updateUserData();
       setContainerOrder(false);
     } catch (error) {
       console.error(`Error Requesting Order:`, error);
     }
   };
-
 
   return (
     <>
@@ -152,7 +150,6 @@ function Home() {
                   className="container-side-buy"
                   onClick={() => {
                     setSideOperation("BUY");
-                  
                   }}
                 >
                   <span class="material-symbols-outlined">shopping_cart</span>
@@ -162,7 +159,6 @@ function Home() {
                   className="container-side-sell"
                   onClick={() => {
                     setSideOperation("SELL");
-                    
                   }}
                 >
                   <span class="material-symbols-outlined">paid</span>

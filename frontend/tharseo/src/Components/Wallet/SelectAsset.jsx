@@ -10,7 +10,7 @@ function SelectAsset({
   listAssets,
   selectAssets,
   setSelectAssets,
-  user,
+ 
 }) {
   const { userProfile, wallet, transactions, updateUserData, setUser } = useContext(UserContext);
   const [assets, setAssets] = useState([]);
@@ -114,7 +114,12 @@ function SelectAsset({
         <footer className="select-assets-footer">
           <span
             className="select-assets-footer-btn"
-            onClick={() => setSelectAssets(false)}
+            onClick={() => {
+              setSelectAssets(false);
+              updateUserData();
+            }
+              
+            }
           >
             Fechar
           </span>

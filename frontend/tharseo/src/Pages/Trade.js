@@ -13,19 +13,16 @@ function Trade() {
   const [containerInputGrid, setContainerInputGrid] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [menuhidden, setMenuhidden] = useState(false);
-   const btnIsVisible = document.getElementById("icon-visible");
-  const { userProfile, wallet, transactions, updateUserData, setIDUser } =
+   
+  const { userProfile, wallet, updateUserData } =
   useContext(UserContext);
   
 
  
   useEffect(() => {
-    if (wallet) {
-      const walletFilter = Array.isArray(wallet)
-        ? wallet.slice(0, limitAsset)
-        : [];
-      setWalletFilter(walletFilter);
-    }
+
+    updateUserData();
+  
   }, [limitAsset, gridData]);
 
   const getGridData = (data) => {
@@ -40,11 +37,7 @@ function Trade() {
       ?.classList.add("show-more");
   }
 
-  function show() {
-    setContainerInputGrid(true);
-    console.log("Chamou Visible");
-    console.log(containerInputGrid);
-  }
+
 
   return (
     <main className="app-dashboard">
@@ -79,7 +72,7 @@ function Trade() {
               <span className="title-active-trades">
                 Configurar Automatização
               </span>
-              <span className="title-active-trades" onClick={() => show()}>
+              <span className="title-active-trades" >
                 Separado para Buttons Filter
               </span>
             </section>
@@ -93,6 +86,7 @@ function Trade() {
                 addressServer={serverConfig.addressServerTharseo}
                 className="show-more"
                 user={userProfile}
+                limitAsset={limitAsset}
               />
 
               <aside className="container-btn-showmore-trade">

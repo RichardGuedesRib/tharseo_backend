@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
 import Rowtabletrades from "./Rowtabletrade";
+import { UserContext } from "../../Services/UserDataProvider";
+import serverConfig from "../../Services/ServerConfig";
 
 export default function Tabletrade({
   table,
@@ -7,8 +9,37 @@ export default function Tabletrade({
   getGridData,
   setGridConfig,
   addressServer,
-  user
+  user,
+  limitAsset
 }) {
+
+  const { userProfile, wallet, updateUserData } =
+  useContext(UserContext);
+  const [walletFilter, setWalletFilter] = useState([]);
+
+  useEffect(() => {
+    
+    if (wallet) {
+      console.log("WALLET", wallet);
+
+      const activesAssets = wallet.filter((item) => (item.isActive ===1));
+
+      console.log("activesAssets", activesAssets);
+
+      const itensWallet = Array.isArray(activesAssets)
+        ? activesAssets.slice(0, limitAsset)
+        : [];
+
+      setWalletFilter(itensWallet);
+
+      console.log("WALLET FILTER", walletFilter);
+    }
+ 
+    return () => {
+     
+    }
+  }, [])
+  
 
   return (
     <table className="table-trades config-media-trade">
@@ -26,7 +57,7 @@ export default function Tabletrade({
         </tr>
       </thead>
       <tbody className="body-table-trades">
-        {table && table.map((item, index) => {
+        {walletFilter && walletFilter.map((item, index) => {
           const itemTrade = setGridConfig
             ? setGridConfig.find(
                 (configItem) => configItem.acronym === item.acronym

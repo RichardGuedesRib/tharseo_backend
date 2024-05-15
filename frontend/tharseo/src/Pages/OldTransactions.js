@@ -24,6 +24,8 @@ function OldTransactions() {
       );
       setOldTransactions(closedTransactions);
     }
+
+    updateUserData();
     }, [userTransactions]);
 
 
