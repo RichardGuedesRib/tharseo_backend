@@ -8,26 +8,10 @@ function Config() {
   const btnIsVisible = document.getElementById("icon-visible");
   let visibleBalance = false;
 
-  // const updateAssetsExchange = async () => {
-  //   try {
-  //     const res = await fetch(
-  //       addressServer + "/tharseo/updatedatauser/1"
-  //     );
-  //     if (!res.ok) {
-  //       throw new Error("Error when get user");
-  //     }
-  //     const userData = await res.json();
-  //     setUser(userData);
-  //     console.log("Return by Variable: ", userData);
-  //   } catch (error) {
-  //     console.error("Error User Resquest", error);
-  //   }
-  // };
 
   useEffect(() => {}, []);
 
  
-
   return (
     <main className="app-dashboard">
       <section

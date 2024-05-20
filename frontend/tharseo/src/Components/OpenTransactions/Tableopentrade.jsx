@@ -21,29 +21,29 @@ export default function Tableopentrade({
     <aside className="container-table-old-trades ">
       <table className="table-actives-trades">
         <thead>
-          <tr className=" ">
+          <tr className="">
             <th className="label-column-old-trades">Symbol</th>
-            <th className=" label-column-old-trades">Nome</th>
-            <th className="label-column-old-trades">Order ID</th>
+            <th className=" label-column-old-trades label-media-name">Nome</th>
+            <th className="label-column-old-trades label-name-id">Order ID</th>
             <th className="label-column-old-trades">Data</th>
             <th className="label-column-old-trades">Side</th>
             <th className="label-column-old-trades">Quantidade</th>
             <th className="label-column-old-trades open-trade-media-response">
               Preço
             </th>
-            <th className="label-column-old-trades open-trade-media-response">
+            <th className="label-column-old-trades label-media-profit">
               Profit
             </th>
-            <th className="label-column-old-trades open-trade-media-response">
+            <th className="label-column-old-trades label-media-type">
               Tipo
             </th>
-            <th className="label-column-old-trades open-trade-media-response">
+            <th className="label-column-old-trades label-media-pair">
               Trans. Par
             </th>
-            <th className="label-column-old-trades open-trade-media-response">
+            <th className="label-column-old-trades label-media-active">
               Op. Ativa?
             </th>
-            <th className="label-column-old-trades open-trade-media-response">
+            <th className="label-column-old-trades label-media-status">
               Status
             </th>
             <th className="label-column-old-trades">Cancel</th>

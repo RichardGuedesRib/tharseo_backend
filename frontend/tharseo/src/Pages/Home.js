@@ -30,7 +30,6 @@ function Home() {
   const { userProfile, wallet, transactions, updateUserData, setIDUser } =
     useContext(UserContext);
   const [walletFilter, setWalletFilter] = useState([]);
- 
 
   useEffect(() => {
     getAllAssets();
@@ -310,7 +309,7 @@ function Home() {
                   table={walletFilter}
                   setContainerInputGrid={setContainerInputGrid}
                   getGridData={getGridData}
-                  setGridConfig={userProfile.grids}
+                  setGridConfig={userProfile?.grids ? userProfile.grids : []}
                   addressServer={serverConfig.addressServerTharseo}
                   className="show-more"
                   user={userProfile}

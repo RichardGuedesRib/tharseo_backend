@@ -36,38 +36,39 @@ export default function Rowtableopentransaction({
   };
 
   return (
-    <tr>
-      <th>
+    <tr className="row-opentrade-mobile">
+      <th className="row-media-icon">
         {" "}
         <Icon name={symbol} size={25} />
       </th>
-      <th className="label-cell-old-trades">{acronym}</th>
-      <th className="label-cell-old-trades">{orderid}</th>
-      <th className="label-cell-old-trades">{date}</th>
-      <th className="label-cell-old-trades">{side}</th>
-      <th className="label-cell-old-trades">{quantity}</th>
-      <th className="label-cell-old-trades open-trade-media-response">
+      <th className="label-cell-old-trades row-media-acronym">{acronym}</th>
+      <th className="label-cell-old-trades row-media-id">{orderid}</th>
+      <th className="label-cell-old-trades row-media-open-date">{date}</th>
+      <th className="label-cell-old-trades row-media-open-side">{side}</th>
+      <th className="label-cell-old-trades row-media-open-quantity">
+        {quantity}
+      </th>
+      <th className="label-cell-old-trades open-trade-media-response row-media-price">
         $ {price}
       </th>
-      <th className="label-cell-old-trades open-trade-media-response">
+      <th className="label-cell-old-trades open-trade-media-response row-media-open-profit">
         $ {profit}
       </th>
-      <th className="label-cell-old-trades open-trade-media-response">
+      <th className="label-cell-old-trades row-media-type">
         {typeTransaction}
       </th>
-      <th className="label-cell-old-trades open-trade-media-response">
+      <th className="label-cell-old-trades row-media-pairtransaction">
         {pairTransaction}
       </th>
-      <th className="label-cell-old-trades open-trade-media-response">
-        {active}
-      </th>
-      <th className="label-cell-old-trades open-trade-media-response">
-        {status}
-      </th>
-      <th className="label-cell-old-trades">
+      <th className="label-cell-old-trades row-media-active">{active}</th>
+      <th className="label-cell-old-trades row-media-status">{status}</th>
+      <th className="label-cell-old-trades row-media-delete">
         <span className="btn-cancel-order" onClick={cancelOrder}>
           <span class="material-symbols-outlined">delete_forever</span>
         </span>
+      </th>
+      <th className="row-media-open-more">
+        <span class="material-symbols-outlined">more_vert</span>
       </th>
     </tr>
   );

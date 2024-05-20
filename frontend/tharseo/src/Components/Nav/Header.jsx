@@ -1,11 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import React from "react";
 import { UserContext } from "../../Services/UserDataProvider";
+import perfilImage from "../../assets/img/perfil.jpg";
 
 function Header() {
   const { userProfile, wallet, transactions, updateUserData, setIDUser } =
     useContext(UserContext);
-    const [visibleBalance, setVisibleBalance] = useState(false);
+  const [visibleBalance, setVisibleBalance] = useState(false);
+  const [urlAvatar, setUrlAvatar] = useState("");
 
   return (
     <>
@@ -13,7 +15,7 @@ function Header() {
         <section className="container-dashboard-right-top-left">
           <span className="text-header-welcome">
             {" "}
-            Olá Bem Vindo,{" "}
+            Bem Vindo,{" "}
             {userProfile && userProfile.name ? userProfile.name : "Unknown"}
           </span>
         </section>
@@ -48,10 +50,15 @@ function Header() {
           <span className="text-name-user">
             {userProfile && userProfile.name ? userProfile.name : "Unknown"}
           </span>
-          <span className="avatar-header-user">
-            <span class="material-symbols-outlined" style={{ fontSize: 50 }}>
-              face
-            </span>
+          <span
+            className="avatar-header-user"
+            style={{ backgroundImage: `url(${perfilImage || "none"})` }}
+          >
+            {!perfilImage && (
+              <span class="material-symbols-outlined" style={{ fontSize: 50 }}>
+                face
+              </span>
+            )}
           </span>
         </section>
       </aside>

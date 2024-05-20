@@ -43,7 +43,7 @@ function Chart({ data, wallet, setContainerOrder }) {
           <div className="chart-item-data">
             <span className="title-data">Valor Total</span>
             <span className="value-data">
-              $ {valueAsset === null ? "Carregando..." : valueAsset}
+              $ {valueAsset}
             </span>
           </div>
         </div>

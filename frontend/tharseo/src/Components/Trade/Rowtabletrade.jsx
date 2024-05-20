@@ -98,23 +98,23 @@ function Rowtabletrades({
 
   return (
     <tr className="row-table-trades">
-      <td className="label-active-trades row-media">
+      <td className="label-active-trades row-media-icon">
         <span className="icon-active-trades ">
           {" "}
           <Icon name={symbol} size={25} />
         </span>
       </td>
 
-      <td className="label-active-trades label-row-name row-media">{name}</td>
-      <td className="label-active-trades row-media">$ {balance}</td>
-      <td className="label-active-trades row-media">$ {profit}</td>
-      <td className="label-active-trades row-media">{performance}%</td>
-      <td className="label-active-trades container-btn-active-trade row-media">
+      <td className="label-active-trades label-row-name row-media-name">{name}</td>
+      <td className="label-active-trades row-media-balance">$ {balance}</td>
+      <td className="label-active-trades row-media-profit">$ {profit}</td>
+      <td className="label-active-trades row-media-performance">{performance}%</td>
+      <td className="label-active-trades container-btn-active-trade row-media-btn">
         <span className="btn-trades" onClick={openGrid}>
           {trade}
         </span>
       </td>
-      <td className="label-active-trades label-toogle-trade row-media">
+      <td className="label-active-trades label-toogle-trade row-media-toggle">
         <span className="btn-toogle-trade " onClick={toggled}>
           <span
             class="material-symbols-outlined"

@@ -35,10 +35,7 @@ export async function authenticateLogin(userLogin, userPassword, navigate, setUs
       alert("Usuário ou Senha Inválidos");
     } else {
       const userData = await request.json();
-      // getUserByLogin(userData);
-      console.log("USERDATA", userData);
-      setUser(userData);
-
+           setUser(userData);
       navigate("/home");
     }
   } catch (error) {

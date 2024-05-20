@@ -56,7 +56,7 @@ function OldTransactions() {
           
          <Header/>
 
-          <aside className="container-trades">
+          <aside className="container-trades container-open-trades">
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">
                 Histórico de Transações

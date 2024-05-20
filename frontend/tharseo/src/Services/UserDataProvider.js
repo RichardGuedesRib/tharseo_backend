@@ -25,16 +25,13 @@ export const UserDataProvider = (props) => {
       setUserProfile(profileData);
       setWallet(profileData.wallet);
       setTransactions(profileData.transactions);
-      console.log("CHAMOU O UPDATE DATA");
-      console.log("USERPROFILE", userProfile);
-    } catch (error) {
+          } catch (error) {
       console.error("Error request data user", error);
     }
   };
 
   const setIDUser = (id) => {
-    console.log(id);
-    setUserID(id);
+       setUserID(id);
     updateUserData();
   };
 
@@ -43,8 +40,7 @@ export const UserDataProvider = (props) => {
     setWallet(user.wallet);
     setTransactions(user.transactions);
     setIDUser(user.id);
-    console.log("SETADO PELO LOGIN", user);
-  };
+      };
 
   return (
     <UserContext.Provider

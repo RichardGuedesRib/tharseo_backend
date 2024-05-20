@@ -10,10 +10,7 @@ export default function Tableoldtrade({ transactions, limit }) {
       : [];
     setTransactionsFilter(filter);
 
-    if (transactionsFilter && transactionsFilter.length > 0) {
-      console.log("Transactions FIlter", transactionsFilter);
-    }
-    console.log("Transactions", transactions);
+      
   }, [transactions, limit]);
 
   return (
