@@ -52,6 +52,10 @@ jobs:
       run:  |
             echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
             cd backend/tharseo && docker build -t richardguedesrib/tharseo-app:latest .
+    
+    - name: Push Docker image to Docker Hub
+      run: |
+            docker push richardguedesrib/tharseo-app:latest
 
   deploy-backend:
     needs: 
@@ -60,10 +64,6 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-
-    - name: Push Docker image to Docker Hub
-      run: |
-            docker push richardguedesrib/tharseo-app:latest
 
     - name: SSH into Azure VM and stop and remove existing Docker containers
       uses: appleboy/ssh-action@master
