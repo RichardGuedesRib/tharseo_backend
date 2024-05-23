@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -122,6 +124,7 @@ public class EngineTradeSystemGrid {
                     Double purchasedValue = transactionBuy.getPrice() * Double.parseDouble(transactionBuy.getExecutedQty());
                     Double soldValue = transaction.getPrice() * Double.parseDouble(transaction.getExecutedQty());
                     Double profit = soldValue - purchasedValue;
+                    transaction.setOpenDate(Instant.now().toEpochMilli());
                     transaction.setProfit(profit);
 
                     operations.add(transaction);

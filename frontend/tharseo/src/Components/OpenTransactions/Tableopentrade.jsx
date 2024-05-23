@@ -34,9 +34,7 @@ export default function Tableopentrade({
             <th className="label-column-old-trades label-media-profit">
               Profit
             </th>
-            <th className="label-column-old-trades label-media-type">
-              Tipo
-            </th>
+            <th className="label-column-old-trades label-media-type">Tipo</th>
             <th className="label-column-old-trades label-media-pair">
               Trans. Par
             </th>
@@ -63,7 +61,7 @@ export default function Tableopentrade({
                   }
                   acronym={item.asset.acronym}
                   orderid={item.id}
-                  date={new Date(item.openDate * 1000).toLocaleString()}
+                  date={new Date(item.openDate).toLocaleString()}
                   side={item.side}
                   quantity={item.executedQty}
                   price={item.price}

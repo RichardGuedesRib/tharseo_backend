@@ -9,8 +9,6 @@ export default function Tableoldtrade({ transactions, limit }) {
       ? transactions.slice(0, limit)
       : [];
     setTransactionsFilter(filter);
-
-      
   }, [transactions, limit]);
 
   return (
@@ -57,7 +55,7 @@ export default function Tableoldtrade({ transactions, limit }) {
                 }
                 acronym={item.asset.acronym}
                 orderid={item.orderId}
-                date={new Date(item.openDate * 1000).toLocaleString()}
+                date={new Date(item.openDate).toLocaleString()}
                 side={item.side}
                 quantity={item.executedQty}
                 price={item.price}

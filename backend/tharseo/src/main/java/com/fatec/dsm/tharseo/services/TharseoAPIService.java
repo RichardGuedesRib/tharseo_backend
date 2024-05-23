@@ -11,6 +11,8 @@ import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -189,6 +191,7 @@ public class TharseoAPIService {
         Double targetPrice = Double.parseDouble(formatPrice);
         TransactionSpotGrid newOrderBuy = awaitOrder(user, assetsUser, "BUY", quota.toString(), price, targetPrice);
         newOrderBuy.setPriceTarget(targetPrice);
+        newOrderBuy.setOpenDate(Instant.now().toEpochMilli());
         newOrderBuy.setStatus("Open");
 
 
@@ -197,6 +200,7 @@ public class TharseoAPIService {
 
         TransactionSpotGrid newOrderSell = awaitOrder(user, assetsUser, "SELL", quota.toString(), targetPrice, Double.parseDouble(String.format(Locale.US,"%.2f", targetPrice)));
         newOrderSell.setStatus("Open");
+        newOrderSell.setOpenDate(Instant.now().toEpochMilli());
         newOrderSell.setOrderPairTrade(newOrderBuy.getId());
         transactionSpotGridService.insertTransactionSpotGrid(newOrderSell);
         newOrderBuy.setOrderPairTrade(newOrderSell.getId());
