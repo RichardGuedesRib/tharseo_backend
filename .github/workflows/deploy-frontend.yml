@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies and run tests
       run: |
         cd frontend/tharseo
-        npm install
+        npm install --legacy-peer-deps
         npm test
 
   build:
