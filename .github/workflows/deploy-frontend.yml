@@ -6,7 +6,6 @@ on:
       - main
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
 
@@ -17,10 +16,11 @@ jobs:
     - name: Install dependencies and run tests
       run: |
         cd frontend/tharseo
-        npm install --legacy-peer-deps
+        npm install
         npm test
-  
-  deploy-frontend:
+
+  build:
+    needs: test
     runs-on: ubuntu-latest
         
     steps:
@@ -36,7 +36,12 @@ jobs:
            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
            docker tag tharseo-front richardguedesrib/tharseo-front:latest
            docker push richardguedesrib/tharseo-front:latest
-        
+
+  deploy-frontend:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
     - name: SSH into Azure VM and stop and remove existing Docker container
       uses: appleboy/ssh-action@master
       with:
