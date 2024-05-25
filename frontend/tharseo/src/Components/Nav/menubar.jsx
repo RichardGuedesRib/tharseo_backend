@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Menubar({ menuhidden }) {
+export default function Menubar() {
   return (
     <>
       <aside className="container-dashboard-left">
@@ -9,17 +9,13 @@ export default function Menubar({ menuhidden }) {
           <span className="title-menubar">tharseo</span>
         </section>
 
-        <aside
-          className={`container-menubar-buttons ${
-            menuhidden === true ? "show" : ""
-          }`}
-        >
+        <aside className={`container-menubar-buttons }`}>
           <section className="container-menubar-buttons-top">
             <article className="button-menubar">
               <Link to="/home" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 30 }}
                   >
                     dashboard
@@ -35,7 +31,7 @@ export default function Menubar({ menuhidden }) {
               <Link to="/trade" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 35 }}
                   >
                     bid_landscape
@@ -51,7 +47,7 @@ export default function Menubar({ menuhidden }) {
               <Link to="/opentrades" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 35 }}
                   >
                     auto_graph
@@ -67,7 +63,7 @@ export default function Menubar({ menuhidden }) {
               <Link to="/oldtransactions" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 35 }}
                   >
                     history
@@ -83,7 +79,7 @@ export default function Menubar({ menuhidden }) {
               <Link to="/config" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 35 }}
                   >
                     tv_options_input_settings
@@ -99,7 +95,7 @@ export default function Menubar({ menuhidden }) {
               <Link to="/" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 35 }}
                   >
                     person
@@ -117,7 +113,7 @@ export default function Menubar({ menuhidden }) {
               <Link to="/" className="link-button-menubar">
                 <span className="icon-button-menubar">
                   <span
-                    class="material-symbols-outlined"
+                    className="material-symbols-outlined"
                     style={{ fontSize: 35 }}
                   >
                     logout
@@ -135,7 +131,10 @@ export default function Menubar({ menuhidden }) {
       <section className="navbar-mobile">
         <article className="button-menubar-mobile">
           <Link to="/trade" className="link-button-menubar-mobile">
-            <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 30 }}
+            >
               bid_landscape
             </span>
           </Link>
@@ -143,7 +142,7 @@ export default function Menubar({ menuhidden }) {
 
         <article className="button-menubar-mobile">
           <Link to="/opentrades" className="link-button-menubar-mobile">
-            <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 30 }}>
               auto_graph
             </span>
           </Link>
@@ -151,7 +150,10 @@ export default function Menubar({ menuhidden }) {
 
         <article className="button-menubar-mobile button-center">
           <Link to="/home" className="link-button-menubar-mobile">
-            <span class="material-symbols-outlined" style={{ fontSize: 40 }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 40 }}
+            >
               dashboard
             </span>
           </Link>
@@ -159,7 +161,10 @@ export default function Menubar({ menuhidden }) {
 
         <article className="button-menubar-mobile">
           <Link to="/oldtransactions" className="link-button-menubar-mobile">
-            <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 30 }}
+            >
               history
             </span>
           </Link>
@@ -167,7 +172,10 @@ export default function Menubar({ menuhidden }) {
 
         <article className="button-menubar-mobile">
           <Link to="/config" className="link-button-menubar-mobile">
-            <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 30 }}
+            >
               tv_options_input_settings
             </span>
           </Link>

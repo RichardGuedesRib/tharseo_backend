@@ -11,8 +11,7 @@ function OldTransactions() {
   const [limitAsset, setLimitAsset] = useState(14);
   const [oldTransactions, setOldTransactions] = useState([]);
   const [userTransactions, setUserTransactions] = useState(userProfile.transactions);
-  const [menuhidden, setMenuhidden] = useState(false);
-  const [wallet, setWallet] = useState(userProfile.wallet);
+    const [wallet, setWallet] = useState(userProfile.wallet);
 
 
 
@@ -39,18 +38,9 @@ function OldTransactions() {
 
   return (
     <main className="app-dashboard">
-      <section
-        className="menu-hidden"
-        onClick={() => {
-          setMenuhidden(!menuhidden);
-        }}
-      >
-        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
-          menu
-        </span>
-      </section>
+    
       <section className="container-dashboard">
-        <Menubar menuhidden={menuhidden} />
+        <Menubar />
 
         <aside className="container-dashboard-trades">
           

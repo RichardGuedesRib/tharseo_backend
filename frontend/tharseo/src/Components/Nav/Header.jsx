@@ -7,7 +7,7 @@ function Header() {
   const { userProfile, wallet, transactions, updateUserData, setIDUser } =
     useContext(UserContext);
   const [visibleBalance, setVisibleBalance] = useState(false);
-  const [urlAvatar, setUrlAvatar] = useState("");
+
 
   return (
     <>
@@ -26,7 +26,7 @@ function Header() {
               onClick={() => setVisibleBalance(!visibleBalance)}
             >
               <span
-                class="material-symbols-outlined"
+                className="material-symbols-outlined"
                 id="icon-visible"
                 style={{ fontSize: 20 }}
               >
@@ -43,7 +43,10 @@ function Header() {
           </section>
 
           <span className="icon-notification-header">
-            <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 30 }}
+            >
               notifications_unread
             </span>
           </span>
@@ -55,7 +58,10 @@ function Header() {
             style={{ backgroundImage: `url(${perfilImage || "none"})` }}
           >
             {!perfilImage && (
-              <span class="material-symbols-outlined" style={{ fontSize: 50 }}>
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: 50 }}
+              >
                 face
               </span>
             )}

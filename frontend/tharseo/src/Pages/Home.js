@@ -24,8 +24,7 @@ function Home() {
   const [assetsActiveTrade, setAssetsActiveTrade] = useState([]);
   const [gridData, setGridData] = useState(null);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
-  const [menuhidden, setMenuhidden] = useState(false);
-  const [assets, setAssets] = useState([]);
+   const [assets, setAssets] = useState([]);
   const [selectAssets, setSelectAssets] = useState(false);
   const { userProfile, wallet, transactions, updateUserData, setIDUser } =
     useContext(UserContext);
@@ -111,18 +110,9 @@ function Home() {
   return (
     <>
       <main className="app-dashboard">
-        <section
-          className="menu-hidden"
-          onClick={() => {
-            setMenuhidden(!menuhidden);
-          }}
-        >
-          <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
-            menu
-          </span>
-        </section>
+      
         <section className="container-dashboard">
-          <Menubar menuhidden={menuhidden} />
+          <Menubar />
 
           <Containergrid
             containerInputGrid={containerInputGrid}

@@ -12,23 +12,16 @@ function Trade() {
   const [limitActiveTrade, setLimiteActiveTrade] = useState(14);
   const [containerInputGrid, setContainerInputGrid] = useState(false);
   const [gridData, setGridData] = useState(null);
-  const [menuhidden, setMenuhidden] = useState(false);
-   
-  const { userProfile, wallet, updateUserData } =
-  useContext(UserContext);
-  
 
- 
+  const { userProfile, wallet, updateUserData } = useContext(UserContext);
+
   useEffect(() => {
-
     updateUserData();
-  
   }, [limitActiveTrade, gridData]);
 
   const getGridData = (data) => {
     setGridData(data);
   };
-
 
   function showMoreAssets() {
     setLimiteActiveTrade((prevLimit) => prevLimit + 5);
@@ -37,23 +30,10 @@ function Trade() {
       ?.classList.add("show-more");
   }
 
-
-
   return (
     <main className="app-dashboard">
-      <section
-        className="menu-hidden"
-        onClick={() => {
-          setMenuhidden(!menuhidden);
-        }}
-      >
-        <span class="material-symbols-outlined" style={{ fontSize: 30 }}>
-          menu
-        </span>
-      </section>
-
       <section className="container-dashboard">
-        <Menubar menuhidden={menuhidden} />
+        <Menubar />
 
         <Containergrid
           containerInputGrid={containerInputGrid}
@@ -64,15 +44,14 @@ function Trade() {
         />
 
         <aside className="container-dashboard-trades">
-
-        <Header />
+          <Header />
 
           <aside className="container-trades">
             <section className="container-dashboard-right-bottom-top">
               <span className="title-active-trades">
                 Configurar Automatização
               </span>
-              <span className="title-active-trades" >
+              <span className="title-active-trades">
                 Separado para Buttons Filter
               </span>
             </section>
