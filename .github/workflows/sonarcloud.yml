@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Start ZAP daemon
-        run: docker run --name zap -u zap -d -p 8080:8080 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+        run: docker run --name zap -u zap -d -p 8080:8080 owasp/zap2docker-weekly zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
       - name: Wait for ZAP to start
         run: |
           echo "Waiting for ZAP to start..."
@@ -53,7 +53,7 @@ jobs:
           done
           echo "ZAP has started!"
       - name: Run ZAP Scan
-        run: docker exec zap zap-cli -p 8080 status -t 120 && docker exec zap zap-cli -p 8080 open-url http://your-application-url && docker exec zap zap-cli -p 8080 active-scan -r http://your-application-url
+        run: docker exec zap zap-cli -p 8080 status -t 120 && docker exec zap zap-cli -p 8080 open-url http://104.45.141.47 && docker exec zap zap-cli -p 8080 active-scan -r http://104.45.141.47
       - name: Generate ZAP Report
         run: docker exec zap zap-cli -p 8080 report -o zap_report.html -f html
       - name: Upload ZAP Report
