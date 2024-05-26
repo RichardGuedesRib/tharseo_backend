@@ -28,7 +28,7 @@ jobs:
     - name: Move report to docs directory
       run:  mv target/dependency-check-report.html docs/
 
-    - name: Commit and push report to GitHub Pages
+    - name: Commit and push report to GitHub Pagesss
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "Update report"
