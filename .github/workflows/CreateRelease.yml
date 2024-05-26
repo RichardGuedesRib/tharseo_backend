@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout source codea'
+      - name: 'Checkout source code'
         uses: 'actions/checkout@v2'
-       
-      - name: 'cat package.json'
-        run: cat frontend/tharseo/package.json
+        with:
+          ref: 'main'  
+          path: 'frontend/tharseo'  
 
-      - name: 'Navigate to project directory'
-        run: cd frontend/tharseo
-        
+      - name: 'cat package.json'
+        run: cat package.json
+
       - name: 'Automated Version Bump'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
@@ -27,8 +27,10 @@ jobs:
           tag-prefix: 'v'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: 'cat package.json'
-        run: cat frontend/tharseo/package.json
+        run: cat package.json
+
       - name: 'Output Step'
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
