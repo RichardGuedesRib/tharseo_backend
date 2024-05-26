@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout source code'
+      - name: 'Checkout source codea'
         uses: 'actions/checkout@v2'
         with:
           ref: ${{ github.ref }}
