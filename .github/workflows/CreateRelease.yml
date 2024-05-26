@@ -3,7 +3,7 @@ name: Build Image
 on:
   push:
     branches:
-      - 'main'
+      - main
 jobs:
   bump-version:
     runs-on: ubuntu-latest
