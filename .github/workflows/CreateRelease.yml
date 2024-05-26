@@ -17,17 +17,14 @@ jobs:
           ref: 'main'  
           path: 'frontend/tharseo'  
 
-      - name: 'List files in directory'
-        run: ls frontend/tharseo      
-
       - name: 'Navigate to project directory'
-        run: cd frontend/tharseo
+        run: cd $GITHUB_WORKSPACE/frontend/tharseo
       
       - name: 'List files in directory'
-        run: ls frontend/tharseo   
-        
+        run: ls $GITHUB_WORKSPACE/frontend/tharseo
+
       - name: 'cat package.json'
-        run: cat package.json
+        run: cat $GITHUB_WORKSPACE/frontend/tharseo/package.json
 
       - name: 'Automated Version Bump'
         id: version-bump
@@ -38,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'cat package.json'
-        run: cat frontend/tharseo/package.json
+        run: cat $GITHUB_WORKSPACE/frontend/tharseo/package.json
 
       - name: 'Output Step'
         env:
