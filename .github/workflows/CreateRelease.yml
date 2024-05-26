@@ -16,6 +16,7 @@ jobs:
             uses: 'actions/checkout@v2'
             with:
               ref: ${{ github.ref }}
+              path: './tharseo/frontend/tharseo' 
           - name: 'cat package.json'
             run: cat ./package.json
           - name: 'Automated Version Bump'
@@ -26,7 +27,7 @@ jobs:
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           - name: 'cat package.json'
-            run: cat ./package.json
+            run: cat ./tharseo/frontend/tharseo/package.json
 
           - name: Create Release
             id: create_release
