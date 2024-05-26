@@ -18,7 +18,7 @@ jobs:
           path: 'frontend/tharseo'  
 
       - name: 'cat package.json'
-        run: cat frontend/tharseo/package.json
+        run: cat ./frontend/tharseo/package.json
 
       - name: 'Automated Version Bump'
         id: version-bump
@@ -29,7 +29,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'cat package.json'
-        run: cat frontend/tharseo/package.json
+        run: cat ./frontend/tharseo/package.json
 
       - name: 'Output Step'
         env:
