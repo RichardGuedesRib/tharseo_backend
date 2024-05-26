@@ -26,6 +26,8 @@ jobs:
           tag-prefix: 'v'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'cat package.json'
+        run: cat frontend/tharseo/package.json
 
       - name: Create Release
         id: create_release
