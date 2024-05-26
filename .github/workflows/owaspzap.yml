@@ -14,7 +14,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.6.1
         with:
-          docker_name: 'owasp/zap2docker-stable'
+          docker_name: 'owasp/dependency-check'
           target: 'http://104.45.141.47/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
