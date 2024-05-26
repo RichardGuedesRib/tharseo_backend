@@ -1,13 +1,15 @@
-name: SonarCloud
+name: CI Pipeline
+
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
-  build:
-    name: Build and analyze
+  build-and-analyze:
+    name: Build and Analyze with SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,3 +37,27 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: cd backend/tharseo && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=RichardGuedesRib_tharseo
+
+  owasp-zap-scan:
+    name: OWASP ZAP Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Start ZAP daemon
+        run: docker run --name zap -u zap -d -p 8080:8080 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+      - name: Wait for ZAP to start
+        run: |
+          echo "Waiting for ZAP to start..."
+          while ! nc -z localhost 8080; do   
+            sleep 1
+          done
+          echo "ZAP has started!"
+      - name: Run ZAP Scan
+        run: docker exec zap zap-cli -p 8080 status -t 120 && docker exec zap zap-cli -p 8080 open-url http://your-application-url && docker exec zap zap-cli -p 8080 active-scan -r http://your-application-url
+      - name: Generate ZAP Report
+        run: docker exec zap zap-cli -p 8080 report -o zap_report.html -f html
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: zap_report.html

@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import Header from "../../../Components/Nav/Header";
 
 
-describe("Test: Testing Header Component", () => {
+describe("Test Scope: Header Component", () => {
   test("Header Render", () => {
     render(<Header />);
   });

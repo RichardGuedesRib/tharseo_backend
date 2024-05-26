@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { UserContext } from "../../../Services/UserDataProvider";
 import Menubar from "../../../Components/Nav/menubar";
 
@@ -12,7 +12,7 @@ const mockUserContext = {
   setIDUser: jest.fn(),
 };
 
-describe("Test Scope: Component Menubar", () => {
+describe("Test Scope: Menubar Component", () => {
   test("Component Render: Menubar", () => {
     render(
       <BrowserRouter>
@@ -62,5 +62,6 @@ describe("Test Scope: Component Menubar", () => {
       expect(screen.getAllByText(/Sair/i).textContent);
     });
   });
+
   
 });
