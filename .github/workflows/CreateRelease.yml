@@ -17,8 +17,14 @@ jobs:
           ref: 'main'  
           path: 'frontend/tharseo'  
 
+      - name: 'List files in directory'
+        run: ls frontend/tharseo      
+
+      - name: 'Navigate to project directory'
+        run: cd frontend/tharseo
+        
       - name: 'cat package.json'
-        run: cat frontend/tharseo/package.json
+        run: cat package.json
 
       - name: 'Automated Version Bump'
         id: version-bump
