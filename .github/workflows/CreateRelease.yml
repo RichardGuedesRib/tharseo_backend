@@ -1,55 +1,19 @@
-name: 'Bump Version'
+name: Build Image
 
 on:
   push:
     branches:
       - 'main'
-
 jobs:
   bump-version:
-    name: 'Bump Version on master'
     runs-on: ubuntu-latest
-
     steps:
-      - name: 'Checkout source code'
-        uses: 'actions/checkout@v2'
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Bump Version
+        uses: remorses/bump-version@js
         with:
-          ref: 'main'  
-          path: 'frontend/tharseo'  
-
-      - name: 'Navigate to project directory'
-        run: cd $GITHUB_WORKSPACE/frontend/tharseo
-      
-      - name: 'List files in directory'
-        run: ls $GITHUB_WORKSPACE/frontend/tharseo
-
-      - name: 'cat package.json'
-        run: cat $GITHUB_WORKSPACE/frontend/tharseo/package.json
-
-      - name: 'Automated Version Bump'
-        id: version-bump
-        uses: 'phips28/gh-action-bump-version@master'
-        with:
-          tag-prefix: 'v'
+          version_file: ./VERSION
+          prefix: image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 'cat package.json'
-        run: cat $GITHUB_WORKSPACE/frontend/tharseo/package.json
-
-      - name: 'Output Step'
-        env:
-          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-        run: echo "new tag $NEW_TAG"
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version-bump.outputs.newTag }}
-          release_name: Release ${{ steps.version-bump.outputs.newTag }} 
-          body: Automatic release created by GitHub Actions.
-          draft: false
-          prerelease: false
