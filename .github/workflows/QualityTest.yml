@@ -33,7 +33,7 @@ jobs:
       with:
         commit_message: "Update report"
         repository: ${{ github.repository }}
-        branch: gh-pages
-        files: docs/relatorio.html
+        branch: reports
+        files: docs/dependency-check-report.html
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
