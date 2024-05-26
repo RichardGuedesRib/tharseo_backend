@@ -1,0 +1,96 @@
+name: Deploy Backend to Container in AzureVM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests-backend: 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17' 
+        distribution: 'temurin'
+    
+    - name: Run Tharseo Tests 
+      run:  cd backend/tharseo && mvn clean test
+      
+      continue-on-error: false
+    
+  build-backend:
+    needs: 
+      - tests-backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17' 
+        distribution: 'temurin'
+
+    - name: Build Tharseo 
+      run:  cd backend/tharseo && mvn clean package
+      
+    - name: Build Docker image
+      run:  |
+            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
+            cd backend/tharseo && docker build -t richardguedesrib/tharseo-app:latest .
+    
+    - name: Push Docker image to Docker Hub
+      run: |
+            docker push richardguedesrib/tharseo-app:latest
+
+  deploy-backend:
+    needs: 
+      - tests-backend
+      - build-backend
+
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: SSH into Azure VM and stop and remove existing Docker containers
+      uses: appleboy/ssh-action@master
+      with:
+        host: 104.45.141.47
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-app) || true
+          docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-app) || true
+
+    - name: SSH into Azure VM and pull Docker image
+      uses: appleboy/ssh-action@master
+      with:
+        host: 104.45.141.47
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker login && docker pull richardguedesrib/tharseo-app:latest
+
+    - name: SSH into Azure VM and start Docker container
+      uses: appleboy/ssh-action@master
+      with:
+        host: 104.45.141.47
+        username: richardguedes
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker run -d -p 8080:8080 -v /home/richardguedes/tharseo/data:/app/data richardguedesrib/tharseo-app:latest
+
+  
