@@ -13,8 +13,7 @@ jobs:
     steps:
       - name: 'Checkout source codea'
         uses: 'actions/checkout@v2'
-        with:
-          ref: ${{ github.ref }}
+       
       - name: 'cat package.json'
         run: cat frontend/tharseo/package.json
       - name: 'Automated Version Bump'
