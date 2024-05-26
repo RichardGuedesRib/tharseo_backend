@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Code Quality - SonarCloud
 
 on:
   push:
