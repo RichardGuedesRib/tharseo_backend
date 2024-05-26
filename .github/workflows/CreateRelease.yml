@@ -18,7 +18,7 @@ jobs:
               ref: ${{ github.ref }}
               path: './tharseo/frontend/tharseo' 
           - name: 'cat package.json'
-            run: cat ./package.json
+            run: cat ./tharseo/frontend/tharseo/package.json
           - name: 'Automated Version Bump'
             id: version-bump
             uses: 'phips28/gh-action-bump-version@master'
