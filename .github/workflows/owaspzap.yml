@@ -1,20 +1,42 @@
-name: OWASP ZAP Integration with GitHub Actions
+name: OWASP ZAP Scan
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
-    name: Scan the web application
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: main
-      - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.6.1
-        with:
-          docker_name: 'owasp/dependency-check'
-          target: 'http://104.45.141.47/'
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a'
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Start OWASP ZAP
+      run: docker run -d --name zap -u zap -p 8080:8080 -i owasp/zap2docker-stable zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.disablekey=true
+
+    - name: Wait for ZAP to start
+      run: |
+        while ! nc -z localhost 8080; do   
+          sleep 1 
+        done
+
+    - name: Run ZAP scan
+      run: |
+        docker exec zap zap-cli quick-scan --self-contained --start-options '-config api.disablekey=true' http://104.45.141.47/
+
+    - name: Stop OWASP ZAP
+      run: docker stop zap
+
+    - name: Remove OWASP ZAP container
+      run: docker rm zap
+
+    - name: Upload ZAP Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: zap-report
+        path: /zap/wrk/report.html
