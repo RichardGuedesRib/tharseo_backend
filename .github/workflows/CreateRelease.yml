@@ -16,6 +16,10 @@ jobs:
        
       - name: 'cat package.json'
         run: cat frontend/tharseo/package.json
+
+      - name: 'Navigate to project directory'
+        run: cd frontend/tharseo
+        
       - name: 'Automated Version Bump'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
