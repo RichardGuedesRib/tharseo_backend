@@ -31,6 +31,7 @@ public class AuthenticateController {
 
     @PostMapping(value = "/checkpassword")
     public ResponseEntity<?> userAuthenticate(@RequestBody HashMap<String, String> credentials){
+        //a
         String userLogin = credentials.get("login");
         String userPassword = credentials.get("password");
         boolean auth = false;
