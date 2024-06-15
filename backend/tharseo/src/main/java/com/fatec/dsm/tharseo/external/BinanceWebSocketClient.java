@@ -54,7 +54,7 @@ public class BinanceWebSocketClient {
             JsonObject resultsPayload = JsonParser.parseString(message.getPayload().toString()).getAsJsonObject();
             JsonObject klineStream = resultsPayload.getAsJsonObject("k");
             Kline kline = CreateKline.createKline(klineStream);
-//            System.out.println(kline);
+            System.out.println(kline);
             chartService.insertOne(kline);
         }
     }
