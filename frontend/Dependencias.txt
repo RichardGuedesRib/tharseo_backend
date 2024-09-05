@@ -1,4 +1,0 @@
-npm install react-router-dom apexcharts react-apexcharts react-use-websocket 
-react-crypto-icons --legacy-peer-deps
-
-

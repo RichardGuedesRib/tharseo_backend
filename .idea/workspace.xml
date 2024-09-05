@@ -1,43 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="13346971-4882-4bc0-97ec-a85fc0824373" name="Changes" comment="" />
+    <list default="true" id="7f2c0502-6e6e-47f4-8a04-41fe7c6b56f0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/data/tharseo.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/tharseo.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
-  <component name="ProjectId" id="2d3usygquDMayeMR118sjOuL5yi" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2dSyVKYr8IOYuOecsW1XeMm4iua" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.TharseoApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Faculdade/OneDrive - Fatec Centro Paula Souza/Projetos/Tharseo/backend/tharseo"
+    "last_opened_file_path": "C:/back/Faculdade/OneDrive - Fatec Centro Paula Souza/Projetos/tharseo/backend/tharseo"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Faculdade\OneDrive - Fatec Centro Paula Souza\Projetos\Tharseo\backend\tharseo\src\main\java\com\fatec\dsm\tharseo\controllers" />
+      <recent name="D:\Faculdade\OneDrive - Fatec Centro Paula Souza\Projetos\Tharseo\backend\tharseo\src\main\java\com\fatec\dsm\tharseo\util" />
+      <recent name="D:\Faculdade\OneDrive - Fatec Centro Paula Souza\Projetos\Tharseo\backend\tharseo\src\main\java\com\fatec\dsm\tharseo\services" />
+      <recent name="D:\Faculdade\OneDrive - Fatec Centro Paula Souza\Projetos\Tharseo\backend\tharseo\src\main\java\com\fatec\dsm\tharseo\repositories" />
+      <recent name="D:\Faculdade\OneDrive - Fatec Centro Paula Souza\Projetos\Tharseo\backend\tharseo\src\main\java\com\fatec\dsm\tharseo\models" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TharseoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.fatec.dsm.tharseo.TharseoApplication" />
+      <module name="tharseo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fatec.dsm.tharseo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TharseoApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="13346971-4882-4bc0-97ec-a85fc0824373" name="Changes" comment="" />
-      <created>1709249295963</created>
+      <changelist id="7f2c0502-6e6e-47f4-8a04-41fe7c6b56f0" name="Changes" comment="" />
+      <created>1710015797724</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1709249295963</updated>
+      <updated>1710015797724</updated>
     </task>
     <servers />
   </component>
