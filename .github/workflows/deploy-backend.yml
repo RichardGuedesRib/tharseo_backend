@@ -70,7 +70,7 @@ jobs:
       with:
         host: 52.168.150.124
         username: tharseo
-        key: ${{ secrets.THARSEO_BACKEND_PASS }}
+        password: ${{ secrets.THARSEO_BACKEND_PASS }}
         script: |
           docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-app) || true
           docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-app) || true
@@ -80,7 +80,7 @@ jobs:
       with:
         host: 52.168.150.124
         username: tharseo
-        key: ${{ secrets.THARSEO_BACKEND_PASS }}
+        password: ${{ secrets.THARSEO_BACKEND_PASS }}
         script: |
           docker login && docker pull richardguedesrib/tharseo-app:latest
 
@@ -89,7 +89,7 @@ jobs:
       with:
         host: 52.168.150.124
         username: tharseo
-        key: ${{ secrets.THARSEO_BACKEND_PASS }}
+        password: ${{ secrets.THARSEO_BACKEND_PASS }}
         script: |
           docker run -d -p 8080:8080 -v /home/richardguedes/tharseo/data:/app/data richardguedesrib/tharseo-app:latest
 
