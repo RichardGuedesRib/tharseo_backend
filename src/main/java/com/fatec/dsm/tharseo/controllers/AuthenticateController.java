@@ -1,13 +1,11 @@
 package com.fatec.dsm.tharseo.controllers;
 
-import com.fatec.dsm.tharseo.dtos.AuthenticateResponse;
-import com.fatec.dsm.tharseo.models.User;
+import com.fatec.dsm.tharseo.controllers.dtos.ApiResponse;
+import com.fatec.dsm.tharseo.controllers.dtos.authenticate.AuthenticateResponse;
 import com.fatec.dsm.tharseo.services.AuthenticateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,9 +26,9 @@ public class AuthenticateController {
         boolean checkuser = authenticateService.checkUser(userLogin);
 
         if(checkuser) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("User find");
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("success", "User found", ""));
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("error", "User not found", ""));
         }
 
     }
@@ -45,16 +43,10 @@ public class AuthenticateController {
         if(checkUser){
             AuthenticateResponse authenticate = authenticateService.userAuthenticate(userLogin, userPassword);
             if(authenticate != null){
-                return ResponseEntity.status(HttpStatus.ACCEPTED).body(authenticate);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login or Password is invalid");
-
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>("success", "Login successful", authenticate));
             }
         }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not Found");
-
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>("error", "Login or password invalid", ""));
     }
-
 
 }

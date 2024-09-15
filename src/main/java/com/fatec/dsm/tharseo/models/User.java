@@ -1,16 +1,12 @@
 package com.fatec.dsm.tharseo.models;
 
 
-import com.fatec.dsm.tharseo.dtos.AuthenticateRequest;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 

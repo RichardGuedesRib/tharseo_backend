@@ -2,14 +2,17 @@ package com.fatec.dsm.tharseo.services;
 
 
 import com.fatec.dsm.tharseo.models.AssetsUser;
+import com.fatec.dsm.tharseo.models.Role;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.UserRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -18,12 +21,21 @@ public class UserService {
     UserRepository userRepository;
 
     @Autowired
+    RoleService roleService;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
     Temporary temporary;
 
 
     public void insertOne(User user) {
         if (user != null) {
             user.setIsactive(1);
+            Role roleBasic = roleService.findByName("BASIC");
+            user.setRoles(Set.of(roleBasic));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
 
             //temporary for test

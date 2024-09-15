@@ -1,12 +1,11 @@
 package com.fatec.dsm.tharseo.services;
 
-import com.fatec.dsm.tharseo.dtos.AuthenticateResponse;
+import com.fatec.dsm.tharseo.controllers.dtos.authenticate.AuthenticateResponse;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.models.Role;
 import com.fatec.dsm.tharseo.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -64,7 +63,7 @@ public class AuthenticateService {
         }
 
         var now = Instant.now();
-        var expiresIn = 300L;
+        var expiresIn = 900L;
 
         var scopes = user.getRoles()
                 .stream()

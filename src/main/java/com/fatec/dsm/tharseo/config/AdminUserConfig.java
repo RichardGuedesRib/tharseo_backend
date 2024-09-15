@@ -24,16 +24,7 @@ public class AdminUserConfig implements CommandLineRunner {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-<<<<<<<<<<<<<<  ✨ Codeium Command ⭐ >>>>>>>>>>>>>>>>
-    /**
-     * This method is responsible for creating the admin user and roles
-     * if they don't already exist. If the user already exists, it prints
-     * a message saying that the admin already exists.
-     *
-     * @param args ignored
-     * @throws Exception if any error occurs
-     */
-<<<<<<<  f83d1310-afc4-412a-b5ed-50b21d6ae3f4  >>>>>>>
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -47,7 +38,7 @@ public class AdminUserConfig implements CommandLineRunner {
         var roleBasic = roleService.findByName(Role.Values.BASIC.name());
         if (roleBasic == null) {
             roleBasic = new Role();
-            roleBasic.setName(Role.Values.BASIC.name());
+            roleBasic.setName("BASIC");
             roleService.insertRole(roleBasic);
         }
 
