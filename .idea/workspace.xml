@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f2c0502-6e6e-47f4-8a04-41fe7c6b56f0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy-backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy-backend.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/tharseo.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/tharseo.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/fatec/dsm/tharseo/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fatec/dsm/tharseo/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

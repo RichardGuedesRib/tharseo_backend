@@ -45,6 +45,12 @@ jobs:
         java-version: '17' 
         distribution: 'temurin'
 
+    - name: Inject secrets into application.properties
+      run: |
+          echo "spring.datasource.url=${{ secrets.DB_URL }}" >> src/main/resources/application.properties
+          echo "spring.datasource.password=${{ secrets.DB_PASSWORD }}" >> src/main/resources/application.properties
+          echo "spring.datasource.username=${{ secrets.DB_USERNAME }}" >> src/main/resources/application.properties
+
     - name: Build Tharseo 
       run:  mvn clean package
       
