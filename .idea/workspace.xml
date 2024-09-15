@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f2c0502-6e6e-47f4-8a04-41fe7c6b56f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/authenticate/AuthenticateResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/tharseo.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/tharseo.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/config/AdminUserConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/config/AdminUserConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/AuthenticateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/AuthenticateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/dtos/AuthenticateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/authenticate/AuthenticateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/dtos/AuthenticateResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/external/BinanceWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/external/BinanceWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/AuthenticateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/AuthenticateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/EngineTradeSystemGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/EngineTradeSystemGrid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fatec/dsm/tharseo/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fatec/dsm/tharseo/services/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +55,9 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+        <option name="customMavenHome" value="C:\libs\apache-maven-3.8.8" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="workOffline" value="true" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -86,23 +76,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TharseoApplication.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "jwt",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/back/Faculdade/Code/Single Projects/tharseo_backend",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TharseoApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/back/Faculdade/Code/Single Projects/tharseo_backend&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.build.tools.auto.reload&quot;: &quot;ALL&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Faculdade\OneDrive - Fatec Centro Paula Souza\Projetos\Tharseo\backend\tharseo\src\main\java\com\fatec\dsm\tharseo\controllers" />

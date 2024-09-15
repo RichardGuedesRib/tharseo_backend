@@ -1,5 +1,6 @@
 package com.fatec.dsm.tharseo.services;
 
+import com.fatec.dsm.tharseo.models.Role;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -26,6 +29,12 @@ class UserServiceTest {
     @Mock
     private Temporary temporary;
 
+    @Mock
+    private RoleService roleService;
+
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UserService userService;
 
@@ -33,7 +42,14 @@ class UserServiceTest {
     @DisplayName("Should insert new user in Database")
     void insertOneUserCase1() {
         User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        Role roleBasic = new Role();
+        when(roleService.findByName("BASIC")).thenReturn(roleBasic);
+
+        user.setPassword("password");
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
         userService.insertOne(user);
+
         verify(userRepository, times(1)).save(user);
 
         //temporary
