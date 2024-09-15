@@ -37,7 +37,7 @@ public class EngineTradeSystemGrid {
     private static final Logger logger = LogManager.getLogger(EngineTradeSystemGrid.class);
 
     public void operatingGridMode() {
-        logger.info("OperatingGrid Escope");
+//        logger.info("OperatingGrid Escope");
         List<Kline> chart = chartService.findAll();
         Kline lastCandlestick = chart.get(chart.size() - 1);
         Double price = Double.parseDouble(lastCandlestick.getClosePrice());
@@ -105,7 +105,7 @@ public class EngineTradeSystemGrid {
     }
 
     public void checkOrders() {
-        logger.info("CHECKING ORDERS");
+//        logger.info("CHECKING ORDERS");
         List<TransactionSpotGrid> operations = new ArrayList<>();
         List<Kline> chart = chartService.findAll();
         Kline lastCandlestick = chart.get(chart.size() - 1);
@@ -138,16 +138,16 @@ public class EngineTradeSystemGrid {
                 }
             }
         }
-        logger.info("No Target Sell Orders");
+//        logger.info("No Target Sell Orders");
 
     }
 
-    @Scheduled(fixedDelay = 5000)
-    public void activeOperation() {
-        logger.info("New Check Wave");
-        operatingGridMode();
-        checkOrders();
-    }
+//    @Scheduled(fixedDelay = 5000)
+//    public void activeOperation() {
+////        logger.info("New Check Wave");
+//        operatingGridMode();
+//        checkOrders();
+//    }
 
 
 }

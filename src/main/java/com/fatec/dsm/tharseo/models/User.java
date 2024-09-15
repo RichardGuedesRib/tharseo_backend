@@ -1,7 +1,10 @@
 package com.fatec.dsm.tharseo.models;
 
 
+import com.fatec.dsm.tharseo.dtos.AuthenticateRequest;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.io.Serial;
@@ -9,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_users")
@@ -32,6 +36,14 @@ public class User implements Serializable {
     private String apiKey;
     private String secretKey;
     private Integer isactive;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 
     public User() {
         this.wallet = new ArrayList<>();
@@ -133,10 +145,13 @@ public class User implements Serializable {
         this.transactions = transactions;
     }
 
-    public void addAsset(AssetsUser asset){
+    public void addAsset(AssetsUser asset) {
         this.wallet.add(asset);
     }
-    public void addTransaction(Transaction transaction) {this.transactions.add(transaction);}
+
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+    }
 
     public String getApiKey() {
         return apiKey;
@@ -162,7 +177,17 @@ public class User implements Serializable {
         this.grids = grids;
     }
 
-    public void addGrid(StrategyGridUser strategyGridUser){
+    public void addGrid(StrategyGridUser strategyGridUser) {
         this.grids.add(strategyGridUser);
     }
+
+    public Set<Role> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+
 }
