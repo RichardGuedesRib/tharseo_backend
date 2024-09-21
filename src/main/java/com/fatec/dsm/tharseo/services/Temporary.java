@@ -21,6 +21,8 @@ public class Temporary {
         dollar.setIsActive(1);
         dollar.setUser(user);
 
+        //TESTE
+
         assetUserService.insertAssetUser(dollar);
 
     }
