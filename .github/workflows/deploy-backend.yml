@@ -6,97 +6,123 @@ on:
       - main
 
 jobs:
-  tests-backend: 
+  notify-start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Telegram - Workflow Started
+        run: |
+          MESSAGE="🚀 Um deploy do backend do Tharseo foi iniciado..."
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="${MESSAGE}" \
+            -d parse_mode="Markdown"
+
+  tests-backend:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17' 
-        distribution: 'temurin'
-    
-    - name: Run Tharseo Tests 
-      run:  mvn clean test
-      
-      continue-on-error: false
-    
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run Tharseo Tests
+        run:  mvn clean test
+        continue-on-error: false
+
   build-backend:
-    needs: 
+    needs:
       - tests-backend
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17' 
-        distribution: 'temurin'
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Inject secrets into application.properties
-      run: |
+      - name: Inject secrets into application.properties
+        run: |
           echo "spring.datasource.url=${{ secrets.DB_URL }}" >> src/main/resources/application.properties
           echo "spring.datasource.password=${{ secrets.DB_PASSWORD }}" >> src/main/resources/application.properties
           echo "spring.datasource.username=${{ secrets.DB_USERNAME }}" >> src/main/resources/application.properties
 
-    - name: Build Tharseo 
-      run:  mvn clean package
-      
-    - name: Build Docker image
-      run:  |
-            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
-            docker build -t richardguedesrib/tharseo-app:latest .
-    
-    - name: Push Docker image to Docker Hub
-      run: |
-            docker push richardguedesrib/tharseo-app:latest
+      - name: Build Tharseo
+        run:  mvn clean package
+
+      - name: Build Docker image
+        run:  |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
+          docker build -t richardguedesrib/tharseo-app:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push richardguedesrib/tharseo-app:latest
 
   deploy-backend:
-    needs: 
+    needs:
       - tests-backend
       - build-backend
 
     runs-on: ubuntu-latest
     steps:
+      - name: SSH into Azure VM and stop and remove existing Docker containers
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.THARSEO_BACKEND_HOST }}
+          username: ${{ secrets.THARSEO_BACKEND_HOST_USER }}
+          password: ${{ secrets.THARSEO_BACKEND_PASS }}
+          script: |
+            docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-app) || true
+            docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-app) || true
 
-    - name: SSH into Azure VM and stop and remove existing Docker containers
-      uses: appleboy/ssh-action@master
-      with:
-        host: 52.168.150.124
-        username: tharseo
-        password: ${{ secrets.THARSEO_BACKEND_PASS }}
-        script: |
-          docker stop $(docker ps -q --filter ancestor=richardguedesrib/tharseo-app) || true
-          docker rm $(docker ps -aq --filter ancestor=richardguedesrib/tharseo-app) || true
+      - name: SSH into Azure VM and pull Docker image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.THARSEO_BACKEND_HOST }}
+          username: ${{ secrets.THARSEO_BACKEND_HOST_USER }}
+          password: ${{ secrets.THARSEO_BACKEND_PASS }}
+          script: |
+            docker login && docker pull richardguedesrib/tharseo-app:latest
 
-    - name: SSH into Azure VM and pull Docker image
-      uses: appleboy/ssh-action@master
-      with:
-        host: 52.168.150.124
-        username: tharseo
-        password: ${{ secrets.THARSEO_BACKEND_PASS }}
-        script: |
-          docker login && docker pull richardguedesrib/tharseo-app:latest
+      - name: SSH into Azure VM and start Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.THARSEO_BACKEND_HOST }}
+          username: ${{ secrets.THARSEO_BACKEND_HOST_USER }}
+          password: ${{ secrets.THARSEO_BACKEND_PASS }}
+          script: |
+            docker run -d -p 8080:8080 -v /home/richardguedes/tharseo/data:/app/data richardguedesrib/tharseo-app:latest
 
-    - name: SSH into Azure VM and start Docker container
-      uses: appleboy/ssh-action@master
-      with:
-        host: 52.168.150.124
-        username: tharseo
-        password: ${{ secrets.THARSEO_BACKEND_PASS }}
-        script: |
-          docker run -d -p 8080:8080 -v /home/richardguedes/tharseo/data:/app/data richardguedesrib/tharseo-app:latest
+      - name: Notify Telegram - Deploy Success
+        run: |
+          MESSAGE="✅ Deploy do backend do Tharseo realizado com sucesso!"
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="${MESSAGE}" \
+            -d parse_mode="Markdown"
 
-  
+      - name: Notify Telegram - Deploy Failure
+        if: failure()
+        run: |
+          echo "error: ${{ job.status }}" > error.log  # Salva o erro em um arquivo
+          ERROR_MESSAGE=$(cat error.log) 
+          MESSAGE="🚨 Ocorreu um erro durante o deploy do backend do Tharseo. Erro: ${ERROR_MESSAGE}"
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="${MESSAGE}" \
+            -d parse_mode="Markdown"
