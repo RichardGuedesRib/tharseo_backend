@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/transactionsspotgrid")
+@CrossOrigin(origins = "*")
 public class TransactionSpotGridController {
 
     @Autowired

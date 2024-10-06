@@ -1,6 +1,7 @@
 package com.fatec.dsm.tharseo.services;
 
 import com.fatec.dsm.tharseo.controllers.dtos.authenticate.AuthenticateResponse;
+import com.fatec.dsm.tharseo.controllers.dtos.user.UserDtoResponse;
 import com.fatec.dsm.tharseo.models.User;
 import com.fatec.dsm.tharseo.models.Role;
 import com.fatec.dsm.tharseo.util.Validator;
@@ -80,7 +81,7 @@ public class AuthenticateService {
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return new AuthenticateResponse(jwtValue, expiresIn);
+        return new AuthenticateResponse(new UserDtoResponse(user), jwtValue, expiresIn);
     }
 
 

@@ -145,8 +145,8 @@ public class EngineTradeSystemGrid {
     @Scheduled(fixedDelay = 5000)
     public void activeOperation() {
 //        logger.info("New Check Wave");
-        operatingGridMode();
-        checkOrders();
+//        operatingGridMode();
+//        checkOrders();
     }
 
 
