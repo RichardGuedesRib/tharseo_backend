@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Notify Telegram - Workflow Started
         run: |
-          MESSAGE="🚀 Um deploy do backend do Tharseo foi iniciado..."
+          MESSAGE="🚀 Novidades! Um deploy do backend do Tharseo foi iniciado... A Previsão do término é de 2 minutos."
+          Nosso backend opera com a url https://tharseo.zapto.com:443."
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
             -d text="${MESSAGE}" \
@@ -60,6 +61,7 @@ jobs:
           echo "spring.datasource.url=${{ secrets.DB_URL }}" >> src/main/resources/application.properties
           echo "spring.datasource.password=${{ secrets.DB_PASSWORD }}" >> src/main/resources/application.properties
           echo "spring.datasource.username=${{ secrets.DB_USERNAME }}" >> src/main/resources/application.properties
+          echo "google.client.key=${{ secrets.GOOGLE_CLIENT_ID }}" >> src/main/resources/application.properties
 
       - name: Build Tharseo
         run:  mvn clean package
@@ -119,9 +121,7 @@ jobs:
       - name: Notify Telegram - Deploy Failure
         if: failure()
         run: |
-          echo "error: ${{ job.status }}" > error.log  # Salva o erro em um arquivo
-          ERROR_MESSAGE=$(cat error.log) 
-          MESSAGE="🚨 Ocorreu um erro durante o deploy do backend do Tharseo. Erro: ${ERROR_MESSAGE}"
+          MESSAGE="🚨 Ocorreu um erro durante o deploy do backend do Tharseo. Verifique os logs do actions para maiores informações."
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
             -d text="${MESSAGE}" \

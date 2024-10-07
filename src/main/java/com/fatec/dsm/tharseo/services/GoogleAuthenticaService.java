@@ -8,6 +8,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 
-
+import java.security.interfaces.RSAPrivateKey;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Set;
@@ -40,11 +41,14 @@ public class GoogleAuthenticaService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Value("${google.client.key}")
+    private String googleClientKey;
+
     public AuthenticateResponse verifyToken(String idTokenString) throws Exception {
 
         idTokenString = idTokenString.replace("\"", "");
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance())
-                .setAudience(Collections.singletonList("911731612364-j1vi1okll0ep5s7i2o7e395neketn48r.apps.googleusercontent.com"))
+                .setAudience(Collections.singletonList(googleClientKey))
                 .build();
 
         GoogleIdToken idToken = verifier.verify(idTokenString);
