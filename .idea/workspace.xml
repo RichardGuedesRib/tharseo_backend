@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f2c0502-6e6e-47f4-8a04-41fe7c6b56f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/user/UserDtoResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/tharseo-test.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/tharseo-test.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/TransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/TransactionSpotGridController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/TransactionSpotGridController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/authenticate/AuthenticateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/authenticate/AuthenticateResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/user/UserDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/external/BinanceWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/external/BinanceWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/AuthenticateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/AuthenticateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/EngineTradeSystemGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/EngineTradeSystemGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +89,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.codeium.enabled": "true",
-    "git-widget-placeholder": "richard-auth",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/back/Faculdade/Code/Single Projects/tharseo_backend",
