@@ -38,6 +38,9 @@ public class AuthenticateController {
 
         String userLogin = credentials.get("login");
         String userPassword = credentials.get("password");
+        System.out.println("Login");
+        System.out.println(userLogin);
+        System.out.println(userPassword);
         boolean auth = false;
         boolean checkUser = authenticateService.checkUser(userLogin);
         if(checkUser){

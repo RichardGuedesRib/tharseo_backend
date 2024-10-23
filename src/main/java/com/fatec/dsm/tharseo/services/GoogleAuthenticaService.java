@@ -99,7 +99,64 @@ public class GoogleAuthenticaService {
         }
     }
 
+    public AuthenticateResponse verifyTokenMobile(String idTokenString) throws Exception {
 
+        idTokenString = idTokenString.replace("\"", "");
+
+        System.out.println(idTokenString);
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance())
+                .setAudience(Collections.singletonList("994939095037-51i8qgua6rv3p3nn8biuoe8fe6rqdc4c.apps.googleusercontent.com"))
+                .build();
+
+        GoogleIdToken idToken = verifier.verify(idTokenString);
+        System.out.println("GOOGLEIDTOKEN");
+        System.out.println(idToken);
+        if (idToken != null) {
+            GoogleIdToken.Payload payload = idToken.getPayload();
+
+            String userId = payload.getSubject();
+            String email = payload.getEmail();
+            boolean emailVerified = payload.getEmailVerified();
+            String name = (String) payload.get("name");
+            String pictureUrl = (String) payload.get("picture");
+
+            User user = userService.findByEmail(email);
+            if (user == null) {
+                user = new User();
+                user.setEmail(email);
+                user.setName(name);
+                user.setPhoneNumber(null);
+                user.setPassword(passwordEncoder.encode("123456"));
+                Role savedRole = roleService.findByName("BASIC");
+                user.setRoles(Set.of(savedRole));
+                userService.insertOne(user);
+            }
+
+            var now = Instant.now();
+            var expiresIn = 900L;
+
+            var scopes = user.getRoles()
+                    .stream()
+                    .map(Role::getName)
+                    .collect(Collectors.joining(" "));
+
+            var claims = JwtClaimsSet.builder()
+                    .issuer("backendtharseo")
+                    .subject(user.getId().toString())
+                    .issuedAt(now)
+                    .expiresAt(now.plusSeconds(expiresIn))
+                    .claim("scope", scopes)
+                    .build();
+
+            var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+
+            return new AuthenticateResponse(new UserDtoResponse(user), jwtValue, expiresIn);
+
+        } else {
+//            throw new Exception("Invalid ID token.");
+            return null;
+        }
+    }
 
 
 

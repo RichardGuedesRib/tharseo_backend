@@ -29,4 +29,17 @@ public class GoogleAuthenticateController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>("error", "Login or password invalid", ""));
     }
 
+    @PostMapping(value = "/auth2")
+    public ResponseEntity<?> userAuthenticateMobile(@RequestBody String idTokenString) throws Exception {
+
+
+        AuthenticateResponse authenticate = googleAuthenticaService.verifyTokenMobile(idTokenString);
+        System.out.println("AUTHMobile");
+        System.out.println(authenticate);
+        if (authenticate != null) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>("success", "Login successful", authenticate));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>("error", "Login or password invalid", ""));
+    }
+
 }
