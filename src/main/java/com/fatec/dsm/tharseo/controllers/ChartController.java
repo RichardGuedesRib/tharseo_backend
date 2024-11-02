@@ -24,11 +24,11 @@ public class ChartController {
     ChartService chartService;
 
     @GetMapping
-    ResponseEntity<?> getChartBtc1m(){
+    public ResponseEntity<?> getChartBtc1m(){
         List<Kline> klines = chartService.findAll();
-//        System.out.println(klines);
-//        System.out.println("Acessou o grafico!");
-             return ResponseEntity.status(HttpStatus.ACCEPTED).body(klines);
+        System.out.println(klines);
+        System.out.println("Acessou o grafico!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(klines);
     }
 
 }
