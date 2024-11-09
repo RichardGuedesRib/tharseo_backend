@@ -15,6 +15,7 @@ public class UserDtoResponse {
     private String phoneNumber;
     private String email;
     private Integer isactive;
+    private String avatar;
     private List<AssetsUser> wallet;
     private List<StrategyGridUser> grids;
     private List<Transaction> transactions;
@@ -27,6 +28,7 @@ public class UserDtoResponse {
         this.phoneNumber = user.getPhoneNumber();
         this.email = user.getEmail();
         this.isactive = user.getIsactive();
+        this.avatar = user.getAvatar();
 
         this.wallet = user.getWallet();
         this.grids = user.getGrids();
@@ -103,5 +105,13 @@ public class UserDtoResponse {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

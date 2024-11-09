@@ -23,6 +23,9 @@ public class User implements Serializable {
     private String phoneNumber;
     private String email;
     private String password;
+    @Lob
+    @Column(name = "avatar", columnDefinition = "LONGTEXT")
+    private String avatar;
     @OneToMany(mappedBy = "user")
     private List<AssetsUser> wallet;
     @OneToMany(mappedBy = "user")
@@ -45,7 +48,7 @@ public class User implements Serializable {
         this.wallet = new ArrayList<>();
     }
 
-    public User(Long id, String name, String lastname, String phoneNumber, String email, String password, Integer isactive) {
+    public User(Long id, String name, String lastname, String phoneNumber, String email, String password, Integer isactive, String avatar) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -54,9 +57,10 @@ public class User implements Serializable {
         this.password = password;
         this.wallet = new ArrayList<>();
         this.isactive = isactive;
+        this.avatar = avatar;
     }
 
-    public User(Long id, String name, String lastname, String phoneNumber, String email, String password, Integer isactive, String apiKey, String secretKey) {
+    public User(Long id, String name, String lastname, String phoneNumber, String email, String password, Integer isactive, String apiKey, String secretKey, String avatar) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -67,6 +71,7 @@ public class User implements Serializable {
         this.isactive = isactive;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
+        this.avatar = avatar;
     }
 
     public Long getId() {
@@ -185,5 +190,11 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

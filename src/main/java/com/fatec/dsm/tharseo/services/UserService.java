@@ -94,6 +94,9 @@ public class UserService {
             if (user.getSecretKey() != null) {
                 oldUser.setSecretKey(user.getSecretKey());
             }
+            if(user.getAvatar() != null) {
+                oldUser.setAvatar(user.getAvatar());
+            }
         }
         return userRepository.save(oldUser);
     }
