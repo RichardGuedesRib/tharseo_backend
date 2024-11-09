@@ -27,7 +27,7 @@ class AssetsUserRepositoryTest {
     @Test
     @DisplayName("Should get AssetsUser by Attribute Acronym from Database")
     void findByUserAndActiveIsTrueCase1() {
-        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1, "photo");
         this.createUser(user);
 
         AssetsUser newAssetsUser = new AssetsUser(null, "Binance Coin", "BNBUSDT", 10.00, 1, 690.00, user);
@@ -42,7 +42,7 @@ class AssetsUserRepositoryTest {
     @Test
     @DisplayName("Should not get AssetsUser by Attribute Acronym from Database when not exists")
     void findByUserAndActiveIsTrueCase2() {
-        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1, "photo");
         this.createUser(user);
 
         List<AssetsUser> results = assetsUserRepository.findByUserAndActiveIsTrue(user);
@@ -54,7 +54,7 @@ class AssetsUserRepositoryTest {
     @Test
     @DisplayName("Should get AssetsUser by attribute acronym from Database")
     void findByAcronymCase1() {
-        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1, "photo");
         this.createUser(user);
 
         AssetsUser newAssetsUser = new AssetsUser(null, "Binance Coin", "BNBUSDT", 10.00, 1, 690.00, user);

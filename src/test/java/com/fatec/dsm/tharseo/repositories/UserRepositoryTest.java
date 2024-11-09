@@ -25,7 +25,7 @@ class UserRepositoryTest {
     @DisplayName("Should get user by email successfully from DataBase")
     void findByEmailCase1() {
 
-        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1, "photo");
         this.createUser(user);
 
         Optional<User> result = userRepository.findByEmail("guedes@gmail.com");
@@ -44,7 +44,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Should get user by phoneNumber successfully from DataBase")
     void findByPhoneNumberCase1() {
-        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1, "photo");
         this.createUser(user);
 
         Optional<User> result = userRepository.findByPhoneNumber("11966066684");

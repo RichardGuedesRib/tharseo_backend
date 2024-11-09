@@ -43,7 +43,7 @@ class UserServiceTest {
     @Test
     @DisplayName("Should insert new user in Database")
     void insertOneUserCase1() {
-        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1);
+        User user = new User(null, "Richard", "Guedes", "11966066684", "guedes@gmail.com", "1234", 1, "photo");
         Role roleBasic = new Role();
         when(roleService.findByName("BASIC")).thenReturn(roleBasic);
 
