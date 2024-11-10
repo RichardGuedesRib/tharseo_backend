@@ -97,6 +97,18 @@ public class UserService {
             if(user.getAvatar() != null) {
                 oldUser.setAvatar(user.getAvatar());
             }
+            if (user.isLoginLocationSecurity() != oldUser.isLoginLocationSecurity()) {
+                oldUser.setLoginLocationSecurity(user.isLoginLocationSecurity());
+            }
+            if(user.getLatitude() != null) {
+                oldUser.setLatitude(user.getLatitude());
+            }
+            if(user.getLongitude() != null) {
+                oldUser.setLongitude(user.getLongitude());
+            }
+            if(user.getRadius() != null) {
+                oldUser.setRadius(user.getRadius());
+            }
         }
         return userRepository.save(oldUser);
     }

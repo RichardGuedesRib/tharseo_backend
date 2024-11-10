@@ -36,6 +36,7 @@ public class User implements Serializable {
     private String secretKey;
     private Integer isactive;
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_users_roles",
@@ -43,6 +44,10 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+    private boolean loginLocationSecurity;
+    private String longitude;
+    private String latitude;
+    private String radius;
 
     public User() {
         this.wallet = new ArrayList<>();
@@ -196,5 +201,37 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isLoginLocationSecurity() {
+        return loginLocationSecurity;
+    }
+
+    public void setLoginLocationSecurity(boolean loginLocationSecurity) {
+        this.loginLocationSecurity = loginLocationSecurity;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getRadius() {
+        return radius;
+    }
+
+    public void setRadius(String radius) {
+        this.radius = radius;
     }
 }

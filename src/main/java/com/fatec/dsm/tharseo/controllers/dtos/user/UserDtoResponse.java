@@ -16,6 +16,10 @@ public class UserDtoResponse {
     private String email;
     private Integer isactive;
     private String avatar;
+    private Boolean loginLocationSecurity;
+    private String latitude;
+    private String longitude;
+    private String radius;
     private List<AssetsUser> wallet;
     private List<StrategyGridUser> grids;
     private List<Transaction> transactions;
@@ -29,7 +33,10 @@ public class UserDtoResponse {
         this.email = user.getEmail();
         this.isactive = user.getIsactive();
         this.avatar = user.getAvatar();
-
+        this.loginLocationSecurity = user.isLoginLocationSecurity();
+        this.latitude = user.getLatitude();
+        this.longitude = user.getLongitude();
+        this.radius = user.getRadius();
         this.wallet = user.getWallet();
         this.grids = user.getGrids();
         this.transactions = user.getTransactions();
@@ -113,5 +120,37 @@ public class UserDtoResponse {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Boolean getLoginLocationSecurity() {
+        return loginLocationSecurity;
+    }
+
+    public void setLoginLocationSecurity(Boolean loginLocationSecurity) {
+        this.loginLocationSecurity = loginLocationSecurity;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getRadius() {
+        return radius;
+    }
+
+    public void setRadius(String radius) {
+        this.radius = radius;
     }
 }
