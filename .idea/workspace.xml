@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7f2c0502-6e6e-47f4-8a04-41fe7c6b56f0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/user/UserDtoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/controllers/dtos/user/UserDtoResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fatec/dsm/tharseo/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
